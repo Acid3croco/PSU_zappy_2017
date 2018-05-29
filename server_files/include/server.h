@@ -1,0 +1,13 @@
+/*
+** EPITECH PROJECT, 2018
+** zappy
+** File description:
+** server headers
+*/
+
+#ifndef SERVER_H_
+	#define SERVER_H_
+
+#include <stdio.h>
+
+#endif /* !SERVER_H_ */
