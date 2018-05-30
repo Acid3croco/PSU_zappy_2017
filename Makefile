@@ -11,19 +11,21 @@ NAME_C	= zappy_ia
 
 CC	= gcc
 
+CPP	= g++
+
 RM	= rm -f
 
 SRCS_S	= ./server_files/src/server.c
 
-SRCS_C	= ./client_files/src/client.c
+SRCS_C	= ./client_files/src/client.cpp
 
 OBJS_S	= $(SRCS_S:.c=.o)
 
-OBJS_C	= $(SRCS_C:.c=.o)
+OBJS_C	= $(SRCS_C:.cpp=.o)
 
-CFLAGS	+= -I ./server_files/include/
-CFLAGS	+= -I ./client_files/include/
-CFLAGS	+= -W -Wall -Wextra -g3
+WFLAGS	+= -W -Wall -Wextra
+CFLAGS	+= -I ./server_files/include/ $(WFLAGS)
+CPPFLAGS	= -I ./client_files/include/ $(WFLAGS)
 
 all: $(NAME_S) $(NAME_C)
 
@@ -31,7 +33,7 @@ $(NAME_S): $(OBJS_S)
 	$(CC) $(OBJS_S) -o $(NAME_S) $(CFLAGS)
 
 $(NAME_C): $(OBJS_C)
-	$(CC) $(OBJS_C) -o $(NAME_C) $(CFLAGS)
+	$(CPP) $(OBJS_C) -o $(NAME_C) $(CPPFLAGS)
 
 clean:
 	$(RM) $(OBJS_S) $(OBJS_C)

@@ -5,10 +5,11 @@
 ** client main
 */
 
-#include "client.h"
+#include "client.hpp"
 
-int main(void)
+int main(int ac, char **av)
 {
-	printf("client !\n");
+	(void)ac;
+	(void)av;
 	return (0);
 }
