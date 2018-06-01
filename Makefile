@@ -17,7 +17,8 @@ RM	= rm -f
 
 SRCS_S	= ./server_files/src/server.c
 
-SRCS_C	= ./client_files/src/client.cpp
+SRCS_C	=	./client_files/src/client.cpp	\
+		./client_files/src/Mysocket.cpp
 
 OBJS_S	= $(SRCS_S:.c=.o)
 

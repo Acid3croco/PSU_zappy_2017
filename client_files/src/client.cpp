@@ -6,9 +6,9 @@
 */
 
 #include "client.hpp"
-#include "connexion.hpp"
+#include "Mysocket.hpp"
 
-int	printError()
+int	printError(void)
 {
 	perror("");
 	return (-1);
@@ -16,11 +16,20 @@ int	printError()
 
 int	main(int ac, char **av)
 {
-	Connexion	*co;
+	Mysocket	*co;
+	char		*buf;
 
 	if (ac != 3)
+		return (-1);
+	co = new Mysocket(av[1], std::atoi(av[2]));
+	if (co->LaunchMysocket() == -1)
 		return (printError());
-	co = new Connexion(av[1], std::atoi(av[2]));
-	co->launch_connexion();
+	buf = (char *)malloc(4096);
+	for (;;) {
+		buf = co->Wlisten(buf);
+		if (buf == NULL)
+			return (-1);
+	}
+	free(buf);
 	return (0);
 }

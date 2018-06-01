@@ -8,10 +8,8 @@
 #ifndef CLIENT_HPP_
 	#define CLIENT_HPP_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include <iostream>
+#include <cstring>
 
 #define F 100
 

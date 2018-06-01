@@ -2,37 +2,40 @@
 ** EPITECH PROJECT, 2018
 ** Zappy
 ** File description:
-** class connexion
+** class Mysocket
 */
 
-#ifndef CONNEXION_HPP_
-	#define CONNEXION_HPP_
+#ifndef Mysocket_HPP_
+	#define Mysocket_HPP_
 
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include <iostream>
+#include <cstring>
 
-class Connexion {
+class Mysocket {
 public:
-	Connexion(const std::string ip, const int port);
-	~Connexion();
-	int	launch_connexion();
+	Mysocket(const std::string ip, const int port);
+	~Mysocket();
+	int	LaunchMysocket();
+	char	*Wlisten(char *);
+	void	Wwrite(const char *s);
+protected:
+private:
 	int	Wgetprotobyname();
 	int	Wsocket();
 	uint16_t	Whtons();
 	in_addr_t	WinetAddr();
 	int	Wconnect();
 	int	Wclose();
-protected:
-private:
-	int			_fd;
+	const std::string	_ip;
 	int			_port;
+	int			_fd;
 	struct sockaddr_in	_addr;
 	struct protoent		*_pe;
-	std::string		_ip;
 };
 
-#endif /* !CONNEXION_HPP_ */
+#endif /* !Mysocket_HPP_ */
