@@ -36,7 +36,7 @@ typedef struct s_server
 } t_srv;
 
 void fill_args(int ac, char **av, t_srv *server);
-void add_team_member(char *name, t_srv *server);
+void add_team(char *name, t_srv *server);
 void init_srv(t_srv *server);
 
 #endif /* !SERVER_H_ */

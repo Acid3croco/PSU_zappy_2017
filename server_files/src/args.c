@@ -9,12 +9,17 @@
 
 void init_srv(t_srv *server)
 {
+	t_tm *team = malloc(sizeof(t_tm));
+
+	team->name = NULL;
+	team->client = NULL;
+	team->next = NULL;
 	server->port = 1234;
 	server->width = 10;
 	server->height = 10;
 	server->clientsNB = 10;
 	server->freq = 100;
-	server->team = NULL;
+	server->team = team;
 }
 
 void fill_teams(int ac, char **av, t_srv *server)
@@ -23,8 +28,13 @@ void fill_teams(int ac, char **av, t_srv *server)
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		add_team_member(av[optind], server);
+		add_team(av[optind], server);
 		optind++;
+	}
+	t_tm *tmp = server->team;
+	while (tmp->next != NULL) {
+		printf("name=%s\n", tmp->name);
+		tmp = tmp->next;
 	}
 }
 
