@@ -21,12 +21,12 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 		return (-1);
-	co = new Mysocket(av[1], std::atoi(av[2]));
-	if (co->LaunchMysocket() == -1)
+	so = new Mysocket(av[1], std::atoi(av[2]));
+	if (so->LaunchMysocket() == -1)
 		return (printError());
 	buf = (char *)malloc(4096);
 	for (;;) {
-		buf = co->Wlisten(buf);
+		buf = so->Wlisten(buf);
 		if (buf == NULL)
 			return (-1);
 	}
