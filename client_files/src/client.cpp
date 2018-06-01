@@ -16,7 +16,7 @@ int	printError(void)
 
 int	main(int ac, char **av)
 {
-	Mysocket	*co;
+	Mysocket	*so;
 	char		*buf;
 
 	if (ac != 3)
