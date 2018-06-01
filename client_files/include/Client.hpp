@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <cstring>
-
-#define F 100
+#include <vector>
 
 #endif /* !CLIENT_HPP_ */

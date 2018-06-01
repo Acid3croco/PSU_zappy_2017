@@ -5,8 +5,8 @@
 ** client main
 */
 
-#include "client.hpp"
-#include "Mysocket.hpp"
+#include "Client.hpp"
+#include "Command.hpp"
 
 int	printError(void)
 {
@@ -16,20 +16,20 @@ int	printError(void)
 
 int	main(int ac, char **av)
 {
-	Mysocket	*so;
-	char		*buf;
+	Command		co;
+	Mysocket	so;
+	std::string	buf;
 
 	if (ac != 3)
 		return (-1);
-	so = new Mysocket(av[1], std::atoi(av[2]));
-	if (so->LaunchMysocket() == -1)
+	if (so.launchMysocket(av[1], std::atoi(av[2])) == -1)
 		return (printError());
-	buf = (char *)malloc(4096);
+	co.setSo(so);
 	for (;;) {
-		buf = so->Wlisten(buf);
-		if (buf == NULL)
+		buf = so.wlisten();
+		if (buf.empty())
 			return (-1);
+		std::cout << buf << std::endl;
 	}
-	free(buf);
 	return (0);
 }
