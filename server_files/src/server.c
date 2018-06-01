@@ -7,8 +7,11 @@
 
 #include "server.h"
 
-int main(void)
+int main(int ac, char **av)
 {
-	printf("Server !\n");
+	t_srv server;
+
+	init_srv(&server);
+	fill_args(ac, av, &server);
 	return (0);
 }
