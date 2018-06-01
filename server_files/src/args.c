@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void init_srv(t_srv *server)
+void init_struct(t_srv *server)
 {
 	t_tm *team = malloc(sizeof(t_tm));
 
@@ -31,36 +31,34 @@ void fill_teams(int ac, char **av, t_srv *server)
 		add_team(av[optind], server);
 		optind++;
 	}
-	t_tm *tmp = server->team;
-	while (tmp->next != NULL) {
-		printf("name=%s\n", tmp->name);
-		tmp = tmp->next;
-	}
 }
 
 void fill_args(int ac, char **av, t_srv *server)
 {
 	int opt = 0;
 
-	while ((opt = getopt(ac, av, "pxyn:cf")) != -1) {
+	while ((opt = getopt(ac, av, "p:x:y:n:c:f:")) != -1) {
 		switch (opt) {
 			case 'p':
-				server->port = atoi(optarg);
+				server->port = strtol(optarg, NULL, 10);
 				break;
 			case 'x':
-				server->width = atoi(optarg);
+				server->width = strtol(optarg, NULL, 10);
 				break;
 			case 'y':
-				server->height = atoi(optarg);
+				server->height = strtol(optarg, NULL, 10);
 				break;
 			case 'n':
 				fill_teams(ac, av, server);
 				break;
 			case 'c':
-				server->clientsNB = atoi(optarg);
+				server->clientsNB = strtol(optarg, NULL, 10);
 				break;
 			case 'f':
-				server->freq = atoi(optarg);
+				server->freq = strtol(optarg, NULL, 10);
+				break;
+			default:
+				quit(server);
 				break;
 		}
 	}

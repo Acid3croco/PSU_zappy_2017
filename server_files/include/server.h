@@ -12,31 +12,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-typedef struct s_client
-{
-	int fd;
-	struct s_client *next;
-} t_cl;
+/* t_srv t_tn t_cl structures header */
+#include "struct.h"
 
-typedef struct s_team
-{
-	char *name;
-	struct s_client *client;
-	struct s_team *next;
-} t_tm;
-
-typedef struct s_server
-{
-	int port;
-	int width;
-	int height;
-	int clientsNB;
-	int freq;
-	struct s_team *team;
-} t_srv;
+/* disable error in vscode */
+extern char *optarg;
+extern int optind;
 
 void fill_args(int ac, char **av, t_srv *server);
 void add_team(char *name, t_srv *server);
-void init_srv(t_srv *server);
+void init_struct(t_srv *server);
+void quit(t_srv *server);
 
 #endif /* !SERVER_H_ */
