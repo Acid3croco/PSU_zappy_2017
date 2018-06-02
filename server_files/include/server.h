@@ -25,5 +25,6 @@ void add_team(char *name, t_srv *server);
 void init_struct(t_srv *server);
 void quit(t_srv *server);
 int is_team_new(char *name, t_srv *server);
+void free_server(t_srv *server);
 
 #endif /* !SERVER_H_ */
