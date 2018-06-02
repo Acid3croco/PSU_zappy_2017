@@ -18,7 +18,9 @@ RM	= rm -f
 SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/args.c \
 	./server_files/src/teams.c \
-	./server_files/src/quit.c
+	./server_files/src/quit.c \
+	./server_files/src/socket.c \
+	./server_files/src/epoll.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
@@ -28,7 +30,7 @@ OBJS_S	= $(SRCS_S:.c=.o)
 
 OBJS_C	= $(SRCS_C:.cpp=.o)
 
-WFLAGS	+= -W -Wall -Wextra
+WFLAGS	+= -W -Wall -Wextra -g3
 CFLAGS	+= -I ./server_files/include/ $(WFLAGS)
 CPPFLAGS	= -I ./client_files/include/ $(WFLAGS)
 

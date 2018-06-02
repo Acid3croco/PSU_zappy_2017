@@ -21,13 +21,23 @@ void free_team(t_tm *team)
 	}
 }
 
+void free_connect(t_cnt *connect)
+{
+	if (connect != NULL && connect->events != NULL) {
+		free(connect->events);
+		free(connect);
+	}
+}
+
 void free_server(t_srv *server)
 {
+	free_connect(server->cnt);
 	free_team(server->team);
 }
 
 void quit(t_srv *server)
 {
+	perror("error");
 	free_server(server);
 	exit(84);
 }

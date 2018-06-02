@@ -8,6 +8,8 @@
 #ifndef STRUCT_H_
 	#define STRUCT_H_
 
+#include <sys/epoll.h>
+
 typedef struct s_client
 {
 	int fd;
@@ -21,6 +23,17 @@ typedef struct s_team
 	struct s_team *next;
 } t_tm;
 
+typedef struct s_connect
+{
+	int a;
+	int s;
+	int fd;
+	int efd;
+	struct epoll_event event;
+	struct epoll_event *events;
+
+} t_cnt;
+
 typedef struct s_server
 {
 	int port;
@@ -28,6 +41,7 @@ typedef struct s_server
 	int height;
 	int clientsNB;
 	int freq;
+	struct s_connect *cnt;
 	struct s_team *team;
 } t_srv;
 

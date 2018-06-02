@@ -3,6 +3,7 @@
 		"server.h": "c",
 		"typeinfo": "c",
 		"unistd.h": "c",
-		"struct.h": "c"
+		"struct.h": "c",
+		"errno.h": "c"
 	}
 }

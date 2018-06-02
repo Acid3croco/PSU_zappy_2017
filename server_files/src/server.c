@@ -9,6 +9,8 @@
 
 void init_server(t_srv *server)
 {
+	socket_bind(server);
+	create_epoll(server);
 	(void)server;
 }
 

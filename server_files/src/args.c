@@ -10,7 +10,10 @@
 void init_struct(t_srv *server)
 {
 	t_tm *team = malloc(sizeof(t_tm));
+	t_cnt *cnt = malloc(sizeof(t_cnt));
 
+	if (team == NULL || cnt == NULL)
+		quit(server);
 	team->name = NULL;
 	team->client = NULL;
 	team->next = NULL;
@@ -20,6 +23,7 @@ void init_struct(t_srv *server)
 	server->clientsNB = 10;
 	server->freq = 100;
 	server->team = team;
+	server->cnt = cnt;
 }
 
 void fill_teams(int ac, char **av, t_srv *server)
