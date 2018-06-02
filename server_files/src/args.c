@@ -28,7 +28,8 @@ void fill_teams(int ac, char **av, t_srv *server)
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		add_team(av[optind], server);
+		if (is_team_new(av[optind], server) == 0)
+			add_team(av[optind], server);
 		optind++;
 	}
 }
