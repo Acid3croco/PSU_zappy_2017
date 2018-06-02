@@ -5,5 +5,20 @@
 		"unistd.h": "c",
 		"struct.h": "c",
 		"errno.h": "c"
-	}
+	},
+	"rainbowString": {
+		"extensions": [
+		    ".cs",
+		    ".csx",
+		    ".fs",
+		    ".fsx",
+		    ".js",
+		    ".jsx",
+		    ".ts",
+		    ".tsx",
+		    ".csproj",
+		    ".fsproj",
+		    ".c"
+		]
+	    }
 }

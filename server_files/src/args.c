@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief init_struct initialize the server struct with default values
+*
+* @param server
+*/
+
 void init_struct(t_srv *server)
 {
 	t_tm *team = malloc(sizeof(t_tm));
@@ -26,6 +32,14 @@ void init_struct(t_srv *server)
 	server->cnt = cnt;
 }
 
+/**
+* @brief fill_teams create and initialize all the teams
+*
+* @param ac
+* @param av
+* @param server
+*/
+
 void fill_teams(int ac, char **av, t_srv *server)
 {
 	optind -= 1;
@@ -37,6 +51,14 @@ void fill_teams(int ac, char **av, t_srv *server)
 		optind++;
 	}
 }
+
+/**
+* @brief fill_args put all arguments with optget in the server structure
+*
+* @param ac
+* @param av
+* @param server
+*/
 
 void fill_args(int ac, char **av, t_srv *server)
 {

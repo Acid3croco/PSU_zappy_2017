@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+* @brief Fill sockaddr_in *s_in with the port
+*
+* @param s_in
+* @param port
+* @return struct sockaddr_in
+*/
+
 struct sockaddr_in get_in(struct sockaddr_in *s_in, int port)
 {
 	bzero((char *) s_in, sizeof((*s_in)));
@@ -15,6 +23,12 @@ struct sockaddr_in get_in(struct sockaddr_in *s_in, int port)
 	(*s_in).sin_port = htons(port);
 	return (*s_in);
 }
+
+/**
+* @brief Function that call socket(), bind() and listen()
+*
+* @param server
+*/
 
 void socket_bind(t_srv *server)
 {

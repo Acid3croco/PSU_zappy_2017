@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief free_team free all the names and nodes of the team linked list
+*
+* @param team
+*/
+
 void free_team(t_tm *team)
 {
 	t_tm *tmp = team;
@@ -21,6 +27,12 @@ void free_team(t_tm *team)
 	}
 }
 
+/**
+* @brief free_connect free the events array and himself
+*
+* @param connect
+*/
+
 void free_connect(t_cnt *connect)
 {
 	if (connect != NULL && connect->events != NULL) {
@@ -29,11 +41,23 @@ void free_connect(t_cnt *connect)
 	}
 }
 
+/**
+* @brief free_server free server by calling free_connect and free_team
+*
+* @param server
+*/
+
 void free_server(t_srv *server)
 {
 	free_connect(server->cnt);
 	free_team(server->team);
 }
+
+/**
+* @brief quit just exit the program after freeing all ressources
+*
+* @param server
+*/
 
 void quit(t_srv *server)
 {

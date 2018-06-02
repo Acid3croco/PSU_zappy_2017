@@ -22,7 +22,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-/* t_srv t_tn t_cl structures header */
+/* t_srv t_cnt t_tn t_cl structures header */
 #include "struct.h"
 
 /* max events for events tab */
@@ -41,5 +41,6 @@ int is_team_new(char *name, t_srv *server);
 void free_server(t_srv *server);
 void socket_bind(t_srv *server);
 void create_epoll(t_srv *server);
+void loop_server(t_srv *server);
 
 #endif /* !SERVER_H_ */

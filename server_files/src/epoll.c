@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief create_epoll initialize the epoll ressources and the events array
+*
+* @param server
+*/
+
 void create_epoll(t_srv *server)
 {
 	server->cnt->efd = epoll_create1(0);

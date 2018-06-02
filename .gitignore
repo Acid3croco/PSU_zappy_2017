@@ -1,3 +1,11 @@
+# Doxygen files
+html/
+latex/
+Doxygen/
+Doxyfile
+Doxy*
+README.md
+
 # Prerequisites
 *.d
 

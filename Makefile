@@ -20,7 +20,8 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/teams.c \
 	./server_files/src/quit.c \
 	./server_files/src/socket.c \
-	./server_files/src/epoll.c
+	./server_files/src/epoll.c \
+	./server_files/src/loop.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
