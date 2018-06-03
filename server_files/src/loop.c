@@ -43,25 +43,36 @@ void add_client(t_srv *server)
 			(struct sockaddr *)&s_in_client, &s_in_size);
 	if (infd == -1)
 		quit(server);
-	//identify_cli(infd, &s_in_client, s_in_size);
+	identify_cli(infd, &s_in_client, s_in_size);
 	server->cnt->event.data.fd = infd;
 	server->cnt->event.events = EPOLLIN | EPOLLET;
 	s = epoll_ctl(server->cnt->efd,
 			EPOLL_CTL_ADD, infd, &server->cnt->event);
 	if (s == -1)
 		quit(server);
-	//clients = add_client(clients, infd);
 }
 
 /**
-* @brief read_event will read evry info in the designated file descriptor
+* @brief read_event read every input in the designated file descriptor
 *
 * @param server
 */
 
 void read_event(t_srv *server)
 {
-	(void)server;
+	FILE *fs = fdopen(server->cnt->events[server->cnt->a].data.fd, "rw");
+	char *buffer;
+	size_t bufsize = 8;
+	ssize_t characters;
+
+	buffer = (char *)malloc(bufsize * sizeof(char));
+	if (buffer == NULL)
+		quit(server);
+	characters = getline(&buffer, &bufsize, fs);
+	if (characters == -1)
+		close_fd(server->cnt->events[server->cnt->a].data.fd);
+	else
+		printf(CYAN"%li char typed\n%s"RESET, characters, buffer);
 }
 
 /**
@@ -72,8 +83,10 @@ void read_event(t_srv *server)
 
 void loop_server(t_srv *server)
 {
-	int n;
+	int n = 0;
 
+	printf(GREEN"Ready to accept new client on port %i\n"RESET,
+		server->port);
 	for (;;) {
 		n = epoll_wait(server->cnt->efd,
 				server->cnt->events, MAX_EVENTS, -1);

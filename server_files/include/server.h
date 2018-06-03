@@ -25,11 +25,24 @@
 /* t_srv t_cnt t_tn t_cl structures header */
 #include "struct.h"
 
-/* max events for events tab */
+/* color define for printf */
+#include "color.h"
+
+/**
+* @brief MAX_EVENTS define the number of max events in the events array
+*
+*/
 #define MAX_EVENTS 64
 
-/* disable error in vscode */
+/**
+* @brief disable error in vscode
+*
+*/
 extern char *optarg;
+/**
+* @brief disable error in vscode
+*
+*/
 extern int optind;
 
 /* functions protorypes */
@@ -42,5 +55,7 @@ void free_server(t_srv *server);
 void socket_bind(t_srv *server);
 void create_epoll(t_srv *server);
 void loop_server(t_srv *server);
+void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
+void close_fd(int fd);
 
 #endif /* !SERVER_H_ */

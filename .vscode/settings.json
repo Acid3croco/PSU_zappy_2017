@@ -20,5 +20,6 @@
 		    ".fsproj",
 		    ".c"
 		]
-	    }
-}
+		},
+		"C_Cpp.intelliSenseEngineFallback": "Enabled"
+	}
