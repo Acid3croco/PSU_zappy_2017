@@ -17,15 +17,14 @@
 #include <cstring>
 
 /**
-* @brief
+* @brief Mysocket : connect to server and communicate with him.
 *
 */
 class Mysocket {
 public:
 	Mysocket();
-	Mysocket(const Mysocket &copy);
 	~Mysocket();
-	int	launchMysocket(const std::string ip, const int port);
+	bool	launchMysocket(const std::string ip, const int port);
 	std::string	wlisten();
 	void	wwrite(const char *s);
 	const std::string	getIp() const;

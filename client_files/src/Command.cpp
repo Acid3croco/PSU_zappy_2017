@@ -23,8 +23,13 @@ Command::~Command()
 {
 }
 
+bool	Command::startConnection(const char *ip, const int port)
+{
+	return (this->_so->launchMysocket(ip, port));
+}
+
 /**
-* @brief
+* @brief forward Ia move forward.
 *
 */
 void	Command::forward() const
@@ -34,7 +39,7 @@ void	Command::forward() const
 }
 
 /**
-* @brief
+* @brief right Ia move to the right.
 *
 */
 void	Command::right() const
@@ -44,7 +49,7 @@ void	Command::right() const
 }
 
 /**
-* @brief
+* @brief left Ia move to the left.
 *
 */
 void	Command::left() const
@@ -54,7 +59,7 @@ void	Command::left() const
 }
 
 /**
-* @brief
+* @brief look Ia look around.
 *
 * @return std::string
 */
@@ -68,7 +73,7 @@ std::string	Command::look() const
 }
 
 /**
-* @brief
+* @brief inventory Ia check his inventory.
 *
 * @return std::string
 */
@@ -82,7 +87,7 @@ std::string	Command::inventory() const
 }
 
 /**
-* @brief
+* @brief broadcast Ia say something.
 *
 * @param broad
 */
@@ -93,7 +98,7 @@ void	Command::broadcast(std::string broad) const
 }
 
 /**
-* @brief
+* @brief connectNbr return the number of unused team number.
 *
 * @return int
 */
@@ -109,7 +114,7 @@ int	Command::connectNbr() const
 }
 
 /**
-* @brief
+* @brief pfork Ia open a new team slot.
 *
 */
 void	Command::pfork() const
@@ -119,7 +124,7 @@ void	Command::pfork() const
 }
 
 /**
-* @brief
+* @brief eject eject other player from Ia actual position.
 *
 * @return true
 * @return false
@@ -136,7 +141,7 @@ bool	Command::eject() const
 }
 
 /**
-* @brief
+* @brief takeObj Ia take an object on the ground.
 *
 * @return true
 * @return false
@@ -153,7 +158,7 @@ bool	Command::takeObj() const
 }
 
 /**
-* @brief
+* @brief setObj Ia drop an object on the ground.
 *
 * @return true
 * @return false
@@ -170,7 +175,7 @@ bool	Command::setObj() const
 }
 
 /**
-* @brief
+* @brief incantation Ia start his level up if all requirement are ready.
 *
 * @return int
 */
@@ -187,11 +192,11 @@ int	Command::incantation() const
 }
 
 /**
-* @brief
+* @brief getListen Ia listen around him.
 *
-* @param socket
+* @return std::string
 */
-void	Command::setSo(const Mysocket &socket)
+std::string	Command::getListen()
 {
-	this->_so = new Mysocket(socket);
+	return (this->_so->wlisten());
 }

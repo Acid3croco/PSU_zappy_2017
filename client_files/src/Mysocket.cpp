@@ -16,17 +16,6 @@ Mysocket::Mysocket()
 }
 
 /**
-* @brief Construct a new Mysocket:: Mysocket object
-*
-* @param copy
-*/
-Mysocket::Mysocket(const Mysocket &copy) : _ip(copy.getIp()),
-_port(copy.getPort()), _fd(copy.getFd()), _addr(copy.getAddr()),
-_pe(copy.getPe())
-{
-}
-
-/**
 * @brief Destroy the Mysocket:: Mysocket object
 *
 */
@@ -35,7 +24,7 @@ Mysocket::~Mysocket()
 }
 
 /**
-* @brief
+* @brief WgetProtoByNamewrap the C function getprotobyname.
 *
 * @return int
 */
@@ -48,7 +37,7 @@ int	Mysocket::wgetprotobyname()
 }
 
 /**
-* @brief
+* @brief wsocket wrap the C function socket.
 *
 * @return int
 */
@@ -59,7 +48,7 @@ int	Mysocket::wsocket()
 }
 
 /**
-* @brief
+* @brief whtons wrap the C function htons.
 *
 * @return uint16_t
 */
@@ -69,7 +58,7 @@ uint16_t	Mysocket::whtons()
 }
 
 /**
-* @brief
+* @brief winetAddr wrap the C function inet_addr.
 *
 * @return in_addr_t
 */
@@ -79,7 +68,7 @@ in_addr_t	Mysocket::winetAddr()
 }
 
 /**
-* @brief
+* @brief wconnect wrap the C function connect.
 *
 * @return int
 */
@@ -90,7 +79,7 @@ int	Mysocket::wconnect()
 }
 
 /**
-* @brief
+* @brief wclose wrap the C function close.
 *
 * @return int
 */
@@ -100,7 +89,7 @@ int	Mysocket::wclose()
 }
 
 /**
-* @brief
+* @brief wlisten read the file descriptor.
 *
 * @return std::string
 */
@@ -115,7 +104,7 @@ std::string	Mysocket::wlisten()
 	if (getline(&buf, &len, (FILE *)fs) == -1) {
 		perror("");
 		free(buf);
-		str = "";
+		str = "Error.\n";
 		return (str);
 	}
 	str = std::string(buf);
@@ -124,7 +113,7 @@ std::string	Mysocket::wlisten()
 }
 
 /**
-* @brief
+* @brief wwrite wrap the C function write.
 *
 * @param s
 */
@@ -134,32 +123,32 @@ void	Mysocket::wwrite(const char *s)
 }
 
 /**
-* @brief
+* @brief launchMysocket connect the client to the server.
 *
 * @param ip
 * @param port
 * @return int
 */
-int	Mysocket::launchMysocket(const std::string ip, const int port)
+bool	Mysocket::launchMysocket(const std::string ip, const int port)
 {
 	this->_ip = ip;
 	this->_port = port;
 	if (wgetprotobyname() == -1)
-		return (-1);
+		return (false);
 	if(wsocket() == -1)
-		return (-1);
+		return (false);
 	this->_addr.sin_family = AF_INET;
 	this->_addr.sin_port = whtons();
 	this->_addr.sin_addr.s_addr = winetAddr();
 	if (wconnect() == -1) {
 		wclose();
-		return (-1);
+		return (false);
 	}
-	return (0);
+	return (true);
 }
 
 /**
-* @brief
+* @brief getIp gets the server's Ip.
 *
 * @return const std::string
 */
@@ -169,7 +158,7 @@ const std::string	Mysocket::getIp() const
 }
 
 /**
-* @brief
+* @brief getPort gets the server's port.
 *
 * @return int
 */
@@ -179,7 +168,7 @@ int	Mysocket::getPort() const
 }
 
 /**
-* @brief
+* @brief getFd gets the server's file descriptor.
 *
 * @return int
 */
@@ -189,7 +178,7 @@ int	Mysocket::getFd()const
 }
 
 /**
-* @brief
+* @brief getAddr gets the server's addr.
 *
 * @return struct sockaddr_in
 */
@@ -199,7 +188,7 @@ struct sockaddr_in	Mysocket::getAddr() const
 }
 
 /**
-* @brief
+* @brief getPe gets the server's pe.
 *
 * @return struct protoent*
 */

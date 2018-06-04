@@ -12,13 +12,14 @@
 #include "Mysocket.hpp"
 
 /**
-* @brief
+* @brief Command : Action to be done by the ia, directly talk to the server.
 *
 */
 class Command {
 	public:
 		Command();
 		~Command();
+		bool	startConnection(const char *ip, const int port);
 		void	forward() const;
 		void	right() const;
 		void	left() const;
@@ -31,7 +32,7 @@ class Command {
 		bool	takeObj() const;
 		bool	setObj() const;
 		int	incantation() const;
-		void	setSo(const Mysocket &so);
+		std::string	getListen();
 	protected:
 	private:
 		Mysocket	*_so;
