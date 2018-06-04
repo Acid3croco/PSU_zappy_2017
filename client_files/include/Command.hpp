@@ -11,6 +11,10 @@
 #include "Client.hpp"
 #include "Mysocket.hpp"
 
+/**
+* @brief
+*
+*/
 class Command {
 	public:
 		Command();

@@ -16,6 +16,10 @@
 #include <iostream>
 #include <cstring>
 
+/**
+* @brief
+*
+*/
 class Mysocket {
 public:
 	Mysocket();
