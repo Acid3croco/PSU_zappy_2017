@@ -1,3 +1,21 @@
 #!/usr/bin/python3
 
+import sys
+
+def launch_graphic_client():
+	
+
+def print_usage():
+	print("USAGE")
+	print("\t./zappy_graphique host address")
+
+def main():
+	if len(sys.argv) == 2 and sys.argv[1] == "--help":
+		print_usage()
+	elif len(sys.argv) == 3:
+		launch_graphic_client(sys.argv[1], sys.argv[2])
+	else:
+		exit(84)
+	exit(0)
+
 main()
