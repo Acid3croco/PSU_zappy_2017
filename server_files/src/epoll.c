@@ -7,6 +7,17 @@
 
 #include "server.h"
 
+void add_stdin(t_srv *server)
+{
+	memset(&server->cnt->event, 0, sizeof(server->cnt->event));
+	server->cnt->event.data.fd = 1;
+	server->cnt->event.events = EPOLLIN;
+	server->cnt->s = epoll_ctl(server->cnt->efd, EPOLL_CTL_ADD,
+				1, &server->cnt->event);
+	if (server->cnt->s == -1)
+		quit(server);
+}
+
 /**
 * @brief create_epoll initialize the epoll ressources and the events array
 *
@@ -23,5 +34,6 @@ void create_epoll(t_srv *server)
 				server->cnt->fd, &server->cnt->event);
 	if (server->cnt->s == -1)
 		quit(server);
+	add_stdin(server);
 	server->cnt->events = calloc(MAX_EVENTS, sizeof(server->cnt->event));
 }

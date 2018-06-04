@@ -61,18 +61,19 @@ void add_client(t_srv *server)
 void read_event(t_srv *server)
 {
 	FILE *fs = fdopen(server->cnt->events[server->cnt->a].data.fd, "rw");
-	char *buffer;
+	char *input;
 	size_t bufsize = 8;
 	ssize_t characters;
 
-	buffer = (char *)malloc(bufsize * sizeof(char));
-	if (buffer == NULL)
+	input = (char *)malloc(bufsize * sizeof(char));
+	if (input == NULL)
 		quit(server);
-	characters = getline(&buffer, &bufsize, fs);
+	characters = getline(&input, &bufsize, fs);
 	if (characters == -1)
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
 	else
-		printf(CYAN"%li char typed\n%s"RESET, characters, buffer);
+		inter_input(server, input, fs);
+	free(input);
 }
 
 /**

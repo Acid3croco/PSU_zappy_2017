@@ -57,5 +57,6 @@ void create_epoll(t_srv *server);
 void loop_server(t_srv *server);
 void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
 void close_fd(int fd);
+void inter_input(t_srv *server, char *input, FILE *fs);
 
 #endif /* !SERVER_H_ */
