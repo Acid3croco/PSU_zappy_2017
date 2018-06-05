@@ -1,13 +1,30 @@
 #!/usr/bin/python3
 
 import sys
+import socket
 
-def launch_graphic_client():
-	
+def connect_client(port, host):
+	sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sockett.connect((host, port))
+	print("Connected : {}".format(port))
+	sockett.send("allo !".encode())
+	print("close")
+	sockett.close()
+
+def get_port(arg1):
+	port = int(arg1)
+	if port < 0 or port > 65535:
+		return (-1)
+	return (port)
+
+def launch_graphic_client(arg1, arg2):
+	port = get_port(arg1)
+	host = arg2
+	connect_client(port, host)
 
 def print_usage():
 	print("USAGE")
-	print("\t./zappy_graphique host address")
+	print("\t./zappy_graphique port host")
 
 def main():
 	if len(sys.argv) == 2 and sys.argv[1] == "--help":
