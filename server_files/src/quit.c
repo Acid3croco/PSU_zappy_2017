@@ -8,6 +8,19 @@
 #include "server.h"
 
 /**
+* @brief free_tab free the given array
+*
+* @param cmd
+*/
+
+void free_tab(char **tab)
+{
+	for (int a = 0; tab[a] != NULL; a++)
+		free(tab[a]);
+	free(tab);
+}
+
+/**
 * @brief free_team free all the names and nodes of the team linked list
 *
 * @param team
@@ -61,7 +74,7 @@ void free_server(t_srv *server)
 
 void quit(t_srv *server)
 {
-	perror("error");
+	perror(RED"error");
 	free_server(server);
 	exit(84);
 }

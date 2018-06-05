@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <ctype.h>
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -58,5 +59,12 @@ void loop_server(t_srv *server);
 void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
 void close_fd(int fd);
 void inter_input(t_srv *server, char *input, FILE *fs);
+void server_cmd(t_srv *server, char **cmd, FILE *fs);
+void add_cli_to_team(t_srv *server, char **cmd, FILE *fs);
+char **str_to_wordtab(char *input, FILE *fs);
+void free_tab(char **tab);
+
+int quit_cmd(t_srv *server, char **cmd, FILE *fs);
+int msg_cmd(char *cmd);
 
 #endif /* !SERVER_H_ */

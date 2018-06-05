@@ -13,11 +13,17 @@
 typedef struct s_client
 {
 	int fd;
+	int x;
+	int y;
+	FILE *fs;
+	char *team;
+	char *inventory;
 	struct s_client *next;
 } t_cl;
 
 typedef struct s_team
 {
+	int nb_ia;
 	char *name;
 	struct s_client *client;
 	struct s_team *next;
@@ -41,6 +47,7 @@ typedef struct s_server
 	int height;
 	int clientsNB;
 	int freq;
+	char **map;
 	struct s_connect *cnt;
 	struct s_team *team;
 } t_srv;

@@ -27,12 +27,12 @@ void check_errors(t_srv *server)
 }
 
 /**
-* @brief add_client will accept new ia client and put them in their team
+* @brief new_client will accept new ia client and put them in their team
 *
 * @param server
 */
 
-void add_client(t_srv *server)
+void new_client(t_srv *server)
 {
 	struct sockaddr_in s_in_client;
 	socklen_t s_in_size = sizeof(s_in_client);
@@ -73,7 +73,6 @@ void read_event(t_srv *server)
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
 	else
 		inter_input(server, input, fs);
-	free(input);
 }
 
 /**
@@ -95,7 +94,7 @@ void loop_server(t_srv *server)
 			check_errors(server);
 			if (server->cnt->fd ==
 				server->cnt->events[server->cnt->a].data.fd)
-				add_client(server);
+				new_client(server);
 			else
 				read_event(server);
 		}
