@@ -20,6 +20,7 @@ void init_struct(t_srv *server)
 
 	if (team == NULL || cnt == NULL)
 		quit(server);
+	cnt->events = NULL;
 	team->name = NULL;
 	team->client = NULL;
 	team->next = NULL;
@@ -46,8 +47,12 @@ void fill_teams(int ac, char **av, t_srv *server)
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		if (is_team_new(av[optind], server) == 0)
-			add_team(av[optind], server);
+		if (is_team_new(av[optind], server) != 0) {
+			printf(RED"-n option only accepts unique team names\n"
+				RESET);
+			quit(server);
+		}
+		add_team(av[optind], server);
 		optind++;
 	}
 }

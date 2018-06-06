@@ -26,7 +26,8 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/inter_input.c \
 	./server_files/src/server_cmd.c \
 	./server_files/src/quit_srv_cmd.c \
-	./server_files/src/add_client.c
+	./server_files/src/add_client.c \
+	./server_files/src/map.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\

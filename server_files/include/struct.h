@@ -10,11 +10,13 @@
 
 #include <sys/epoll.h>
 
+/* Players strucutres */
 typedef struct s_client
 {
 	int fd;
 	int x;
 	int y;
+	int lv;
 	FILE *fs;
 	char *team;
 	char *inventory;
@@ -29,6 +31,7 @@ typedef struct s_team
 	struct s_team *next;
 } t_tm;
 
+/* Epoll and connection structure */
 typedef struct s_connect
 {
 	int a;
@@ -40,6 +43,33 @@ typedef struct s_connect
 
 } t_cnt;
 
+/* Map Strucutres */
+typedef struct s_stones
+{
+	int linemate;
+	int deraumere;
+	int sibur;
+	int mendiane;
+	int phiras;
+	int thystame;
+	int food;
+} t_st;
+
+typedef struct s_box
+{
+	struct s_client *client;
+	struct s_stones *stones;
+
+} t_box;
+
+typedef struct s_map
+{
+	int width;
+	int height;
+	struct s_case *box;
+} t_map;
+
+/* Server structure */
 typedef struct s_server
 {
 	int port;
@@ -47,7 +77,7 @@ typedef struct s_server
 	int height;
 	int clientsNB;
 	int freq;
-	char **map;
+	struct s_map *map;
 	struct s_connect *cnt;
 	struct s_team *team;
 } t_srv;

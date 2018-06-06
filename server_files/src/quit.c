@@ -48,8 +48,9 @@ void free_team(t_tm *team)
 
 void free_connect(t_cnt *connect)
 {
-	if (connect != NULL && connect->events != NULL) {
-		free(connect->events);
+	if (connect != NULL) {
+		if (connect->events != NULL)
+			free(connect->events);
 		free(connect);
 	}
 }
@@ -74,7 +75,8 @@ void free_server(t_srv *server)
 
 void quit(t_srv *server)
 {
-	perror(RED"error");
+	if (errno == -1)
+		perror(RED"error");
 	free_server(server);
 	exit(84);
 }
