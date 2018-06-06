@@ -37,7 +37,7 @@ OBJS_S	= $(SRCS_S:.c=.o)
 
 OBJS_C	= $(SRCS_C:.cpp=.o)
 
-WFLAGS	+= -W -Wall -Wextra -g3
+WFLAGS	+= -W -Wall -Wextra
 CFLAGS	+= -I ./server_files/include/ $(WFLAGS)
 CPPFLAGS	= -I ./client_files/include/ $(WFLAGS)
 
