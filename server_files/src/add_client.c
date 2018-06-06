@@ -1,0 +1,71 @@
+/*
+** EPITECH PROJECT, 2018
+** zappy
+** File description:
+** add a client to his team
+*/
+
+#include "server.h"
+
+/**
+* @brief wrong_teamname close the fd of the client and free cmd
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
+{
+	printf(RED"%s: Unknow team name\n"RESET, cmd[0]);
+	close_fd(server->cnt->events[server->cnt->a].data.fd);
+	fclose(fs);
+}
+
+/**
+* @brief add_cli add the client to his team
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
+{
+	t_cl *new = malloc(sizeof(t_cl));
+
+	new->team = malloc(strlen(cmd[0]) + 1);
+	strcpy(new->team, cmd[0]);
+	new->fs = fs;
+	new->fd = server->cnt->events[server->cnt->a].data.fd;
+	new->inventory = NULL;
+	new->next = team->client;
+	team->client = new;
+}
+
+/**
+* @brief add_cli_to_team find the team of the client
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
+{
+	t_tm *tmp;
+	int done = 0;
+
+	(void)fs;
+	for (tmp = server->team; tmp->next != NULL; tmp = tmp->next) {
+		if (strcmp(cmd[0], tmp->name) == 0) {
+			done = 1;
+			break;
+		}
+	}
+	if (done == 0)
+		wrong_teamname(server, cmd, fs);
+	else {
+		add_cli(server, cmd, fs, tmp);
+	}
+}
