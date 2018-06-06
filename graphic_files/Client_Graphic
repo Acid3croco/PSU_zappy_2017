@@ -1,15 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-import socket
-
-def connect_client(port, host):
-	sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sockett.connect((host, port))
-	print("Connected : {}".format(port))
-	sockett.send("allo !".encode())
-	print("close")
-	sockett.close()
+import Connection.py
 
 def get_port(arg1):
 	port = int(arg1)
@@ -20,7 +12,7 @@ def get_port(arg1):
 def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
-	connect_client(port, host)
+	@Connection.connect_client(port, host)
 
 def print_usage():
 	print("USAGE")

@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+
+import socket
+
+def connect_client(port, host):
+	sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sockett.connect((host, port))
+	print("Connected : {}".format(port))
+	sockett.send("allo !".encode())
+	sockett.close()
