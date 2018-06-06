@@ -1,7 +1,38 @@
 
 
-import sys
-import Connection.py
+import sys, pygame, socket
+from pygame.locals import *
+
+#_______________________________________________________________________________
+# DISPLAY
+def create_window():
+
+	(width, height) = (1366, 768)
+
+	screen = pygame.display.set_mode((width, height))
+	pygame.display.flip()
+	pygame.display.set_caption('Zappy')
+
+	running = True
+	while running:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				running = False
+
+
+
+#_______________________________________________________________________________
+# CONNECTION SERVER
+def connect_client(port, host):
+	sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sockett.connect((host, port))
+	print("Connected : {}".format(port))
+	sockett.send("GMAP".encode())
+	sockett.close()
+
+
+#_______________________________________________________________________________
+# GESTION CLIENT
 
 def get_port(arg1):
 	port = int(arg1)
@@ -9,10 +40,12 @@ def get_port(arg1):
 		return (-1)
 	return (port)
 
+
 def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
-	@Connection.connect_client(port, host)
+	connect_client(port, host)
+	create_window()
 
 def print_usage():
 	print("USAGE")
