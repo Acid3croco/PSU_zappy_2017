@@ -19,7 +19,7 @@ class Command {
 	public:
 		Command();
 		~Command();
-		bool	startConnection(const char *ip, const int port);
+		bool	startConnection(int ac, char **av);
 		void	forward() const;
 		void	right() const;
 		void	left() const;

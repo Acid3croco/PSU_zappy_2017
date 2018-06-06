@@ -11,7 +11,7 @@
 * @brief Construct a new Command:: Command object
 *
 */
-Command::Command()
+Command::Command() : _so(new Mysocket())
 {
 }
 
@@ -23,9 +23,37 @@ Command::~Command()
 {
 }
 
-bool	Command::startConnection(const char *ip, const int port)
+/**
+* @brief startConnection connect the client to the server and launch the game.
+*
+* @param ac
+* @param av
+* @return true
+* @return false
+*/
+bool	Command::startConnection(int ac, char **av)
 {
-	return (this->_so->launchMysocket(ip, port));
+	std::vector<int>	pos{-1, -1, 0};
+
+	for (int i = 1; i < ac; i += 2) {
+		if (std::strcmp(av[i], "-p") == 0)
+			pos[0] = i + 1;
+		else if (std::strcmp(av[i], "-n") == 0)
+			pos[1] = i + 1;
+		else if (std::strcmp(av[i], "-h") == 0)
+			pos[2] = i + 1;
+	}
+	if (pos[0] == -1 || pos[1] == -1)
+		return (false);
+	if (this->_so->launchMysocket(std::atoi(av[pos[0]]), av[pos[2]], pos[2])
+	== false) {
+		perror("");
+		return (false);
+	}
+	std::cout << this->_so->wlisten() << std::endl;
+	this->_so->wwrite(av[pos[1]]);
+	this->_so->wwrite("\n");
+	return (true);
 }
 
 /**
@@ -135,7 +163,7 @@ bool	Command::eject() const
 
 	this->_so->wwrite("Eject\n");
 	msg = this->_so->wlisten();
-	if (msg.compare("ko\n") == 0)
+	if (msg.compare("ko e\n") == 0)
 		return (false);
 	return (true);
 }
@@ -152,7 +180,7 @@ bool	Command::takeObj() const
 
 	this->_so->wwrite("Take object\n");
 	msg = this->_so->wlisten();
-	if (msg.compare("ko\n") == 0)
+	if (msg.compare("ko t\n") == 0)
 		return (false);
 	return (true);
 }
@@ -169,7 +197,7 @@ bool	Command::setObj() const
 
 	this->_so->wwrite("Set object\n");
 	msg = this->_so->wlisten();
-	if (msg.compare("ko\n") == 0)
+	if (msg.compare("ko s\n") == 0)
 		return (false);
 	return (true);
 }
@@ -185,7 +213,7 @@ int	Command::incantation() const
 	int		nbr;
 
 	this->_so->wwrite("Incantation");
-	if (msg.compare("ko\n") == 0)
+	if (msg.compare("ko i\n") == 0)
 		return (-1);
 	nbr = stoi(msg, nullptr);
 	return (nbr);

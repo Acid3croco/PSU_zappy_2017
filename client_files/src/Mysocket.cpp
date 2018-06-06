@@ -11,7 +11,7 @@
  * @brief Construct a new Mysocket:: Mysocket object
  *
  */
-Mysocket::Mysocket()
+Mysocket::Mysocket() : _ip("0")
 {
 }
 
@@ -129,9 +129,11 @@ void	Mysocket::wwrite(const char *s)
 * @param port
 * @return int
 */
-bool	Mysocket::launchMysocket(const std::string ip, const int port)
+bool	Mysocket::launchMysocket(const int port, const std::string ip,
+const int pos)
 {
-	this->_ip = ip;
+	if (pos != 0)
+		this->_ip = ip;
 	this->_port = port;
 	if (wgetprotobyname() == -1)
 		return (false);

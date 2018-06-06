@@ -24,7 +24,8 @@ class Mysocket {
 public:
 	Mysocket();
 	~Mysocket();
-	bool	launchMysocket(const std::string ip, const int port);
+	bool	launchMysocket(const int port, const std::string ip,
+	const int pos);
 	std::string	wlisten();
 	void	wwrite(const char *s);
 	const std::string	getIp() const;
@@ -40,7 +41,7 @@ private:
 	in_addr_t	winetAddr();
 	int	wconnect();
 	int	wclose();
-	std::string	_ip;
+	std::string		_ip;
 	int			_port;
 	int			_fd;
 	struct sockaddr_in	_addr;

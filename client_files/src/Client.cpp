@@ -20,12 +20,10 @@ int	main(int ac, char **av)
 	Command		co;
 	std::string	buf;
 
-	if (ac != 3)
+	if (ac != 5 && ac != 7)
 		return (84);
-	if (co.startConnection(av[1], std::atoi(av[2])) == false) {
-		perror("");
+	if (co.startConnection(ac, av) == false)
 		return (84);
-	}
 	for (;;) {
 		buf = co.getListen();
 		if (buf.compare("Error.\n") == 0) {
@@ -33,6 +31,7 @@ int	main(int ac, char **av)
 			return (84);
 		}
 		std::cout << buf << std::endl;
+		co.forward();
 	}
 	return (0);
 }
