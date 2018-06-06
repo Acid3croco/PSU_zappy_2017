@@ -41,5 +41,5 @@ void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size)
 void close_fd(int fd)
 {
 	close(fd);
-	printf("Closed connection on descriptor %d\n", fd);
+	printf(YELLOW"Closed connection on descriptor %d\n"RESET, fd);
 }

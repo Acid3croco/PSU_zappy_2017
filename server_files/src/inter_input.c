@@ -14,17 +14,20 @@
 * @param client
 */
 
-void find_client(t_srv *server, t_cl *client)
+t_cl *find_client(t_srv *server)
 {
 	t_tm *tmp = server->team;
+	int done = 0;
+	int fd = server->cnt->events[server->cnt->a].data.fd;
 
-	(void)client;
-	for (;tmp->next != NULL; tmp = tmp->next) {
-		for (t_cl *cl = tmp->client; cl != NULL && cl->next != NULL;
+	for (;tmp->next != NULL && done == 0; tmp = tmp->next) {
+		for (t_cl *cl = tmp->client; cl != NULL;
 			cl = cl->next) {
-				printf("jew code = %i\n", cl->fd);
+				if (cl->fd == fd)
+					return (cl);
 			}
 	}
+	return (NULL);
 }
 
 /**
@@ -39,14 +42,16 @@ void inter_input(t_srv *server, char *input, FILE *fs)
 {
 	t_cl *client = NULL;
 	char **cmd;
+	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	(void)fs;
-	printf(CYAN"%s"RESET, input);
 	cmd = str_to_wordtab(input, fs);
-	if (server->cnt->events[server->cnt->a].data.fd == 1)
+	if (fd == 1)
 		server_cmd(server, cmd, fs);
+	else if (fd == server->map->fd)
+		map_cmd(server, cmd, fs);
 	else {
-		find_client(server, client);
+		client = find_client(server);
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else

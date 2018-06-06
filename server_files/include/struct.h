@@ -66,6 +66,8 @@ typedef struct s_map
 {
 	int width;
 	int height;
+	int fd;
+	FILE *fs;
 	struct s_case *box;
 } t_map;
 
