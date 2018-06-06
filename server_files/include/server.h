@@ -65,6 +65,7 @@ void add_cli_to_team(t_srv *server, char **cmd, FILE *fs);
 char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
 void init_map(t_srv *server);
+void map_cmd(t_srv *server, char **cmd, FILE *fs);
 
 int quit_cmd(t_srv *server, char **cmd, FILE *fs);
 int msg_cmd(char *cmd);

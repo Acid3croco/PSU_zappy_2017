@@ -50,6 +50,7 @@ void new_client(t_srv *server)
 			EPOLL_CTL_ADD, infd, &server->cnt->event);
 	if (s == -1)
 		quit(server);
+	dprintf(infd, "WELCOME\n");
 }
 
 /**

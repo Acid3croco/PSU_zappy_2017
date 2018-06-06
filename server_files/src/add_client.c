@@ -33,14 +33,24 @@ void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
 void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 {
 	t_cl *new = malloc(sizeof(t_cl));
+	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	new->team = malloc(strlen(cmd[0]) + 1);
 	strcpy(new->team, cmd[0]);
 	new->fs = fs;
-	new->fd = server->cnt->events[server->cnt->a].data.fd;
+	new->fd = fd;
 	new->inventory = NULL;
 	new->next = team->client;
 	team->client = new;
+	printf("Adding %i to the team %s\n", fd, cmd[0]);
+}
+
+void add_map(t_srv *server, FILE *fs)
+{
+	server->map->fs = fs;
+	server->map->fd = server->cnt->events[server->cnt->a].data.fd;
+	dprintf(server->map->fd, "mbape\n");
+	return;
 }
 
 /**
@@ -57,6 +67,10 @@ void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
 	int done = 0;
 
 	(void)fs;
+	if (strcmp(cmd[0], "GMAP") == 0) {
+		add_map(server, fs);
+		return;
+	}
 	for (tmp = server->team; tmp->next != NULL; tmp = tmp->next) {
 		if (strcmp(cmd[0], tmp->name) == 0) {
 			done = 1;
