@@ -44,7 +44,7 @@ typedef struct s_connect
 } t_cnt;
 
 /* Map Strucutres */
-typedef struct s_stones
+typedef struct s_ress
 {
 	int linemate;
 	int deraumere;
@@ -53,22 +53,20 @@ typedef struct s_stones
 	int phiras;
 	int thystame;
 	int food;
-} t_st;
+} t_rs;
 
 typedef struct s_box
 {
 	struct s_client *client;
-	struct s_stones *stones;
+	struct s_ress ress;
 
 } t_box;
 
 typedef struct s_map
 {
-	int width;
-	int height;
 	int fd;
 	FILE *fs;
-	struct s_case *box;
+	struct s_case **box;
 } t_map;
 
 /* Server structure */
