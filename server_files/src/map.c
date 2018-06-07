@@ -9,6 +9,8 @@
 
 void init_map(t_srv *server)
 {
-	(void)server;
-	printf("map!\n");
+	server->map = malloc(sizeof(t_map));
+
+	if (server->map == NULL)
+		quit(server);
 }
