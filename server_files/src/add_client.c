@@ -45,6 +45,13 @@ void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 	printf("Adding %i to the team %s\n", fd, cmd[0]);
 }
 
+/**
+* @brief add_map add the fd of the map
+*
+* @param server
+* @param fs
+*/
+
 void add_map(t_srv *server, FILE *fs)
 {
 	server->map->fs = fs;

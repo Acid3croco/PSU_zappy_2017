@@ -7,6 +7,7 @@
 
 #ifndef SERVER_H_
 	#define SERVER_H_
+#define _GNU_SOURCE
 
 /* basics headers */
 #include <stdio.h>
@@ -68,5 +69,7 @@ void map_cmd(t_srv *server, char **cmd, FILE *fs);
 int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs);
 int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs);
 void free_tab(char **tab);
+FILE *my_fdopen(t_srv *server);
+t_cl *find_client(t_srv *server);
 
 #endif /* !SERVER_H_ */

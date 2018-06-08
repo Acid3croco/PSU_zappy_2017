@@ -5,7 +5,8 @@
 		"unistd.h": "c",
 		"struct.h": "c",
 		"errno.h": "c",
-		"cmd.h": "c"
+		"cmd.h": "c",
+		"istream": "c"
 	},
 	"rainbowString": {
 		"extensions": [

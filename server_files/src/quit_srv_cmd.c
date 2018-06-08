@@ -19,8 +19,8 @@
 int quit_cmd(t_srv *server, char **cmd, FILE *fs)
 {
 	(void)cmd;
+	(void)fs;
 	free_server(server);
-	fclose(fs);
 	exit(0);
 }
 

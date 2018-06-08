@@ -61,16 +61,16 @@ void new_client(t_srv *server)
 
 void read_event(t_srv *server)
 {
-	FILE *fs = fdopen(server->cnt->events[server->cnt->a].data.fd, "rw");
+	FILE *fs = my_fdopen(server);
 	char *input;
-	size_t bufsize = 8;
+	size_t bufsize = 0;
 	ssize_t characters;
 
-	input = (char *)malloc(bufsize * sizeof(char));
+	input = malloc(bufsize);
 	if (input == NULL)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
-	if (characters == -1) {
+	if (characters < 1) {
 		fclose(fs);
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
 	}
