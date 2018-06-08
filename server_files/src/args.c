@@ -15,24 +15,20 @@
 
 void init_struct(t_srv *server)
 {
-	t_tm *team = malloc(sizeof(t_tm));
-	t_cnt *cnt = malloc(sizeof(t_cnt));
-	t_map *map = malloc(sizeof(t_map));
+	server->team = malloc(sizeof(t_tm));
+	server->cnt = malloc(sizeof(t_cnt));
 
-	if (team == NULL || cnt == NULL || map == NULL)
+	if (server->team == NULL || server->cnt == NULL)
 		quit(server);
-	cnt->events = NULL;
-	team->name = NULL;
-	team->client = NULL;
-	team->next = NULL;
-	server->map = map;
+	server->cnt->events = NULL;
+	server->team->name = NULL;
+	server->team->client = NULL;
+	server->team->next = NULL;
 	server->port = 1234;
 	server->width = 10;
 	server->height = 10;
 	server->clientsNB = 10;
 	server->freq = 100;
-	server->team = team;
-	server->cnt = cnt;
 }
 
 /**

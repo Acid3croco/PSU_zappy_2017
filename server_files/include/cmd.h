@@ -9,9 +9,9 @@
 	#define CMD_H_
 
 #include "struct.h"
-#include <stdio.h>
 
 #define NB_CMD_SRV 1
+#define NB_CMD_CLI 1
 
 typedef struct s_cmd
 {
@@ -21,6 +21,10 @@ typedef struct s_cmd
 
 const t_cmd cmd_srv[] = {
 	{"QUIT", &quit_cmd}
+};
+
+const t_cmd cmd_cli[] = {
+	{"Forward", &forward_cmd}
 };
 
 #endif /* !CMD_H_ */

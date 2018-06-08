@@ -48,14 +48,14 @@ void inter_input(t_srv *server, char *input, FILE *fs)
 	cmd = str_to_wordtab(input, fs);
 	if (fd == 1)
 		server_cmd(server, cmd, fs);
-	else if (fd == server->map->fd)
+	if (fd == server->map->fd)
 		map_cmd(server, cmd, fs);
 	else {
 		client = find_client(server);
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else
-			msg_cmd(cmd[0]);
+			sel_cli_cmd(server, cmd, fs);
 	}
 	free_tab(cmd);
 }

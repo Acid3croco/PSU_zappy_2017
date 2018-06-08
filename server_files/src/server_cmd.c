@@ -6,7 +6,6 @@
 */
 
 #include "server.h"
-#include "cmd.h"
 
 /**
 * @brief Get the tab size counting the number of space js
@@ -25,23 +24,6 @@ int get_tab_size(char *buf)
 			len++;
 	}
 	return (len + 2);
-}
-
-/**
-* @brief sle_srv_cmd loop on the array structure to find the command
-*
-* @param server
-* @param cmd
-* @param fs
-* @return int
-*/
-
-int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs)
-{
-	for (int a = 0; a < NB_CMD_SRV; a++)
-		if (strcmp(cmd_srv[a].cmd, cmd[0]) == 0)
-			return (cmd_srv[a].sel_cmd(server, cmd, fs));
-	return (1);
 }
 
 /**

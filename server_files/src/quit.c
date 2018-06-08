@@ -65,6 +65,7 @@ void free_server(t_srv *server)
 {
 	free_connect(server->cnt);
 	free_team(server->team);
+	free(server);
 }
 
 /**
