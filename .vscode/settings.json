@@ -1,0 +1,27 @@
+{
+	"files.associations": {
+		"server.h": "c",
+		"typeinfo": "c",
+		"unistd.h": "c",
+		"struct.h": "c",
+		"errno.h": "c",
+		"cmd.h": "c",
+		"istream": "c"
+	},
+	"rainbowString": {
+		"extensions": [
+		    ".cs",
+		    ".csx",
+		    ".fs",
+		    ".fsx",
+		    ".js",
+		    ".jsx",
+		    ".ts",
+		    ".tsx",
+		    ".csproj",
+		    ".fsproj",
+		    ".c"
+		]
+		},
+		"C_Cpp.intelliSenseEngineFallback": "Enabled"
+	}

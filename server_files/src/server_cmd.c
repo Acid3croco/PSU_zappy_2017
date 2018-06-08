@@ -79,6 +79,7 @@ void upper_case(char *cmd)
 
 void server_cmd(t_srv *server, char **cmd, FILE *fs)
 {
+	server->fs = fs;
 	if (cmd[0] != NULL) {
 		upper_case(cmd[0]);
 		if (sel_srv_cmd(server, cmd, fs) == 1)

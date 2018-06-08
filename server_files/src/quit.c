@@ -17,8 +17,8 @@ void free_client(t_cl *client)
 			free(tmp->team);
 		if (tmp->inventory != NULL)
 			free(tmp->inventory);
-		if (tmp->fs != NULL)
-			fclose(tmp->fs);
+		/* if (tmp->fs != NULL)
+			fclose(tmp->fs); */
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);
@@ -75,6 +75,8 @@ void free_server(t_srv *server)
 	if (server->map->fs != NULL)
 		fclose(server->map->fs);
 	free(server->map);
+	if (server->fs != NULL)
+		fclose(server->fs);
 	free(server);
 }
 

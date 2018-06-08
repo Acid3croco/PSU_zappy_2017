@@ -29,6 +29,7 @@ void init_struct(t_srv *server)
 	server->height = 10;
 	server->clientsNB = 10;
 	server->freq = 100;
+	server->fs = NULL;
 }
 
 /**

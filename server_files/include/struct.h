@@ -82,6 +82,7 @@ typedef struct s_server
 	int height;
 	int clientsNB;
 	int freq;
+	FILE *fs;
 	struct s_map *map;
 	struct s_connect *cnt;
 	struct s_team *team;
