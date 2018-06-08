@@ -72,7 +72,7 @@ void read_event(t_srv *server)
 	characters = getline(&input, &bufsize, fs);
 	if (characters == -1)
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
-	else
+	else if (characters > 1)
 		inter_input(server, input, fs);
 }
 

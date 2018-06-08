@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/timeb.h>
+
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -26,9 +28,6 @@
 
 /* t_srv t_cnt t_tn t_cl structures header */
 #include "struct.h"
-
-/* color define for printf */
-#include "color.h"
 
 /**
 * @brief MAX_EVENTS define the number of max events in the events array
@@ -66,8 +65,7 @@ char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
 void init_map(t_srv *server);
 void map_cmd(t_srv *server, char **cmd, FILE *fs);
-
-int quit_cmd(t_srv *server, char **cmd, FILE *fs);
-int msg_cmd(char *cmd);
+int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs);
+int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs);
 
 #endif /* !SERVER_H_ */

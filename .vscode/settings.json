@@ -4,7 +4,8 @@
 		"typeinfo": "c",
 		"unistd.h": "c",
 		"struct.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"cmd.h": "c"
 	},
 	"rainbowString": {
 		"extensions": [

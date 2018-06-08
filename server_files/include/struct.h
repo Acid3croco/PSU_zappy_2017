@@ -9,6 +9,11 @@
 	#define STRUCT_H_
 
 #include <sys/epoll.h>
+#include <stdio.h>
+#include <string.h>
+
+/* color define for printf */
+#include "color.h"
 
 /* Players strucutres */
 typedef struct s_client
@@ -81,5 +86,12 @@ typedef struct s_server
 	struct s_connect *cnt;
 	struct s_team *team;
 } t_srv;
+
+/* server commands functions */
+int quit_cmd(t_srv *server, char **cmd, FILE *fs);
+int msg_cmd(char *cmd);
+
+/* client commands functions */
+int forward_cmd(t_srv *server, char **cmd, FILE *fs);
 
 #endif /* !STRUCT_H_ */

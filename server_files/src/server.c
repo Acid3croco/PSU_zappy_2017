@@ -30,13 +30,15 @@ void init_server(t_srv *server)
 
 int main(int ac, char **av)
 {
-	t_srv server;
+	t_srv *server = malloc(sizeof(t_srv));
 
-	init_struct(&server);
-	fill_args(ac, av, &server);
-	init_server(&server);
-	init_map(&server);
-	loop_server(&server);
-	free_server(&server);
+	if (server == NULL)
+		return (84);
+	init_struct(server);
+	fill_args(ac, av, server);
+	init_server(server);
+	init_map(server);
+	loop_server(server);
+	free_server(server);
 	return (0);
 }
