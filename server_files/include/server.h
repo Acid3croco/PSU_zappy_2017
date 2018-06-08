@@ -67,5 +67,6 @@ void init_map(t_srv *server);
 void map_cmd(t_srv *server, char **cmd, FILE *fs);
 int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs);
 int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs);
+void free_tab(char **tab);
 
 #endif /* !SERVER_H_ */

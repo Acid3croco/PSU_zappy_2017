@@ -14,4 +14,6 @@ void init_map(t_srv *server)
 	if (server->map == NULL)
 		quit(server);
 	server->map->fd = 0;
+	server->map->fs = NULL;
+	server->map->box = NULL;
 }

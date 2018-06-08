@@ -7,17 +7,22 @@
 
 #include "server.h"
 
-/**
-* @brief free_tab free the given array
-*
-* @param cmd
-*/
-
-void free_tab(char **tab)
+void free_client(t_cl *client)
 {
-	for (int a = 0; tab[a] != NULL; a++)
-		free(tab[a]);
-	free(tab);
+	t_cl *tmp = client;
+	t_cl *prev;
+
+	while (tmp != NULL) {
+		if (tmp->team != NULL)
+			free(tmp->team);
+		if (tmp->inventory != NULL)
+			free(tmp->inventory);
+		if (tmp->fs != NULL)
+			fclose(tmp->fs);
+		prev = tmp;
+		tmp = tmp->next;
+		free(prev);
+	}
 }
 
 /**
@@ -34,6 +39,8 @@ void free_team(t_tm *team)
 	while (tmp != NULL) {
 		if (tmp->name != NULL)
 			free(tmp->name);
+		if (tmp->client != NULL)
+			free_client(tmp->client);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);
@@ -65,6 +72,9 @@ void free_server(t_srv *server)
 {
 	free_connect(server->cnt);
 	free_team(server->team);
+	if (server->map->fs != NULL)
+		fclose(server->map->fs);
+	free(server->map);
 	free(server);
 }
 

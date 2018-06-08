@@ -70,10 +70,13 @@ void read_event(t_srv *server)
 	if (input == NULL)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
-	if (characters == -1)
+	if (characters == -1) {
+		fclose(fs);
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
+	}
 	else if (characters > 1)
 		inter_input(server, input, fs);
+	free(input);
 }
 
 /**
