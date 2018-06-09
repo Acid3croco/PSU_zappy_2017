@@ -20,6 +20,7 @@ int quit_cmd(t_srv *server, char **cmd, FILE *fs)
 {
 	(void)cmd;
 	(void)fs;
+	free_tab(cmd);
 	free_server(server);
 	exit(0);
 }
