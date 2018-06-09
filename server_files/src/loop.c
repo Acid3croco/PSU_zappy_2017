@@ -63,7 +63,7 @@ void read_event(t_srv *server)
 {
 	FILE *fs = my_fdopen(server);
 	char *input;
-	size_t bufsize = 0;
+	size_t bufsize = 1;
 	ssize_t characters;
 
 	input = malloc(bufsize);
@@ -72,11 +72,13 @@ void read_event(t_srv *server)
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1) {
 		fclose(fs);
+		free(input);
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
 	}
 	else if (characters > 1)
 		inter_input(server, input, fs);
-	free(input);
+	else
+		free(input);
 }
 
 /**

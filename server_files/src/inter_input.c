@@ -46,6 +46,7 @@ void inter_input(t_srv *server, char *input, FILE *fs)
 
 	(void)fs;
 	cmd = str_to_wordtab(input, fs);
+	free(input);
 	if (fd == 1)
 		server_cmd(server, cmd, fs);
 	else if (fd == server->map->fd)
