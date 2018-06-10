@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief free_client free all ressources of all the clients
+*
+* @param client
+*/
+
 void free_client(t_cl *client)
 {
 	t_cl *tmp = client;
@@ -17,6 +23,8 @@ void free_client(t_cl *client)
 			free(tmp->team);
 		if (tmp->inventory != NULL)
 			free(tmp->inventory);
+		if (tmp->fs != NULL)
+			fclose(tmp->fs);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);

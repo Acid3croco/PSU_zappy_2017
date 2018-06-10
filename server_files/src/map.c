@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief init_map initialize and create the map
+*
+* @param server
+*/
+
 void init_map(t_srv *server)
 {
 	server->map = malloc(sizeof(t_map));

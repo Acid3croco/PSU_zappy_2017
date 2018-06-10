@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+/**
+* @brief forward_cmd move a client forward
+*
+* @param server
+* @param cmd
+* @param fs
+* @return int
+*/
+
 int forward_cmd(t_srv *server, char **cmd, FILE *fs)
 {
 	(void)server;
