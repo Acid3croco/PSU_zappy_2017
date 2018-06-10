@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief add_stdin add the stdin to the events to read server commands
+*
+* @param server
+*/
+
 void add_stdin(t_srv *server)
 {
 	memset(&server->cnt->event, 0, sizeof(server->cnt->event));
