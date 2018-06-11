@@ -26,7 +26,7 @@ void free_tab(char **tab)
 * @param map
 */
 
-void free_map(t_map *map)
+void free_map(map_t *map)
 {
 	if (map->fs != NULL)
 		fclose(map->fs);

@@ -11,17 +11,17 @@
 * @brief identify_cli give some information about the new client
 *
 * @param infd
-* @param s_client
+* @param client_s
 * @param size
 */
 
-void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size)
+void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size)
 {
 	int s;
 	char hbuf[NI_MAXHOST];
 	char sbuf[NI_MAXSERV];
 
-	s = getnameinfo((struct sockaddr *)s_client, size,
+	s = getnameinfo((struct sockaddr *)client_s, size,
 		hbuf, sizeof(hbuf),
 		sbuf, sizeof(sbuf),
 		NI_NUMERICHOST | NI_NUMERICSERV);
@@ -39,7 +39,7 @@ void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size)
 * @param cl
 */
 
-void delete_client(t_tm *team, t_cl *cl, t_cl *prev)
+void delete_client(tm_t *team, cl_t *cl, cl_t *prev)
 {
 	team->nb_ia -= 1;
 	if (prev != NULL)
@@ -50,8 +50,6 @@ void delete_client(t_tm *team, t_cl *cl, t_cl *prev)
 		free(cl->team);
 	if (cl->inventory != NULL)
 		free(cl->inventory);
-	if (cl->fs != NULL)
-		fclose(cl->fs);
 	close(cl->fd);
 	free(cl);
 }
@@ -62,11 +60,11 @@ void delete_client(t_tm *team, t_cl *cl, t_cl *prev)
 * @param fd
 */
 
-void close_fd(t_srv *server)
+void close_fd(srv_t *server)
 {
-	t_tm *tm = server->team;
-	t_cl *cl = NULL;
-	t_cl *prev = NULL;
+	tm_t *tm = server->team;
+	cl_t *cl = NULL;
+	cl_t *prev = NULL;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 	int done = 0;
 

@@ -13,24 +13,24 @@
 * @param server
 */
 
-void create_map(t_srv *server)
+void create_map(srv_t *server)
 {
 	server->map->box = malloc(server->height * server->width *
-					sizeof(t_box));
+					sizeof(box_t));
 
 	if (server->map->box == NULL)
 		quit(server);
 }
 
 /**
-* @brief init_map initialize and create the map
+* @brief inimap_t initialize and create the map
 *
 * @param server
 */
 
-void init_map(t_srv *server)
+void inimap_t(srv_t *server)
 {
-	server->map = malloc(sizeof(t_map));
+	server->map = malloc(sizeof(map_t));
 
 	if (server->map == NULL)
 		quit(server);
