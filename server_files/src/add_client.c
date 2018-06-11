@@ -47,8 +47,9 @@ void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 	new->next = team->client;
 	team->client = new;
 	team->nb_ia += 1;
-	printf("Adding %i to the team %s\n", fd, cmd[0]);
-	printf("There is %i ia in the %s team\n", team->nb_ia, cmd[0]);
+	printf(MAGENTA"Adding %i to the team %s\n"RESET, fd, cmd[0]);
+	printf(MAGENTA"There is %i ia in the team %s\n"RESET,
+		team->nb_ia, cmd[0]);
 }
 
 /**
