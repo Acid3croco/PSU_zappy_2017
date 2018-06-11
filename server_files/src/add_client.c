@@ -18,7 +18,7 @@
 void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
 {
 	printf(RED"%s: Unknow team name\n"RESET, cmd[0]);
-	close_fd(server->cnt->events[server->cnt->a].data.fd);
+	close(server->cnt->events[server->cnt->a].data.fd);
 	fclose(fs);
 }
 
@@ -35,6 +35,10 @@ void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 	t_cl *new = malloc(sizeof(t_cl));
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
+	if (new == NULL) {
+		free_tab(cmd);
+		quit(server);
+	}
 	new->team = malloc(strlen(cmd[0]) + 1);
 	strcpy(new->team, cmd[0]);
 	new->fs = fs;
@@ -42,7 +46,9 @@ void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 	new->inventory = NULL;
 	new->next = team->client;
 	team->client = new;
+	team->nb_ia += 1;
 	printf("Adding %i to the team %s\n", fd, cmd[0]);
+	printf("There is %i ia in the %s team\n", team->nb_ia, cmd[0]);
 }
 
 /**

@@ -8,6 +8,21 @@
 #include "server.h"
 
 /**
+* @brief create_map create the map and put ressources on it
+*
+* @param server
+*/
+
+void create_map(t_srv *server)
+{
+	server->map->box = malloc(server->height * server->width *
+					sizeof(t_box));
+
+	if (server->map->box == NULL)
+		quit(server);
+}
+
+/**
 * @brief init_map initialize and create the map
 *
 * @param server

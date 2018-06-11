@@ -19,3 +19,17 @@ void free_tab(char **tab)
 		free(tab[a]);
 	free(tab);
 }
+
+/**
+* @brief free_map free the map ressources
+*
+* @param map
+*/
+
+void free_map(t_map *map)
+{
+	if (map->fs != NULL)
+		fclose(map->fs);
+	free(map->box);
+	free(map);
+}

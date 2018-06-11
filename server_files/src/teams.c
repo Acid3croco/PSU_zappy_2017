@@ -42,5 +42,6 @@ void add_team(char *name, t_srv *server)
 	asprintf(&new->name, "%s", name);
 	new->next = server->team;
 	new->client = NULL;
+	new->nb_ia = 0;
 	server->team = new;
 }
