@@ -13,7 +13,7 @@
 * @param server
 */
 
-void check_errors(t_srv *server)
+void check_errors(srv_t *server)
 {
 	int b = 0;
 
@@ -32,7 +32,7 @@ void check_errors(t_srv *server)
 * @param server
 */
 
-void new_client(t_srv *server)
+void new_client(srv_t *server)
 {
 	struct sockaddr_in s_in_client;
 	socklen_t s_in_size = sizeof(s_in_client);
@@ -59,7 +59,7 @@ void new_client(t_srv *server)
 * @param server
 */
 
-void read_event(t_srv *server)
+void read_event(srv_t *server)
 {
 	FILE *fs = my_fdopen(server);
 	char *input;
@@ -72,6 +72,7 @@ void read_event(t_srv *server)
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1) {
 		free(input);
+		fclose(fs);
 		close_fd(server);
 	}
 	else if (characters > 1)
@@ -86,7 +87,7 @@ void read_event(t_srv *server)
 * @param server
 */
 
-void loop_server(t_srv *server)
+void loop_server(srv_t *server)
 {
 	int n = 0;
 

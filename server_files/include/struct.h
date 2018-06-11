@@ -16,7 +16,7 @@
 #include "color.h"
 
 /* Players strucutres */
-typedef struct s_client
+typedef struct client_s
 {
 	int fd;
 	int x;
@@ -25,19 +25,19 @@ typedef struct s_client
 	FILE *fs;
 	char *team;
 	char *inventory;
-	struct s_client *next;
-} t_cl;
+	struct client_s *next;
+} cl_t;
 
-typedef struct s_team
+typedef struct team_s
 {
 	int nb_ia;
 	char *name;
-	struct s_client *client;
-	struct s_team *next;
-} t_tm;
+	struct client_s *client;
+	struct team_s *next;
+} tm_t;
 
 /* Epoll and connection structure */
-typedef struct s_connect
+typedef struct connect_s
 {
 	int a;
 	int s;
@@ -46,10 +46,10 @@ typedef struct s_connect
 	struct epoll_event event;
 	struct epoll_event *events;
 
-} t_cnt;
+} cnt_t;
 
 /* Map Strucutres */
-typedef struct s_ress
+typedef struct ress_s
 {
 	int linemate;
 	int deraumere;
@@ -58,24 +58,24 @@ typedef struct s_ress
 	int phiras;
 	int thystame;
 	int food;
-} t_rs;
+} rs_t;
 
-typedef struct s_box
+typedef struct box_s
 {
-	struct s_client *client;
-	struct s_ress ress;
+	struct client_s *client;
+	struct ress_s ress;
 
-} t_box;
+} box_t;
 
-typedef struct s_map
+typedef struct map_s
 {
 	int fd;
 	FILE *fs;
 	struct s_case **box;
-} t_map;
+} map_t;
 
 /* Server structure */
-typedef struct s_server
+typedef struct server_s
 {
 	int port;
 	int width;
@@ -83,16 +83,16 @@ typedef struct s_server
 	int clientsNB;
 	int freq;
 	FILE *fs;
-	struct s_map *map;
-	struct s_connect *cnt;
-	struct s_team *team;
-} t_srv;
+	struct map_s *map;
+	struct connect_s *cnt;
+	struct team_s *team;
+} srv_t;
 
 /* server commands functions */
-int quit_cmd(t_srv *server, char **cmd, FILE *fs);
+int quit_cmd(srv_t *server, char **cmd, FILE *fs);
 int msg_cmd(char *cmd);
 
 /* client commands functions */
-int forward_cmd(t_srv *server, char **cmd, FILE *fs);
+int forward_cmd(srv_t *server, char **cmd, FILE *fs);
 
 #endif /* !STRUCT_H_ */

@@ -16,7 +16,7 @@
 * @return int
 */
 
-int quit_cmd(t_srv *server, char **cmd, FILE *fs)
+int quit_cmd(srv_t *server, char **cmd, FILE *fs)
 {
 	(void)cmd;
 	(void)fs;

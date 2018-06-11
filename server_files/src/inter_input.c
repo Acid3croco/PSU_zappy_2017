@@ -14,14 +14,14 @@
 * @param client
 */
 
-t_cl *find_client(t_srv *server)
+cl_t *find_client(srv_t *server)
 {
-	t_tm *tmp = server->team;
+	tm_t *tmp = server->team;
 	int done = 0;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	for (;tmp->next != NULL && done == 0; tmp = tmp->next) {
-		for (t_cl *cl = tmp->client; cl != NULL;
+		for (cl_t *cl = tmp->client; cl != NULL;
 			cl = cl->next) {
 				if (cl->fd == fd)
 					return (cl);
@@ -38,9 +38,9 @@ t_cl *find_client(t_srv *server)
 * @param fs
 */
 
-void inter_input(t_srv *server, char *input, FILE *fs)
+void inter_input(srv_t *server, char *input, FILE *fs)
 {
-	t_cl *client = NULL;
+	cl_t *client = NULL;
 	char **cmd;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 

@@ -9,16 +9,16 @@
 #include "server.h"
 
 /**
-* @brief is_team_new (?) check if the team name already exist
+* @brief iteam_s_new (?) check if the team name already exist
 *
 * @param name
 * @param server
 * @return int
 */
 
-int is_team_new(char *name, t_srv *server)
+int iteam_s_new(char *name, srv_t *server)
 {
-	t_tm *tmp = server->team;
+	tm_t *tmp = server->team;
 
 	while (tmp->next != NULL) {
 		if (strcmp(name, tmp->name) == 0)
@@ -35,9 +35,9 @@ int is_team_new(char *name, t_srv *server)
 * @param server
 */
 
-void add_team(char *name, t_srv *server)
+void add_team(char *name, srv_t *server)
 {
-	t_tm *new = malloc(sizeof(t_tm));
+	tm_t *new = malloc(sizeof(tm_t));
 
 	asprintf(&new->name, "%s", name);
 	new->next = server->team;

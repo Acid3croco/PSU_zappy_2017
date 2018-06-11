@@ -14,9 +14,9 @@
 * @return FILE*
 */
 
-FILE *my_fdopen(t_srv *server)
+FILE *my_fdopen(srv_t *server)
 {
-	t_cl *client = NULL;
+	cl_t *client = NULL;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	if (fd == 1) {

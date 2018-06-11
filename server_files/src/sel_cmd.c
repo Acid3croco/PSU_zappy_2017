@@ -16,7 +16,7 @@
 * @return int
 */
 
-int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs)
+int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs)
 {
 	for (int a = 0; a < NB_CMD_CLI; a++)
 		if (strcmp(cmd_cli[a].cmd, cmd[0]) == 0)
@@ -33,7 +33,7 @@ int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs)
 * @return int
 */
 
-int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs)
+int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs)
 {
 	for (int a = 0; a < NB_CMD_SRV; a++)
 		if (strcmp(cmd_srv[a].cmd, cmd[0]) == 0)

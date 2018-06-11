@@ -15,7 +15,7 @@
 * @param fs
 */
 
-void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
+void wrong_teamname(srv_t *server, char **cmd, FILE *fs)
 {
 	printf(RED"%s: Unknow team name\n"RESET, cmd[0]);
 	close(server->cnt->events[server->cnt->a].data.fd);
@@ -30,9 +30,9 @@ void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
 * @param fs
 */
 
-void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
+void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 {
-	t_cl *new = malloc(sizeof(t_cl));
+	cl_t *new = malloc(sizeof(cl_t));
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	if (new == NULL) {
@@ -59,7 +59,7 @@ void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
 * @param fs
 */
 
-void add_map(t_srv *server, FILE *fs)
+void add_map(srv_t *server, FILE *fs)
 {
 	server->map->fs = fs;
 	server->map->fd = server->cnt->events[server->cnt->a].data.fd;
@@ -75,9 +75,9 @@ void add_map(t_srv *server, FILE *fs)
 * @param fs
 */
 
-void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
+void add_cli_to_team(srv_t *server, char **cmd, FILE *fs)
 {
-	t_tm *tmp;
+	tm_t *tmp;
 	int done = 0;
 
 	if (strcmp(cmd[0], "GMAP") == 0) {

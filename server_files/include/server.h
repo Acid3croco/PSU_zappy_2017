@@ -27,7 +27,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-/* t_srv t_cnt t_tn t_cl structures header */
+/* srv_t cnt_t t_tn cl_t structures header */
 #include "struct.h"
 
 /**
@@ -48,30 +48,30 @@ extern char *optarg;
 extern int optind;
 
 /* functions protorypes */
-void fill_args(int ac, char **av, t_srv *server);
-void add_team(char *name, t_srv *server);
-void init_struct(t_srv *server);
-void quit(t_srv *server);
-int is_team_new(char *name, t_srv *server);
-void free_server(t_srv *server);
-void socket_bind(t_srv *server);
-void create_epoll(t_srv *server);
-void loop_server(t_srv *server);
-void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
-void close_fd(t_srv *server);
-void inter_input(t_srv *server, char *input, FILE *fs);
-void server_cmd(t_srv *server, char **cmd, FILE *fs);
-void add_cli_to_team(t_srv *server, char **cmd, FILE *fs);
+void fill_args(int ac, char **av, srv_t *server);
+void add_team(char *name, srv_t *server);
+void init_struct(srv_t *server);
+void quit(srv_t *server);
+int iteam_s_new(char *name, srv_t *server);
+void free_server(srv_t *server);
+void socket_bind(srv_t *server);
+void create_epoll(srv_t *server);
+void loop_server(srv_t *server);
+void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size);
+void close_fd(srv_t *server);
+void inter_input(srv_t *server, char *input, FILE *fs);
+void server_cmd(srv_t *server, char **cmd, FILE *fs);
+void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
 char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
-void init_map(t_srv *server);
-void map_cmd(t_srv *server, char **cmd, FILE *fs);
-int sel_cli_cmd(t_srv *server, char **cmd, FILE *fs);
-int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs);
+void inimap_t(srv_t *server);
+void map_cmd(srv_t *server, char **cmd, FILE *fs);
+int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs);
+int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs);
 void free_tab(char **tab);
-FILE *my_fdopen(t_srv *server);
-t_cl *find_client(t_srv *server);
-void create_map(t_srv *server);
-void free_map(t_map *map);
+FILE *my_fdopen(srv_t *server);
+cl_t *find_client(srv_t *server);
+void create_map(srv_t *server);
+void free_map(map_t *map);
 
 #endif /* !SERVER_H_ */

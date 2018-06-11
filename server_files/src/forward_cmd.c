@@ -16,7 +16,7 @@
 * @return int
 */
 
-int forward_cmd(t_srv *server, char **cmd, FILE *fs)
+int forward_cmd(srv_t *server, char **cmd, FILE *fs)
 {
 	(void)server;
 	(void)fs;

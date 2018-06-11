@@ -13,10 +13,10 @@
 * @param server
 */
 
-void init_struct(t_srv *server)
+void init_struct(srv_t *server)
 {
-	server->team = malloc(sizeof(t_tm));
-	server->cnt = malloc(sizeof(t_cnt));
+	server->team = malloc(sizeof(tm_t));
+	server->cnt = malloc(sizeof(cnt_t));
 
 	if (server->team == NULL || server->cnt == NULL)
 		quit(server);
@@ -40,13 +40,13 @@ void init_struct(t_srv *server)
 * @param server
 */
 
-void fill_teams(int ac, char **av, t_srv *server)
+void fill_teams(int ac, char **av, srv_t *server)
 {
 	optind -= 1;
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		if (is_team_new(av[optind], server) != 0) {
+		if (iteam_s_new(av[optind], server) != 0) {
 			printf(RED"-n option only accepts unique team names\n"
 				RESET);
 			quit(server);
@@ -64,7 +64,7 @@ void fill_teams(int ac, char **av, t_srv *server)
 * @param server
 */
 
-void fill_args(int ac, char **av, t_srv *server)
+void fill_args(int ac, char **av, srv_t *server)
 {
 	int opt = 0;
 
