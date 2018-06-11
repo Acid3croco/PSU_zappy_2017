@@ -3,16 +3,18 @@
 import sys, pygame, socket
 from pygame.locals import *
 
+#a enlever apres que le pb de mbmap soit regle cote server
 SizeX = 10
 SizeY = 10
 
+# SIZE OF A BOX BY DEFAULT
 size_box = 30
 
 #_______________________________________________________________________________
 # DATA MAP
 def handle_map():
 	width = SizeX * size_box
-	height = SizeY *size_box
+	height = SizeY * size_box
 	create_window(width, height)
 
 #_______________________________________________________________________________
@@ -51,7 +53,6 @@ def connect_client(port, host):
 
 #_______________________________________________________________________________
 # GESTION CLIENT
-
 def get_port(arg1):
 	port = int(arg1)
 	if port < 0 or port > 65535:
@@ -63,7 +64,7 @@ def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
 	connect_client(port, host)
-	handle_map()
+	handle_map() #a enlever apres que le pb de mbmap soit regle cote server
 
 def print_usage():
 	print("USAGE")
