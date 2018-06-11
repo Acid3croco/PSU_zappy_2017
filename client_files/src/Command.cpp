@@ -21,6 +21,7 @@ Command::Command() : _so(new Mysocket())
 */
 Command::~Command()
 {
+	delete this->_so;
 }
 
 /**
@@ -63,7 +64,6 @@ bool	Command::startConnection(int ac, char **av)
 void	Command::forward() const
 {
 	this->_so->wwrite("Forward\n");
-	this->_so->wlisten();
 }
 
 /**
@@ -73,7 +73,6 @@ void	Command::forward() const
 void	Command::right() const
 {
 	this->_so->wwrite("Right\n");
-	this->_so->wlisten();
 }
 
 /**
@@ -83,35 +82,24 @@ void	Command::right() const
 void	Command::left() const
 {
 	this->_so->wwrite("Left\n");
-	this->_so->wlisten();
 }
 
 /**
 * @brief look Ia look around.
 *
-* @return std::string
 */
-std::string	Command::look() const
+void	Command::look() const
 {
-	std::string	msg;
-
 	this->_so->wwrite("Look\n");
-	msg = this->_so->wlisten();
-	return (msg);
 }
 
 /**
 * @brief inventory Ia check his inventory.
 *
-* @return std::string
 */
-std::string	Command::inventory() const
+void	Command::inventory() const
 {
-	std::string	msg;
-
 	this->_so->wwrite("Inventory\n");
-	msg = this->_so->wlisten();
-	return (msg);
 }
 
 /**
@@ -119,26 +107,20 @@ std::string	Command::inventory() const
 *
 * @param broad
 */
-void	Command::broadcast(std::string broad) const
+void	Command::broadcast(const std::string broad) const
 {
+	this->_so->wwrite("Broadcast ");
 	this->_so->wwrite(broad.c_str());
-	this->_so->wlisten();
+	this->_so->wwrite(" \n");
 }
 
 /**
 * @brief connectNbr return the number of unused team number.
 *
-* @return int
 */
-int	Command::connectNbr() const
+void	Command::connectNbr() const
 {
-	int		nbr;
-	std::string	msg;
-
 	this->_so->wwrite("Connect_nbr\n");
-	msg = this->_so->wlisten();
-	nbr = stoi(msg, nullptr);
-	return (nbr);
 }
 
 /**
@@ -148,75 +130,46 @@ int	Command::connectNbr() const
 void	Command::pfork() const
 {
 	this->_so->wwrite("Fork\n");
-	this->_so->wlisten();
 }
 
 /**
 * @brief eject eject other player from Ia actual position.
 *
-* @return true
-* @return false
 */
-bool	Command::eject() const
+void	Command::eject() const
 {
-	std::string	msg;
-
 	this->_so->wwrite("Eject\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko e\n") == 0)
-		return (false);
-	return (true);
 }
 
 /**
 * @brief takeObj Ia take an object on the ground.
 *
-* @return true
-* @return false
 */
-bool	Command::takeObj() const
+void	Command::takeObj(const std::string object) const
 {
-	std::string	msg;
-
-	this->_so->wwrite("Take object\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko t\n") == 0)
-		return (false);
-	return (true);
+	this->_so->wwrite("Take ");
+	this->_so->wwrite(object.c_str());
+	this->_so->wwrite(" \n");
 }
 
 /**
 * @brief setObj Ia drop an object on the ground.
 *
-* @return true
-* @return false
 */
-bool	Command::setObj() const
+void	Command::setObj(const std::string object) const
 {
-	std::string	msg;
-
-	this->_so->wwrite("Set object\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko s\n") == 0)
-		return (false);
-	return (true);
+	this->_so->wwrite("Set ");
+	this->_so->wwrite(object.c_str());
+	this->_so->wwrite(" \n");
 }
 
 /**
 * @brief incantation Ia start his level up if all requirement are ready.
 *
-* @return int
 */
-int	Command::incantation() const
+void	Command::incantation() const
 {
-	std::string	msg;
-	int		nbr;
-
 	this->_so->wwrite("Incantation");
-	if (msg.compare("ko i\n") == 0)
-		return (-1);
-	nbr = stoi(msg, nullptr);
-	return (nbr);
 }
 
 /**

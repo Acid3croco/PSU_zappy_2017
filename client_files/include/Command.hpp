@@ -23,15 +23,15 @@ class Command {
 		void	forward() const;
 		void	right() const;
 		void	left() const;
-		std::string	look() const;
-		std::string	inventory() const;
-		void	broadcast(std::string broad) const;
-		int	connectNbr() const;
+		void	look() const;
+		void	inventory() const;
+		void	broadcast(const std::string broad) const;
+		void	connectNbr() const;
 		void	pfork() const;
-		bool	eject() const;
-		bool	takeObj() const;
-		bool	setObj() const;
-		int	incantation() const;
+		void	eject() const;
+		void	takeObj(const std::string object) const;
+		void	setObj(const std::string ocbject) const;
+		void	incantation() const;
 		std::string	getListen();
 	protected:
 	private:

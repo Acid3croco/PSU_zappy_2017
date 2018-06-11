@@ -11,7 +11,7 @@
  * @brief Construct a new Mysocket:: Mysocket object
  *
  */
-Mysocket::Mysocket() : _ip("0")
+Mysocket::Mysocket()
 {
 }
 
@@ -21,6 +21,8 @@ Mysocket::Mysocket() : _ip("0")
 */
 Mysocket::~Mysocket()
 {
+	fclose(this->_fs);
+	free(this->_buf);
 }
 
 /**
@@ -95,20 +97,16 @@ int	Mysocket::wclose()
 */
 std::string	Mysocket::wlisten()
 {
-	FILE		*fs = fdopen(this->_fd, "r");
-	char		*buf = (char *)malloc(4096);
 	std::string	str;
 	size_t		len = 4096;
 
-	buf = (char *)memset(buf, 0, 4096);
-	if (getline(&buf, &len, (FILE *)fs) == -1) {
+	this->_buf = (char *)memset(this->_buf, 0, 4096);
+	if (getline(&this->_buf, &len, (FILE *)this->_fs) == -1) {
 		perror("");
-		free(buf);
-		str = "Error.\n";
-		return (str);
+		fclose(this->_fs);
+		return ("Error\n");
 	}
-	str = std::string(buf);
-	free(buf);
+	str = std::string(this->_buf);
 	return(str);
 }
 
@@ -132,6 +130,7 @@ void	Mysocket::wwrite(const char *s)
 bool	Mysocket::launchMysocket(const int port, const std::string ip,
 const int pos)
 {
+	this->_ip = "0";
 	if (pos != 0)
 		this->_ip = ip;
 	this->_port = port;
@@ -146,6 +145,8 @@ const int pos)
 		wclose();
 		return (false);
 	}
+	this->_buf = (char *)malloc(4096);
+	this->_fs = fdopen(this->_fd, "r");
 	return (true);
 }
 

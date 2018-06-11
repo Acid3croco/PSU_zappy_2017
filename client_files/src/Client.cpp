@@ -24,14 +24,19 @@ int	main(int ac, char **av)
 		return (84);
 	if (co.startConnection(ac, av) == false)
 		return (84);
+	buf = co.getListen();
+	std::cout << buf << std::endl;
+	buf = co.getListen();
+	std::cout << buf << std::endl;
 	for (;;) {
 		buf = co.getListen();
-		if (buf.compare("Error.\n") == 0) {
+		if (buf.compare("Error\n") == 0) {
 			perror("");
 			return (84);
 		}
+		else if (buf.compare("dead\n") == 0)
+			break;
 		std::cout << buf << std::endl;
-		co.forward();
 	}
 	return (0);
 }
