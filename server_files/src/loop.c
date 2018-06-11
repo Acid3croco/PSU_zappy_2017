@@ -71,7 +71,7 @@ void read_event(t_srv *server)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1) {
-		fclose(fs);
+		//fclose(fs);
 		free(input);
 		close_fd(server->cnt->events[server->cnt->a].data.fd);
 	}

@@ -73,7 +73,6 @@ void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
 	t_tm *tmp;
 	int done = 0;
 
-	(void)fs;
 	if (strcmp(cmd[0], "GMAP") == 0) {
 		add_map(server, fs);
 		return;
