@@ -58,7 +58,7 @@ void socket_bind(t_srv *server);
 void create_epoll(t_srv *server);
 void loop_server(t_srv *server);
 void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
-void close_fd(int fd);
+void close_fd(t_srv *server);
 void inter_input(t_srv *server, char *input, FILE *fs);
 void server_cmd(t_srv *server, char **cmd, FILE *fs);
 void add_cli_to_team(t_srv *server, char **cmd, FILE *fs);
@@ -71,5 +71,7 @@ int sel_srv_cmd(t_srv *server, char **cmd, FILE *fs);
 void free_tab(char **tab);
 FILE *my_fdopen(t_srv *server);
 t_cl *find_client(t_srv *server);
+void create_map(t_srv *server);
+void free_map(t_map *map);
 
 #endif /* !SERVER_H_ */

@@ -38,6 +38,7 @@ int main(int ac, char **av)
 	fill_args(ac, av, server);
 	init_map(server);
 	init_server(server);
+	create_map(server);
 	loop_server(server);
 	free_server(server);
 	return (0);

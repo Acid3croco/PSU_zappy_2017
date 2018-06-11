@@ -71,9 +71,8 @@ void read_event(t_srv *server)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1) {
-		//fclose(fs);
 		free(input);
-		close_fd(server->cnt->events[server->cnt->a].data.fd);
+		close_fd(server);
 	}
 	else if (characters > 1)
 		inter_input(server, input, fs);
