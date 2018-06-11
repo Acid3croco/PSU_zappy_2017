@@ -41,11 +41,7 @@ void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size)
 
 void delete_client(t_tm *team, t_cl *cl, t_cl *prev)
 {
-	printf("team %s\n", team->name);
-	if (prev != NULL)
-		printf("prev fd %i\n", prev->fd);
-	if (cl != NULL)
-		printf("cl fd %i\n", cl->fd);
+	team->nb_ia -= 1;
 	if (prev != NULL)
 		prev->next = cl->next;
 	else
