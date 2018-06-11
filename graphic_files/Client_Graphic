@@ -6,20 +6,21 @@ from pygame.locals import *
 SizeX = 10
 SizeY = 10
 
+size_box = 30
+
 #_______________________________________________________________________________
 # DATA MAP
 def handle_map():
-	
+	width = SizeX * size_box
+	height = SizeY *size_box
+	create_window(width, height)
 
 #_______________________________________________________________________________
 # GRAPHIC
-def create_window():
-
-	(width, height) = (720, 720)
-
+def create_window(width, height):
 	screen = pygame.display.set_mode((width, height))
-	my_image = pygame.image.load('textures/grass_template.png')
-	screen.blit(my_image, (0, 0))
+	my_image = pygame.image.load('textures/grass_template.jpg')
+	screen.blit(pygame.transform.scale(my_image, (width, height)), (0, 0))
 	pygame.display.flip()
 	pygame.display.set_caption('Zappy')
 	running = True
@@ -43,8 +44,8 @@ def connect_client(port, host):
 	if str(data).find(str1) == 2:
 		sockett.send("GMAP\n".encode())
 	data = sockett.recv(255)
-	if str(data).find(str2) == 2:
-		handle_map()
+	#if str(data).find(str2) == 2:
+	#	handle_map()
 	sockett.close()
 
 
@@ -62,7 +63,7 @@ def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
 	connect_client(port, host)
-	create_window()
+	handle_map()
 
 def print_usage():
 	print("USAGE")
