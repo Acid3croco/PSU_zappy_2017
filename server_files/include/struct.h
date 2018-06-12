@@ -71,7 +71,7 @@ typedef struct map_s
 {
 	int fd;
 	FILE *fs;
-	struct s_case **box;
+	struct box_s ***box;
 } map_t;
 
 /* Server structure */

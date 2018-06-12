@@ -19,7 +19,6 @@
 #include <errno.h>
 #include <sys/timeb.h>
 
-
 /* socket bind listen headers */
 #include <netdb.h>
 #include <sys/types.h>
@@ -64,7 +63,7 @@ void server_cmd(srv_t *server, char **cmd, FILE *fs);
 void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
 char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
-void inimap_t(srv_t *server);
+void init_map(srv_t *server);
 void map_cmd(srv_t *server, char **cmd, FILE *fs);
 int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs);
 int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs);
@@ -72,6 +71,6 @@ void free_tab(char **tab);
 FILE *my_fdopen(srv_t *server);
 cl_t *find_client(srv_t *server);
 void create_map(srv_t *server);
-void free_map(map_t *map);
+void free_map(map_t *map, int x, int y);
 
 #endif /* !SERVER_H_ */
