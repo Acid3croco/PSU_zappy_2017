@@ -72,5 +72,6 @@ FILE *my_fdopen(srv_t *server);
 cl_t *find_client(srv_t *server);
 void create_map(srv_t *server);
 void free_map(map_t *map, int x, int y);
+int my_rand(unsigned int *seed);
 
 #endif /* !SERVER_H_ */

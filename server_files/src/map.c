@@ -7,23 +7,42 @@
 
 #include "server.h"
 
+/**
+* @brief fill_box fill the box with ressources depending on their rarity
+*
+* @param box
+*/
+
+void fill_box(box_t *box)
+{
+	unsigned int seed = 0;
+
+	box->ress.deraumere = my_rand(&seed) % 7;
+	box->ress.food = my_rand(&seed) % 10;
+	box->ress.linemate = my_rand(&seed) % 8;
+	box->ress.mendiane = my_rand(&seed) % 5;
+	box->ress.phiras = my_rand(&seed) % 4;
+	box->ress.sibur = my_rand(&seed) % 6;
+	box->ress.thystame = my_rand(&seed) % 3;
+}
+
+/**
+* @brief fill_map fill all the box in the map by chosing a random box
+*
+* @param server
+*/
+
 void fill_map(srv_t *server)
 {
-	struct timeb time;
 	unsigned int seed = 0;
 	int x = 0;
 	int y = 0;
 
-	(void)server;
-	ftime(&time);
-	seed += time.millitm;
-	srand(seed);
-	x = rand() % server->width;
-	ftime(&time);
-	seed += time.millitm;
-	srand(seed);
-	y = rand() % server->height;
-	printf("x=%i, y=%i\n", x, y);
+	for (int a = 0; a < server->height * server->width; a++) {
+		x = my_rand(&seed) % server->width;
+		y = my_rand(&seed) % server->height;
+		fill_box(server->map->box[y][x]);
+	}
 }
 
 /**

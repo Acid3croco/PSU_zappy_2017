@@ -31,3 +31,19 @@ FILE *my_fdopen(srv_t *server)
 	else
 		return (client->fs);
 }
+
+/**
+* @brief my_rand return a random number
+*
+* @return int
+*/
+
+int my_rand(unsigned int *seed)
+{
+	struct timeb time;
+
+	ftime(&time);
+	*seed += time.millitm;
+	srand(*seed);
+	return (rand());
+}
