@@ -35,8 +35,8 @@ int main(int ac, char **av)
 	if (server == NULL)
 		return (84);
 	init_struct(server);
+	init_map(server);
 	fill_args(ac, av, server);
-	inimap_t(server);
 	init_server(server);
 	create_map(server);
 	loop_server(server);

@@ -26,10 +26,18 @@ void free_tab(char **tab)
 * @param map
 */
 
-void free_map(map_t *map)
+void free_map(map_t *map, int x, int y)
 {
-	if (map->fs != NULL)
+	if (map != NULL && map->fs != NULL)
 		fclose(map->fs);
-	free(map->box);
-	free(map);
+	if (map != NULL && map->box != NULL) {
+		for (int a = 0; a < y; a++) {
+			for (int b = 0; b < x; b++)
+				free(map->box[a][b]);
+			free(map->box[a]);
+		}
+		free(map->box);
+	}
+	if (map != NULL)
+		free(map);
 }
