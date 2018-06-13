@@ -17,13 +17,14 @@ void fill_box(box_t *box)
 {
 	unsigned int seed = 0;
 
-	box->ress.deraumere = my_rand(&seed) % 7;
-	box->ress.food = my_rand(&seed) % 10;
-	box->ress.linemate = my_rand(&seed) % 8;
-	box->ress.mendiane = my_rand(&seed) % 5;
-	box->ress.phiras = my_rand(&seed) % 4;
-	box->ress.sibur = my_rand(&seed) % 6;
-	box->ress.thystame = my_rand(&seed) % 3;
+	box->ress.deraumere = my_rand(&seed) %2;
+	box->ress.food = my_rand(&seed) % 2;
+	box->ress.linemate = my_rand(&seed) % 2;
+	box->ress.mendiane = my_rand(&seed) % 2;
+	box->ress.phiras = my_rand(&seed) % 2;
+	box->ress.sibur = my_rand(&seed) % 2;
+	box->ress.thystame = my_rand(&seed) % 2;
+	box->client = NULL;
 }
 
 /**

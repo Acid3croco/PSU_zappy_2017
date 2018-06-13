@@ -20,8 +20,10 @@
 		    ".tsx",
 		    ".csproj",
 		    ".fsproj",
-		    ".c"
+		    ".c",
+		    ".hpp",
+		    ".h",
+		    ".cpp"
 		]
-		},
-		"C_Cpp.intelliSenseEngineFallback": "Enabled"
+		}
 	}
