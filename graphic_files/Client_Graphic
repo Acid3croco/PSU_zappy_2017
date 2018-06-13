@@ -8,9 +8,7 @@ SizeX = 10
 SizeY = 10
 
 # SIZE OF A BOX BY DEFAULT
-size_box = 50
-
-
+size_box = 100
 
 #_______________________________________________________________________________
 # DATA MAP
@@ -35,8 +33,6 @@ def load_tab_info():
 	line = SizeX
 	column = SizeY
 	lst = [[0] * column for _ in range(line)]
-	lst[1][1] = 3
-	print(lst)
 
 
 #_______________________________________________________________________________
