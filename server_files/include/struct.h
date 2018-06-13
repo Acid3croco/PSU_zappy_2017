@@ -19,6 +19,7 @@
 typedef struct client_s
 {
 	int fd;
+	int look;
 	int x;
 	int y;
 	int lv;
@@ -26,6 +27,7 @@ typedef struct client_s
 	char *team;
 	char *inventory;
 	struct client_s *next;
+	struct client_s *mnext;
 } cl_t;
 
 typedef struct team_s
