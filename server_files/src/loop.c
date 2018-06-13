@@ -94,10 +94,13 @@ void time_loop(srv_t *server, struct timeb *start)
 
 	(void)server;
 	ftime(&end);
-	timer = (end.time * 1000 + end.millitm) -
-		 (start->time * 1000 + start->millitm);
+	printf("start %li %i\n", start->time, start->millitm);
+	printf("end %li %i\n", end.time, end.millitm);
+	timer = (1 / server->freq * 1000) - ((end.time * 1000 + end.millitm) -
+		 (start->time * 1000 + start->millitm));
 	printf("timer %li\n", timer);
-	//usleep(timer * 1000);
+	if (timer > 0)
+		usleep(timer * 1000);
 }
 
 /**
@@ -114,9 +117,9 @@ void loop_server(srv_t *server)
 	printf(GREEN"Ready to accept new client on port %i\n"RESET,
 		server->port);
 	for (;;) {
-		ftime(&start);
 		n = epoll_wait(server->cnt->efd,
 				server->cnt->events, MAX_EVENTS, -1);
+		ftime(&start);
 		for (server->cnt->a = 0; server->cnt->a < n; server->cnt->a++) {
 			check_errors(server);
 			if (server->cnt->fd ==
