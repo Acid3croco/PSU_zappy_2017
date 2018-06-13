@@ -6,7 +6,8 @@
 		"struct.h": "c",
 		"errno.h": "c",
 		"cmd.h": "c",
-		"istream": "c"
+		"istream": "c",
+		"timeb.h": "c"
 	},
 	"rainbowString": {
 		"extensions": [

@@ -21,8 +21,6 @@ void free_client(cl_t *client)
 	while (tmp != NULL) {
 		if (tmp->team != NULL)
 			free(tmp->team);
-		if (tmp->inventory != NULL)
-			free(tmp->inventory);
 		if (tmp->fs != NULL)
 			fclose(tmp->fs);
 		prev = tmp;

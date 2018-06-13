@@ -62,10 +62,10 @@ void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 	strcpy(new->team, cmd[0]);
 	new->fs = fs;
 	new->fd = fd;
-	new->inventory = NULL;
 	new->next = team->client;
 	team->client = new;
 	team->nb_ia += 1;
+	init_ress_client(new);
 	put_cli_on_map(server, new);
 	send_new_client(server, team, new, cmd);
 }

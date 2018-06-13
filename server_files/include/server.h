@@ -74,5 +74,6 @@ void create_map(srv_t *server);
 void free_map(map_t *map, int x, int y);
 int my_rand(unsigned int *seed);
 void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
+void init_ress_client(cl_t *client);
 
 #endif /* !SERVER_H_ */

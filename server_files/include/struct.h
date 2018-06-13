@@ -16,16 +16,28 @@
 #include "color.h"
 
 /* Players strucutres */
+typedef struct ress_s
+{
+	int linemate;
+	int deraumere;
+	int sibur;
+	int mendiane;
+	int phiras;
+	int thystame;
+	int food;
+} rs_t;
+
 typedef struct client_s
 {
-	int fd;
-	int look;
 	int x;
 	int y;
 	int lv;
+	int fd;
+	int look;
+	int cycle;
 	FILE *fs;
 	char *team;
-	char *inventory;
+	struct ress_s ress;
 	struct client_s *next;
 	struct client_s *mnext;
 } cl_t;
@@ -51,17 +63,6 @@ typedef struct connect_s
 } cnt_t;
 
 /* Map Strucutres */
-typedef struct ress_s
-{
-	int linemate;
-	int deraumere;
-	int sibur;
-	int mendiane;
-	int phiras;
-	int thystame;
-	int food;
-} rs_t;
-
 typedef struct box_s
 {
 	struct client_s *client;
