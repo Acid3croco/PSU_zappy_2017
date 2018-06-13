@@ -26,8 +26,8 @@ void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size)
 		sbuf, sizeof(sbuf),
 		NI_NUMERICHOST | NI_NUMERICSERV);
 	if (s == 0) {
-		printf("Accepted connection on descriptor %d "
-			"(host=%s, port=%s)\n",
+		printf(CYAN"Accepted connection on descriptor %d "
+			"(host=%s, port=%s)\n"RESET,
 			infd, hbuf, sbuf);
 	}
 }
@@ -48,8 +48,6 @@ void delete_client(tm_t *team, cl_t *cl, cl_t *prev)
 		team->client = cl->next;
 	if (cl->team != NULL)
 		free(cl->team);
-	if (cl->inventory != NULL)
-		free(cl->inventory);
 	close(cl->fd);
 	free(cl);
 }

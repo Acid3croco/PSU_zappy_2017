@@ -82,6 +82,25 @@ void read_event(srv_t *server)
 }
 
 /**
+* @brief time_loop handle time cycle for everything
+*
+* @param server
+*/
+
+void time_loop(srv_t *server, struct timeb *start)
+{
+	struct timeb end;
+	long int timer;
+
+	(void)server;
+	ftime(&end);
+	timer = (end.time * 1000 + end.millitm) -
+		 (start->time * 1000 + start->millitm);
+	printf("timer %li\n", timer);
+	//usleep(timer * 1000);
+}
+
+/**
 * @brief loop_server is the function within every event will be handled
 *
 * @param server
@@ -90,10 +109,12 @@ void read_event(srv_t *server)
 void loop_server(srv_t *server)
 {
 	int n = 0;
+	struct timeb start;
 
 	printf(GREEN"Ready to accept new client on port %i\n"RESET,
 		server->port);
 	for (;;) {
+		ftime(&start);
 		n = epoll_wait(server->cnt->efd,
 				server->cnt->events, MAX_EVENTS, -1);
 		for (server->cnt->a = 0; server->cnt->a < n; server->cnt->a++) {
@@ -104,5 +125,6 @@ void loop_server(srv_t *server)
 			else
 				read_event(server);
 		}
+		time_loop(server, &start);
 	}
 }

@@ -7,6 +7,32 @@
 
 #include "server.h"
 
+/**
+* @brief init_ress_client initalize the inventory of the client
+*
+* @param client
+*/
+
+void init_ress_client(cl_t *client)
+{
+	client->ress.deraumere = 0;
+	client->ress.food = 10;
+	client->ress.linemate = 0;
+	client->ress.mendiane = 0;
+	client->ress.phiras = 0;
+	client->ress.sibur = 0;
+	client->ress.thystame = 0;
+}
+
+/**
+* @brief send_new_client send information to the client
+*
+* @param server
+* @param team
+* @param client
+* @param cmd
+*/
+
 void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd)
 {
 	int fd = server->cnt->events[server->cnt->a].data.fd;
