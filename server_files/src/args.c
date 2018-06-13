@@ -70,26 +70,19 @@ void fill_args(int ac, char **av, srv_t *server)
 
 	while ((opt = getopt(ac, av, "p:x:y:n:c:f:")) != -1) {
 		switch (opt) {
-			case 'p':
-				server->port = strtol(optarg, NULL, 10);
+			case 'p': server->port = strtol(optarg, NULL, 10);
 				break;
-			case 'x':
-				server->width = strtol(optarg, NULL, 10);
+			case 'x': server->width = strtol(optarg, NULL, 10);
 				break;
-			case 'y':
-				server->height = strtol(optarg, NULL, 10);
+			case 'y': server->height = strtol(optarg, NULL, 10);
 				break;
-			case 'n':
-				fill_teams(ac, av, server);
+			case 'n': fill_teams(ac, av, server);
 				break;
-			case 'c':
-				server->clientsNB = strtol(optarg, NULL, 10);
+			case 'c': server->clientsNB = strtol(optarg, NULL, 10);
 				break;
-			case 'f':
-				server->freq = strtol(optarg, NULL, 10);
+			case 'f': server->freq = strtol(optarg, NULL, 10);
 				break;
-			default:
-				quit(server);
+			default : quit(server);
 				break;
 		}
 	}
