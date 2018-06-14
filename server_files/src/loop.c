@@ -94,11 +94,8 @@ void time_loop(srv_t *server, struct timeb *start)
 
 	(void)server;
 	ftime(&end);
-	printf("start %li %i\n", start->time, start->millitm);
-	printf("end %li %i\n", end.time, end.millitm);
 	timer = (1 / server->freq * 1000) - ((end.time * 1000 + end.millitm) -
-		 (start->time * 1000 + start->millitm));
-	printf("timer %li\n", timer);
+		(start->time * 1000 + start->millitm));
 	if (timer > 0)
 		usleep(timer * 1000);
 }

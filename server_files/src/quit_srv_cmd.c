@@ -16,10 +16,11 @@
 * @return int
 */
 
-int quit_cmd(srv_t *server, char **cmd, FILE *fs)
+int quit_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
 {
 	(void)cmd;
 	(void)fs;
+	(void)client;
 	free_tab(cmd);
 	free_server(server);
 	exit(0);
