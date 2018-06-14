@@ -1,24 +1,8 @@
 
 
-import sys, pygame, socket
-from pygame.locals import *
+import sys, socket
 from map_handler import handle_map, load_tab_info
 from connection import get_port, connect_client
-
-#_______________________________________________________________________________
-# GRAPHIC
-def create_window(width, height):
-	screen = pygame.display.set_mode((width, height))
-	my_image = pygame.image.load('textures/grass_template.jpg')
-	screen.blit(pygame.transform.scale(my_image, (width, height)), (0, 0))
-	pygame.display.flip()
-	pygame.display.set_caption('Zappy')
-	running = True
-	while running:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				running = False
-
 
 def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
