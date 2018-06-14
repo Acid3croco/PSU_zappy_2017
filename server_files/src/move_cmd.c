@@ -8,47 +8,50 @@
 #include "server.h"
 
 /**
-* @brief left_cmf turn the client to the left
+* @brief set_coords set the coords x and y for the client
 *
-* @param server
-* @param cmd
-* @param fs
-* @return int
+* @param s
+* @param client
+* @param x
+* @param y
 */
 
-int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+void set_coords(srv_t *s, cl_t *client, int x, int y)
 {
-	(void)server;
-	(void)cmd;
-	printf("Left! look %i\n", client->look);
-	client->look = client->look - 1 % 4;
-	if (client->look < 0)
-		client->look += 4;
-	printf("Left! look %i\n", client->look);
-	fprintf(fs, "ok\n");
-	return (0);
+	x = (x >= s->width) ? x % s->width : x;
+	y = (y >= s->height) ? y % s->height : y;
+	x = (x < 0) ? x + s->width : x;
+	y = (y < 0) ? y + s->height : y;
+	client->x = x;
+	client->y = y;
+	client->mnext = s->map->box[y][x]->client;
+	s->map->box[y][x]->client = client;
 }
 
 /**
-* @brief right_cmd turn the client to the right
+* @brief go_on move th eplayer to his new box
 *
-* @param server
-* @param cmd
-* @param fs
-* @return int
+* @param s
+* @param client
+* @param x
+* @param y
 */
 
-int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+void go_on(srv_t *s, cl_t *client, int x, int y)
 {
-	(void)server;
-	(void)cmd;
-	printf("Right! look %i\n", client->look);
-	client->look = client->look + 1 % 4;
-	if (client->look > 3)
-		client->look -= 4;
-	printf("Right! look %i\n", client->look);
-	fprintf(fs, "ok\n");
-	return (0);
+	cl_t *prev = NULL;
+	cl_t *tmp = NULL;
+
+	for (tmp = client; tmp != NULL; tmp = tmp->mnext) {
+			if (tmp->fd == client->fd)
+				break;
+			prev = tmp;
+		}
+	if (prev == NULL)
+		s->map->box[client->y][client->x]->client = tmp->mnext;
+	else
+		prev->mnext = tmp->mnext;
+	set_coords(s, client, x, y);
 }
 
 /**
@@ -64,7 +67,16 @@ int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
 {
 	(void)server;
 	(void)cmd;
-	(void)client;
+	switch (client->look) {
+		case 0:go_on(server, client, client->x, client->y - 1);
+			break;
+		case 1:go_on(server, client, client->x + 1, client->y);
+			break;
+		case 2:go_on(server, client, client->x, client->y + 1);
+			break;
+		case 3:go_on(server, client, client->x -1, client->y);
+			break;
+	}
 	printf("Forward!\n");
 	fprintf(fs, "ok\n");
 	return (0);

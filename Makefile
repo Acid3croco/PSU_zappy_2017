@@ -30,6 +30,7 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/map.c \
 	./server_files/src/map_cmd.c \
 	./server_files/src/move_cmd.c \
+	./server_files/src/turn_cmd.c \
 	./server_files/src/sel_cmd.c \
 	./server_files/src/free.c \
 	./server_files/src/my.c \

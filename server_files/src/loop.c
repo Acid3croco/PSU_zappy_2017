@@ -116,6 +116,7 @@ void loop_server(srv_t *server)
 	for (;;) {
 		n = epoll_wait(server->cnt->efd,
 				server->cnt->events, MAX_EVENTS, -1);
+		printf(BLUE"n %i\n"RESET, n);
 		ftime(&start);
 		for (server->cnt->a = 0; server->cnt->a < n; server->cnt->a++) {
 			check_errors(server);
