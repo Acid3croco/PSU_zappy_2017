@@ -64,3 +64,7 @@ dkms.conf
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+client_files/zappy_server
+
+\.vscode/

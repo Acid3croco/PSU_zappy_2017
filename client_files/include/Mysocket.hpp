@@ -46,6 +46,8 @@ private:
 	int			_fd;
 	struct sockaddr_in	_addr;
 	struct protoent		*_pe;
+	char			*_buf;
+	FILE			*_fs;
 };
 
 #endif /* !Mysocket_HPP_ */

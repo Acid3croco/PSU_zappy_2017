@@ -16,26 +16,28 @@
 *
 */
 class Command {
-	public:
-		Command();
-		~Command();
-		bool	startConnection(int ac, char **av);
-		void	forward() const;
-		void	right() const;
-		void	left() const;
-		std::string	look() const;
-		std::string	inventory() const;
-		void	broadcast(std::string broad) const;
-		int	connectNbr() const;
-		void	pfork() const;
-		bool	eject() const;
-		bool	takeObj() const;
-		bool	setObj() const;
-		int	incantation() const;
-		std::string	getListen();
-	protected:
-	private:
-		Mysocket	*_so;
+public:
+	Command();
+	~Command();
+	bool	startConnection(int ac, char **av);
+	void	forward();
+	void	right();
+	void	left();
+	void	look();
+	void	inventory();
+	void	broadcast(const std::string broad);
+	void	connectNbr();
+	void	pfork();
+	void	eject();
+	void	takeObj(const std::string object);
+	void	setObj(const std::string ocbject);
+	void	incantation();
+	std::string	getListen();
+	bool	compareCmd(std::string cmd);
+protected:
+private:
+	Mysocket	*_so;
+	std::string	_lastCmd;
 };
 
 #endif /* !COMMAND_HPP_ */

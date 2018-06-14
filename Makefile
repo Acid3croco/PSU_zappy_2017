@@ -39,7 +39,10 @@ SRCS_S	= ./server_files/src/server.c \
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
-		./client_files/src/Command.cpp
+		./client_files/src/Command.cpp	\
+		./client_files/src/Game.cpp	\
+		./client_files/src/Inventory.cpp	\
+		./client_files/src/Objectif.cpp
 
 OBJS_S	= $(SRCS_S:.c=.o)
 
