@@ -9,42 +9,14 @@
 	#define STRUCT_H_
 
 #include <sys/epoll.h>
+#include <stdio.h>
+#include <string.h>
+
+/* color define for printf */
+#include "color.h"
 
 /* Players strucutres */
-typedef struct s_client
-{
-	int fd;
-	int x;
-	int y;
-	int lv;
-	FILE *fs;
-	char *team;
-	char *inventory;
-	struct s_client *next;
-} t_cl;
-
-typedef struct s_team
-{
-	int nb_ia;
-	char *name;
-	struct s_client *client;
-	struct s_team *next;
-} t_tm;
-
-/* Epoll and connection structure */
-typedef struct s_connect
-{
-	int a;
-	int s;
-	int fd;
-	int efd;
-	struct epoll_event event;
-	struct epoll_event *events;
-
-} t_cnt;
-
-/* Map Strucutres */
-typedef struct s_stones
+typedef struct ress_s
 {
 	int linemate;
 	int deraumere;
@@ -53,35 +25,81 @@ typedef struct s_stones
 	int phiras;
 	int thystame;
 	int food;
-} t_st;
+} rs_t;
 
-typedef struct s_box
+typedef struct client_s
 {
-	struct s_client *client;
-	struct s_stones *stones;
+	int x;
+	int y;
+	int lv;
+	int fd;
+	int look;
+	int cycle;
+	FILE *fs;
+	char *team;
+	struct ress_s ress;
+	struct client_s *next;
+	struct client_s *mnext;
+} cl_t;
 
-} t_box;
-
-typedef struct s_map
+typedef struct team_s
 {
-	int width;
-	int height;
+	int nb_ia;
+	char *name;
+	struct client_s *client;
+	struct team_s *next;
+} tm_t;
+
+/* Epoll and connection structure */
+typedef struct connect_s
+{
+	int a;
+	int s;
+	int fd;
+	int efd;
+	struct epoll_event event;
+	struct epoll_event *events;
+
+} cnt_t;
+
+/* Map Strucutres */
+typedef struct box_s
+{
+	struct client_s *client;
+	struct ress_s ress;
+
+} box_t;
+
+typedef struct map_s
+{
 	int fd;
 	FILE *fs;
-	struct s_case *box;
-} t_map;
+	struct box_s ***box;
+} map_t;
 
 /* Server structure */
-typedef struct s_server
+typedef struct server_s
 {
 	int port;
 	int width;
 	int height;
 	int clientsNB;
 	int freq;
-	struct s_map *map;
-	struct s_connect *cnt;
-	struct s_team *team;
-} t_srv;
+	FILE *fs;
+	struct map_s *map;
+	struct connect_s *cnt;
+	struct team_s *team;
+} srv_t;
+
+/* server commands functions */
+int quit_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int msg_cmd(char *cmd);
+
+/* client commands functions */
+int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int look_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+
 
 #endif /* !STRUCT_H_ */

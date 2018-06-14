@@ -7,7 +7,13 @@
 
 #include "server.h"
 
-void add_stdin(t_srv *server)
+/**
+* @brief add_stdin add the stdin to the events to read server commands
+*
+* @param server
+*/
+
+void add_stdin(srv_t *server)
 {
 	memset(&server->cnt->event, 0, sizeof(server->cnt->event));
 	server->cnt->event.data.fd = 1;
@@ -24,7 +30,7 @@ void add_stdin(t_srv *server)
 * @param server
 */
 
-void create_epoll(t_srv *server)
+void create_epoll(srv_t *server)
 {
 	server->cnt->efd = epoll_create1(0);
 	memset(&server->cnt->event, 0, sizeof(server->cnt->event));

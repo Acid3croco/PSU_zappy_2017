@@ -8,16 +8,25 @@
 #include "server.h"
 
 /**
-* @brief free_tab free the given array
+* @brief free_client free all ressources of all the clients
 *
-* @param cmd
+* @param client
 */
 
-void free_tab(char **tab)
+void free_client(cl_t *client)
 {
-	for (int a = 0; tab[a] != NULL; a++)
-		free(tab[a]);
-	free(tab);
+	cl_t *tmp = client;
+	cl_t *prev;
+
+	while (tmp != NULL) {
+		if (tmp->team != NULL)
+			free(tmp->team);
+		if (tmp->fs != NULL)
+			fclose(tmp->fs);
+		prev = tmp;
+		tmp = tmp->next;
+		free(prev);
+	}
 }
 
 /**
@@ -26,14 +35,16 @@ void free_tab(char **tab)
 * @param team
 */
 
-void free_team(t_tm *team)
+void free_team(tm_t *team)
 {
-	t_tm *tmp = team;
-	t_tm *prev;
+	tm_t *tmp = team;
+	tm_t *prev;
 
 	while (tmp != NULL) {
 		if (tmp->name != NULL)
 			free(tmp->name);
+		if (tmp->client != NULL)
+			free_client(tmp->client);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);
@@ -46,7 +57,7 @@ void free_team(t_tm *team)
 * @param connect
 */
 
-void free_connect(t_cnt *connect)
+void free_connect(cnt_t *connect)
 {
 	if (connect != NULL) {
 		if (connect->events != NULL)
@@ -61,10 +72,14 @@ void free_connect(t_cnt *connect)
 * @param server
 */
 
-void free_server(t_srv *server)
+void free_server(srv_t *server)
 {
 	free_connect(server->cnt);
 	free_team(server->team);
+	free_map(server->map, server->width, server->height);
+	if (server->fs != NULL)
+		fclose(server->fs);
+	free(server);
 }
 
 /**
@@ -73,7 +88,7 @@ void free_server(t_srv *server)
 * @param server
 */
 
-void quit(t_srv *server)
+void quit(srv_t *server)
 {
 	if (errno == -1)
 		perror(RED"error");

@@ -7,15 +7,17 @@
 
 #ifndef SERVER_H_
 	#define SERVER_H_
+#define _GNU_SOURCE
 
 /* basics headers */
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/timeb.h>
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -24,11 +26,8 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-/* t_srv t_cnt t_tn t_cl structures header */
+/* srv_t cnt_t t_tn cl_t structures header */
 #include "struct.h"
-
-/* color define for printf */
-#include "color.h"
 
 /**
 * @brief MAX_EVENTS define the number of max events in the events array
@@ -48,26 +47,33 @@ extern char *optarg;
 extern int optind;
 
 /* functions protorypes */
-void fill_args(int ac, char **av, t_srv *server);
-void add_team(char *name, t_srv *server);
-void init_struct(t_srv *server);
-void quit(t_srv *server);
-int is_team_new(char *name, t_srv *server);
-void free_server(t_srv *server);
-void socket_bind(t_srv *server);
-void create_epoll(t_srv *server);
-void loop_server(t_srv *server);
-void identify_cli(int infd, struct sockaddr_in *s_client, socklen_t size);
-void close_fd(int fd);
-void inter_input(t_srv *server, char *input, FILE *fs);
-void server_cmd(t_srv *server, char **cmd, FILE *fs);
-void add_cli_to_team(t_srv *server, char **cmd, FILE *fs);
+void fill_args(int ac, char **av, srv_t *server);
+void add_team(char *name, srv_t *server);
+void init_struct(srv_t *server);
+void quit(srv_t *server);
+int iteam_s_new(char *name, srv_t *server);
+void free_server(srv_t *server);
+void socket_bind(srv_t *server);
+void create_epoll(srv_t *server);
+void loop_server(srv_t *server);
+void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size);
+void close_fd(srv_t *server);
+void inter_input(srv_t *server, char *input, FILE *fs);
+void server_cmd(srv_t *server, char **cmd, FILE *fs);
+void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
 char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
-void init_map(t_srv *server);
-void map_cmd(t_srv *server, char **cmd, FILE *fs);
-
-int quit_cmd(t_srv *server, char **cmd, FILE *fs);
-int msg_cmd(char *cmd);
+void init_map(srv_t *server);
+void map_cmd(srv_t *server, char **cmd, FILE *fs);
+int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs);
+void free_tab(char **tab);
+FILE *my_fdopen(srv_t *server);
+cl_t *find_client(srv_t *server);
+void create_map(srv_t *server);
+void free_map(map_t *map, int x, int y);
+int my_rand(unsigned int *seed);
+void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
+void init_ress_client(cl_t *client);
 
 #endif /* !SERVER_H_ */

@@ -14,20 +14,33 @@
 * @param client
 */
 
-t_cl *find_client(t_srv *server)
+cl_t *find_client(srv_t *server)
 {
-	t_tm *tmp = server->team;
+	tm_t *tmp = server->team;
 	int done = 0;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	for (;tmp->next != NULL && done == 0; tmp = tmp->next) {
-		for (t_cl *cl = tmp->client; cl != NULL;
+		for (cl_t *cl = tmp->client; cl != NULL;
 			cl = cl->next) {
 				if (cl->fd == fd)
 					return (cl);
 			}
 	}
 	return (NULL);
+}
+
+/**
+* @brief unknow_cmd send ko to the client becasue of an unknow command
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void unknow_cmd(FILE *fs)
+{
+	fprintf(fs, "ko\n");
 }
 
 /**
@@ -38,14 +51,15 @@ t_cl *find_client(t_srv *server)
 * @param fs
 */
 
-void inter_input(t_srv *server, char *input, FILE *fs)
+void inter_input(srv_t *server, char *input, FILE *fs)
 {
-	t_cl *client = NULL;
+	cl_t *client = NULL;
 	char **cmd;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
 	(void)fs;
 	cmd = str_to_wordtab(input, fs);
+	free(input);
 	if (fd == 1)
 		server_cmd(server, cmd, fs);
 	else if (fd == server->map->fd)
@@ -55,7 +69,8 @@ void inter_input(t_srv *server, char *input, FILE *fs)
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else
-			msg_cmd(cmd[0]);
+			if (sel_cli_cmd(server, cmd, fs, client))
+				unknow_cmd(fs);
 	}
 	free_tab(cmd);
 }

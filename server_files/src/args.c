@@ -13,26 +13,23 @@
 * @param server
 */
 
-void init_struct(t_srv *server)
+void init_struct(srv_t *server)
 {
-	t_tm *team = malloc(sizeof(t_tm));
-	t_cnt *cnt = malloc(sizeof(t_cnt));
-	t_map *map = malloc(sizeof(t_map));
+	server->team = malloc(sizeof(tm_t));
+	server->cnt = malloc(sizeof(cnt_t));
 
-	if (team == NULL || cnt == NULL || map == NULL)
+	if (server->team == NULL || server->cnt == NULL)
 		quit(server);
-	cnt->events = NULL;
-	team->name = NULL;
-	team->client = NULL;
-	team->next = NULL;
-	server->map = map;
+	server->cnt->events = NULL;
+	server->team->name = NULL;
+	server->team->client = NULL;
+	server->team->next = NULL;
 	server->port = 1234;
 	server->width = 10;
 	server->height = 10;
 	server->clientsNB = 10;
 	server->freq = 100;
-	server->team = team;
-	server->cnt = cnt;
+	server->fs = NULL;
 }
 
 /**
@@ -43,13 +40,13 @@ void init_struct(t_srv *server)
 * @param server
 */
 
-void fill_teams(int ac, char **av, t_srv *server)
+void fill_teams(int ac, char **av, srv_t *server)
 {
 	optind -= 1;
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		if (is_team_new(av[optind], server) != 0) {
+		if (iteam_s_new(av[optind], server) != 0) {
 			printf(RED"-n option only accepts unique team names\n"
 				RESET);
 			quit(server);
@@ -67,32 +64,25 @@ void fill_teams(int ac, char **av, t_srv *server)
 * @param server
 */
 
-void fill_args(int ac, char **av, t_srv *server)
+void fill_args(int ac, char **av, srv_t *server)
 {
 	int opt = 0;
 
 	while ((opt = getopt(ac, av, "p:x:y:n:c:f:")) != -1) {
 		switch (opt) {
-			case 'p':
-				server->port = strtol(optarg, NULL, 10);
+			case 'p': server->port = strtol(optarg, NULL, 10);
 				break;
-			case 'x':
-				server->width = strtol(optarg, NULL, 10);
+			case 'x': server->width = strtol(optarg, NULL, 10);
 				break;
-			case 'y':
-				server->height = strtol(optarg, NULL, 10);
+			case 'y': server->height = strtol(optarg, NULL, 10);
 				break;
-			case 'n':
-				fill_teams(ac, av, server);
+			case 'n': fill_teams(ac, av, server);
 				break;
-			case 'c':
-				server->clientsNB = strtol(optarg, NULL, 10);
+			case 'c': server->clientsNB = strtol(optarg, NULL, 10);
 				break;
-			case 'f':
-				server->freq = strtol(optarg, NULL, 10);
+			case 'f': server->freq = strtol(optarg, NULL, 10);
 				break;
-			default:
-				quit(server);
+			default : quit(server);
 				break;
 		}
 	}

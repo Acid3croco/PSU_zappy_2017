@@ -13,7 +13,7 @@
 * @param server
 */
 
-void init_server(t_srv *server)
+void init_server(srv_t *server)
 {
 	socket_bind(server);
 	create_epoll(server);
@@ -30,13 +30,16 @@ void init_server(t_srv *server)
 
 int main(int ac, char **av)
 {
-	t_srv server;
+	srv_t *server = malloc(sizeof(srv_t));
 
-	init_struct(&server);
-	fill_args(ac, av, &server);
-	init_server(&server);
-	init_map(&server);
-	loop_server(&server);
-	free_server(&server);
+	if (server == NULL)
+		return (84);
+	init_struct(server);
+	init_map(server);
+	fill_args(ac, av, server);
+	init_server(server);
+	create_map(server);
+	loop_server(server);
+	free_server(server);
 	return (0);
 }

@@ -15,11 +15,30 @@
 * @param fs
 */
 
-void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
+void wrong_teamname(srv_t *server, char **cmd, FILE *fs)
 {
-	printf(RED"%s: Unknow team name\n"RESET, cmd[0]);
-	close_fd(server->cnt->events[server->cnt->a].data.fd);
+	printf(RED"%s: Unknow team name or team is full\n"RESET, cmd[0]);
+	close(server->cnt->events[server->cnt->a].data.fd);
 	fclose(fs);
+}
+
+/**
+* @brief put_cli_on_map put the new client ramdomly on the map
+*
+* @param server
+* @param team
+* @param new
+*/
+
+void put_cli_on_map(srv_t *server, cl_t *new)
+{
+	unsigned int seed = 0;
+
+	new->x = my_rand(&seed) % server->width;
+	new->y = my_rand(&seed) % server->height;
+	new->look = my_rand(&seed) % 4;
+	new->mnext = server->map->box[new->y][new->x]->client;
+	server->map->box[new->y][new->x]->client = new;
 }
 
 /**
@@ -30,22 +49,36 @@ void wrong_teamname(t_srv *server, char **cmd, FILE *fs)
 * @param fs
 */
 
-void add_cli(t_srv *server, char **cmd, FILE *fs, t_tm *team)
+void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 {
-	t_cl *new = malloc(sizeof(t_cl));
+	cl_t *new = malloc(sizeof(cl_t));
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
+	if (new == NULL) {
+		fclose(fs);
+		free_tab(cmd);
+		quit(server);
+	}
 	new->team = malloc(strlen(cmd[0]) + 1);
 	strcpy(new->team, cmd[0]);
 	new->fs = fs;
 	new->fd = fd;
-	new->inventory = NULL;
 	new->next = team->client;
 	team->client = new;
-	printf("Adding %i to the team %s\n", fd, cmd[0]);
+	team->nb_ia += 1;
+	init_ress_client(new);
+	put_cli_on_map(server, new);
+	send_new_client(server, team, new, cmd);
 }
 
-void add_map(t_srv *server, FILE *fs)
+/**
+* @brief add_map add the fd of the map
+*
+* @param server
+* @param fs
+*/
+
+void add_map(srv_t *server, FILE *fs)
 {
 	server->map->fs = fs;
 	server->map->fd = server->cnt->events[server->cnt->a].data.fd;
@@ -61,12 +94,11 @@ void add_map(t_srv *server, FILE *fs)
 * @param fs
 */
 
-void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
+void add_cli_to_team(srv_t *server, char **cmd, FILE *fs)
 {
-	t_tm *tmp;
+	tm_t *tmp;
 	int done = 0;
 
-	(void)fs;
 	if (strcmp(cmd[0], "GMAP") == 0) {
 		add_map(server, fs);
 		return;
@@ -77,9 +109,8 @@ void add_cli_to_team(t_srv *server, char **cmd, FILE *fs)
 			break;
 		}
 	}
-	if (done == 0)
-		wrong_teamname(server, cmd, fs);
-	else {
+	if (done == 1 && server->clientsNB - tmp->nb_ia > 0)
 		add_cli(server, cmd, fs, tmp);
-	}
+	else
+		wrong_teamname(server, cmd, fs);
 }

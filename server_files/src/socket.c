@@ -30,7 +30,7 @@ struct sockaddr_in get_in(struct sockaddr_in *s_in, int port)
 * @param server
 */
 
-void socket_bind(t_srv *server)
+void socket_bind(srv_t *server)
 {
 	struct protoent *pe;
 	struct sockaddr_in s_in;

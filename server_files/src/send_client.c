@@ -1,0 +1,45 @@
+/*
+** EPITECH PROJECT, 2018
+** zappy
+** File description:
+** send_client
+*/
+
+#include "server.h"
+
+/**
+* @brief init_ress_client initalize the inventory of the client
+*
+* @param client
+*/
+
+void init_ress_client(cl_t *client)
+{
+	client->ress.deraumere = 0;
+	client->ress.food = 1260;
+	client->ress.linemate = 0;
+	client->ress.mendiane = 0;
+	client->ress.phiras = 0;
+	client->ress.sibur = 0;
+	client->ress.thystame = 0;
+}
+
+/**
+* @brief send_new_client send information to the client
+*
+* @param server
+* @param team
+* @param client
+* @param cmd
+*/
+
+void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd)
+{
+	int fd = server->cnt->events[server->cnt->a].data.fd;
+
+	printf(MAGENTA"Adding %i to the team %s\n"RESET, fd, cmd[0]);
+	printf(MAGENTA"There is %i ia in the team %s\n"RESET,
+		team->nb_ia, cmd[0]);
+	fprintf(client->fs, "%i\n", server->clientsNB - team->nb_ia);
+	fprintf(client->fs, "%i %i\n", server->width, server->height);
+}

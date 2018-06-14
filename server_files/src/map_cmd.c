@@ -7,7 +7,15 @@
 
 #include "server.h"
 
-void map_cmd(t_srv *server, char **cmd, FILE *fs)
+/**
+* @brief map_cmd take the command given by
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void map_cmd(srv_t *server, char **cmd, FILE *fs)
 {
 	(void)server;
 	(void)fs;
