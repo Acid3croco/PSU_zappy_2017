@@ -61,45 +61,50 @@ bool	Command::startConnection(int ac, char **av)
 * @brief forward Ia move forward.
 *
 */
-void	Command::forward() const
+void	Command::forward()
 {
 	this->_so->wwrite("Forward\n");
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief right Ia move to the right.
 *
 */
-void	Command::right() const
+void	Command::right()
 {
 	this->_so->wwrite("Right\n");
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief left Ia move to the left.
 *
 */
-void	Command::left() const
+void	Command::left()
 {
 	this->_so->wwrite("Left\n");
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief look Ia look around.
 *
 */
-void	Command::look() const
+void	Command::look()
 {
 	this->_so->wwrite("Look\n");
+	this->_lastCmd = std::string("look");
 }
 
 /**
 * @brief inventory Ia check his inventory.
 *
 */
-void	Command::inventory() const
+void	Command::inventory()
 {
 	this->_so->wwrite("Inventory\n");
+	this->_lastCmd = std::string("inventory");
 }
 
 /**
@@ -107,69 +112,76 @@ void	Command::inventory() const
 *
 * @param broad
 */
-void	Command::broadcast(const std::string broad) const
+void	Command::broadcast(const std::string broad)
 {
 	this->_so->wwrite("Broadcast ");
 	this->_so->wwrite(broad.c_str());
 	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("broadcast");
 }
 
 /**
 * @brief connectNbr return the number of unused team number.
 *
 */
-void	Command::connectNbr() const
+void	Command::connectNbr()
 {
 	this->_so->wwrite("Connect_nbr\n");
+	this->_lastCmd = std::string("connectNbr");
 }
 
 /**
 * @brief pfork Ia open a new team slot.
 *
 */
-void	Command::pfork() const
+void	Command::pfork()
 {
 	this->_so->wwrite("Fork\n");
+	this->_lastCmd = std::string("fork");
 }
 
 /**
 * @brief eject eject other player from Ia actual position.
 *
 */
-void	Command::eject() const
+void	Command::eject()
 {
 	this->_so->wwrite("Eject\n");
+	this->_lastCmd = std::string("eject");
 }
 
 /**
 * @brief takeObj Ia take an object on the ground.
 *
 */
-void	Command::takeObj(const std::string object) const
+void	Command::takeObj(const std::string object)
 {
 	this->_so->wwrite("Take ");
 	this->_so->wwrite(object.c_str());
 	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("takeObj");
 }
 
 /**
 * @brief setObj Ia drop an object on the ground.
 *
 */
-void	Command::setObj(const std::string object) const
+void	Command::setObj(const std::string object)
 {
 	this->_so->wwrite("Set ");
 	this->_so->wwrite(object.c_str());
 	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("setObj");
 }
 
 /**
 * @brief incantation Ia start his level up if all requirement are ready.
 *
 */
-void	Command::incantation() const
+void	Command::incantation()
 {
 	this->_so->wwrite("Incantation");
+	this->_lastCmd = std::string("incantation");
 }
 
 /**
@@ -180,4 +192,18 @@ void	Command::incantation() const
 std::string	Command::getListen()
 {
 	return (this->_so->wlisten());
+}
+
+/**
+* @brief compareCmd compare the message send by the server and string.
+*
+* @param cmd
+* @return true
+* @return false
+*/
+bool	Command::compareCmd(std::string cmd)
+{
+	if (this->_lastCmd.compare(cmd) == 0)
+		return (true);
+	return (false);
 }

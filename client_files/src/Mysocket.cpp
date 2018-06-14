@@ -21,8 +21,10 @@ Mysocket::Mysocket()
 */
 Mysocket::~Mysocket()
 {
-	fclose(this->_fs);
-	free(this->_buf);
+	if (this->_fs != NULL)
+		fclose(this->_fs);
+	if (this->_buf != NULL)
+		free(this->_buf);
 }
 
 /**
@@ -77,7 +79,7 @@ in_addr_t	Mysocket::winetAddr()
 int	Mysocket::wconnect()
 {
 	return (connect(this->_fd,
-	(struct sockaddr *)&this->_addr, sizeof(this->_addr)) == -1);
+	(struct sockaddr *)&this->_addr, sizeof(this->_addr)));
 }
 
 /**
