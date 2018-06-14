@@ -96,10 +96,10 @@ void	Game::handleInventory(std::string buf)
 */
 void	Game::handleLook(std::string buf)
 {
-	std:vector<int>	inventory;
+	std::vector<int>	inventory;
 
+	(void)buf;
 	inventory = this->_inv->getInventory();
-	this->_obj->
 }
 
 /**
