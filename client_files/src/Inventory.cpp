@@ -62,7 +62,7 @@ std::string	Inventory::priority()
 *
 * @return std::vector<int>
 */
-std::vector<int>	Iventory::getInventory() const
+std::vector<int>	Inventory::getInventory() const
 {
 	return (this->_res);
 }

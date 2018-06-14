@@ -1,0 +1,99 @@
+#!/usr/bin/python3
+ 
+import sys, pygame, socket
+from pygame.locals import *
+ 
+#a enlever apres que le pb de mbmap soit regle cote server
+SizeX = 10
+SizeY = 10
+ 
+# SIZE OF A BOX BY DEFAULT
+size_box = 100
+ 
+#_______________________________________________________________________________
+# DATA MAP
+def handle_map():
+  if (SizeX >= 100 and SizeX < 1000 or
+     SizeY >= 100 and SizeY < 1000):
+    width = SizeX * (size_box / 10)
+    height = SizeY * (size_box / 10)
+  elif (SizeX >= 1000 and SizeX < 10000 or
+     SizeY >= 1000 and SizeY < 10000):
+    width = SizeX * (size_box / 100)
+    height = SizeY * (size_box / 100)
+  elif (SizeX >= 10000 or SizeY >= 10000):
+    width = SizeX * (size_box / 1000)
+    height = SizeY * (size_box / 1000)
+  else:
+    width = SizeX * size_box
+    height = SizeY * size_box
+  create_window(int(width), int(height))
+ 
+def load_tab_info():
+  line = SizeX
+  column = SizeY
+  lst = [[0] * column for _ in range(line)]
+
+   
+#_______________________________________________________________________________
+# GRAPHIC
+def create_window(width, height):
+  screen = pygame.display.set_mode((width, height))
+  my_image = pygame.image.load('textures/grass_template.jpg')
+  screen.blit(pygame.transform.scale(my_image, (width, height)), (0, 0))
+  pygame.display.flip()
+  pygame.display.set_caption('Zappy')
+  running = True
+  while running:
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        running = False
+ 
+ 
+ 
+#_______________________________________________________________________________
+# CONNECTION SERVER
+def connect_client(port, host):
+  str1 = "WELCOME"
+  str2 = "mbape"
+  sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  sockett.connect((host, port))
+  print("Connected : {}".format(port))
+  data = sockett.recv(255)
+  if str(data).find(str1) == 2:
+    sockett.send("GMAP\n".encode())
+  data = sockett.recv(255)
+  #if str(data).find(str2) == 2:
+  #  handle_map()
+  sockett.close()
+   
+#_______________________________________________________________________________
+# GESTION CLIENT
+def get_port(arg1):
+  port = int(arg1)
+  if port < 0 or port > 65535:
+    return (-1)
+  return (port)
+ 
+ 
+def launch_graphic_client(arg1, arg2):
+  port = get_port(arg1)
+  host = arg2
+  connect_client(port, host)
+  load_tab_info()
+  handle_map() #a enlever apres que le pb de mbmap soit regle cote server
+ 
+def print_usage():
+  print("USAGE")
+  print("\t./zappy_graphique port host")
+ 
+def main():
+  if len(sys.argv) == 2 and sys.argv[1] == "--help":
+    print_usage()
+  elif len(sys.argv) == 3:
+    launch_graphic_client(sys.argv[1], sys.argv[2])
+  else:
+    exit(84)
+  exit(0)
+ 
+main()
