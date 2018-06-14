@@ -57,7 +57,15 @@ std::string	Inventory::priority()
 	return("food");
 }
 
-
+/**
+* @brief getInventory return the inventory.
+*
+* @return std::vector<int>
+*/
+std::vector<int>	Iventory::getInventory() const
+{
+	return (this->_res);
+}
 
 /**
 * @brief setInventory assign the value of the last inventory cmd.

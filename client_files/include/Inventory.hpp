@@ -30,7 +30,7 @@ public:
 	~Inventory();
 	void	parseInventory(std::string buf);
 	std::string	priority();
-	//std::vector<std::string>	getRessource(int lvl);
+	std::vector<int>	getInventory() const;
 protected:
 private:
 	void	setInventory(std::string buf);
