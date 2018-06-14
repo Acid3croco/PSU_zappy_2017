@@ -21,6 +21,7 @@ Command::Command() : _so(new Mysocket())
 */
 Command::~Command()
 {
+	delete this->_so;
 }
 
 /**
@@ -60,58 +61,50 @@ bool	Command::startConnection(int ac, char **av)
 * @brief forward Ia move forward.
 *
 */
-void	Command::forward() const
+void	Command::forward()
 {
 	this->_so->wwrite("Forward\n");
-	this->_so->wlisten();
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief right Ia move to the right.
 *
 */
-void	Command::right() const
+void	Command::right()
 {
 	this->_so->wwrite("Right\n");
-	this->_so->wlisten();
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief left Ia move to the left.
 *
 */
-void	Command::left() const
+void	Command::left()
 {
 	this->_so->wwrite("Left\n");
-	this->_so->wlisten();
+	this->_lastCmd = std::string("move");
 }
 
 /**
 * @brief look Ia look around.
 *
-* @return std::string
 */
-std::string	Command::look() const
+void	Command::look()
 {
-	std::string	msg;
-
 	this->_so->wwrite("Look\n");
-	msg = this->_so->wlisten();
-	return (msg);
+	this->_lastCmd = std::string("look");
 }
 
 /**
 * @brief inventory Ia check his inventory.
 *
-* @return std::string
 */
-std::string	Command::inventory() const
+void	Command::inventory()
 {
-	std::string	msg;
-
 	this->_so->wwrite("Inventory\n");
-	msg = this->_so->wlisten();
-	return (msg);
+	this->_lastCmd = std::string("inventory");
 }
 
 /**
@@ -119,104 +112,76 @@ std::string	Command::inventory() const
 *
 * @param broad
 */
-void	Command::broadcast(std::string broad) const
+void	Command::broadcast(const std::string broad)
 {
+	this->_so->wwrite("Broadcast ");
 	this->_so->wwrite(broad.c_str());
-	this->_so->wlisten();
+	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("broadcast");
 }
 
 /**
 * @brief connectNbr return the number of unused team number.
 *
-* @return int
 */
-int	Command::connectNbr() const
+void	Command::connectNbr()
 {
-	int		nbr;
-	std::string	msg;
-
 	this->_so->wwrite("Connect_nbr\n");
-	msg = this->_so->wlisten();
-	nbr = stoi(msg, nullptr);
-	return (nbr);
+	this->_lastCmd = std::string("connectNbr");
 }
 
 /**
 * @brief pfork Ia open a new team slot.
 *
 */
-void	Command::pfork() const
+void	Command::pfork()
 {
 	this->_so->wwrite("Fork\n");
-	this->_so->wlisten();
+	this->_lastCmd = std::string("fork");
 }
 
 /**
 * @brief eject eject other player from Ia actual position.
 *
-* @return true
-* @return false
 */
-bool	Command::eject() const
+void	Command::eject()
 {
-	std::string	msg;
-
 	this->_so->wwrite("Eject\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko e\n") == 0)
-		return (false);
-	return (true);
+	this->_lastCmd = std::string("eject");
 }
 
 /**
 * @brief takeObj Ia take an object on the ground.
 *
-* @return true
-* @return false
 */
-bool	Command::takeObj() const
+void	Command::takeObj(const std::string object)
 {
-	std::string	msg;
-
-	this->_so->wwrite("Take object\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko t\n") == 0)
-		return (false);
-	return (true);
+	this->_so->wwrite("Take ");
+	this->_so->wwrite(object.c_str());
+	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("takeObj");
 }
 
 /**
 * @brief setObj Ia drop an object on the ground.
 *
-* @return true
-* @return false
 */
-bool	Command::setObj() const
+void	Command::setObj(const std::string object)
 {
-	std::string	msg;
-
-	this->_so->wwrite("Set object\n");
-	msg = this->_so->wlisten();
-	if (msg.compare("ko s\n") == 0)
-		return (false);
-	return (true);
+	this->_so->wwrite("Set ");
+	this->_so->wwrite(object.c_str());
+	this->_so->wwrite(" \n");
+	this->_lastCmd = std::string("setObj");
 }
 
 /**
 * @brief incantation Ia start his level up if all requirement are ready.
 *
-* @return int
 */
-int	Command::incantation() const
+void	Command::incantation()
 {
-	std::string	msg;
-	int		nbr;
-
 	this->_so->wwrite("Incantation");
-	if (msg.compare("ko i\n") == 0)
-		return (-1);
-	nbr = stoi(msg, nullptr);
-	return (nbr);
+	this->_lastCmd = std::string("incantation");
 }
 
 /**
@@ -227,4 +192,18 @@ int	Command::incantation() const
 std::string	Command::getListen()
 {
 	return (this->_so->wlisten());
+}
+
+/**
+* @brief compareCmd compare the message send by the server and string.
+*
+* @param cmd
+* @return true
+* @return false
+*/
+bool	Command::compareCmd(std::string cmd)
+{
+	if (this->_lastCmd.compare(cmd) == 0)
+		return (true);
+	return (false);
 }
