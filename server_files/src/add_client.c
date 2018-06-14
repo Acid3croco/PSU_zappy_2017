@@ -38,6 +38,7 @@ void put_cli_on_map(srv_t *server, cl_t *new)
 	new->y = my_rand(&seed) % server->height;
 	new->look = my_rand(&seed) % 4;
 	new->mnext = server->map->box[new->y][new->x]->client;
+	server->map->box[new->y][new->x]->client = new;
 }
 
 /**
