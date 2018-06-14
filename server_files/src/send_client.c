@@ -16,7 +16,7 @@
 void init_ress_client(cl_t *client)
 {
 	client->ress.deraumere = 0;
-	client->ress.food = 10;
+	client->ress.food = 1260;
 	client->ress.linemate = 0;
 	client->ress.mendiane = 0;
 	client->ress.phiras = 0;

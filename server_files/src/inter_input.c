@@ -31,6 +31,19 @@ cl_t *find_client(srv_t *server)
 }
 
 /**
+* @brief unknow_cmd send ko to the client becasue of an unknow command
+*
+* @param server
+* @param cmd
+* @param fs
+*/
+
+void unknow_cmd(FILE *fs)
+{
+	fprintf(fs, "ko\n");
+}
+
+/**
 * @brief inter_input interprete the given input
 *
 * @param server
@@ -56,7 +69,8 @@ void inter_input(srv_t *server, char *input, FILE *fs)
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else
-			sel_cli_cmd(server, cmd, fs);
+			if (sel_cli_cmd(server, cmd, fs, client))
+				unknow_cmd(fs);
 	}
 	free_tab(cmd);
 }

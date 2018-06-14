@@ -92,10 +92,14 @@ typedef struct server_s
 } srv_t;
 
 /* server commands functions */
-int quit_cmd(srv_t *server, char **cmd, FILE *fs);
+int quit_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 int msg_cmd(char *cmd);
 
 /* client commands functions */
-int forward_cmd(srv_t *server, char **cmd, FILE *fs);
+int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int look_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+
 
 #endif /* !STRUCT_H_ */

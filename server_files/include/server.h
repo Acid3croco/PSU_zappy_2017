@@ -65,7 +65,7 @@ char **str_to_wordtab(char *input, FILE *fs);
 void free_tab(char **tab);
 void init_map(srv_t *server);
 void map_cmd(srv_t *server, char **cmd, FILE *fs);
-int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs);
+int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs);
 void free_tab(char **tab);
 FILE *my_fdopen(srv_t *server);
