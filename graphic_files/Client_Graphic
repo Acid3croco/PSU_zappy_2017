@@ -1,8 +1,8 @@
 
 
-import sys, socket
-from map_handler import handle_map, load_tab_info
-from connection import get_port, connect_client
+import sys
+from map_handle import handle_map, load_tab_info
+from connection import connect_client
 
 def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
@@ -10,6 +10,14 @@ def launch_graphic_client(arg1, arg2):
 	connect_client(port, host)
 	load_tab_info()
 	handle_map() #a enlever apres que le pb de mbmap soit regle cote server
+
+#_______________________________________________________________________________
+# GESTION CLIENT
+def get_port(arg1):
+	port = int(arg1)
+	if port < 0 or port > 65535:
+		return (-1)
+	return (port)
 
 def print_usage():
 	print("USAGE")
