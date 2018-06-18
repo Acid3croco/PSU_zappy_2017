@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <sys/timeb.h>
+#include <sys/time.h>
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -75,5 +76,6 @@ void free_map(map_t *map, int x, int y);
 int my_rand(unsigned int *seed);
 void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
 void init_ress_client(cl_t *client);
+void getline_close(srv_t *server, char *input, FILE *fs);
 
 #endif /* !SERVER_H_ */

@@ -80,10 +80,25 @@ void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 
 void add_map(srv_t *server, FILE *fs)
 {
+	char *map = calloc(sizeof(char), server->height * server->width * 20);
+
 	server->map->fs = fs;
 	server->map->fd = server->cnt->events[server->cnt->a].data.fd;
-	dprintf(server->map->fd, "mbape\n");
-	return;
+	for (int y = 0; y < server->height; y++) {
+		for (int x = 0; x < server->width; x++) {;
+			sprintf(map, "%s/%i;%i:%iD%iF%iL%iM%iP%iS%iT",
+				map, x, y,
+				server->map->box[y][x]->ress.deraumere,
+				server->map->box[y][x]->ress.food,
+				server->map->box[y][x]->ress.linemate,
+				server->map->box[y][x]->ress.mendiane,
+				server->map->box[y][x]->ress.phiras,
+				server->map->box[y][x]->ress.sibur,
+				server->map->box[y][x]->ress.thystame);
+		}
+	}
+	dprintf(server->map->fd, "%s", map);
+	free(map);
 }
 
 /**

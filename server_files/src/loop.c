@@ -70,11 +70,8 @@ void read_event(srv_t *server)
 	if (input == NULL)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
-	if (characters < 1) {
-		free(input);
-		fclose(fs);
-		close_fd(server);
-	}
+	if (characters < 1)
+		getline_close(server, input, fs);
 	else if (characters > 1)
 		inter_input(server, input, fs);
 	else

@@ -41,3 +41,20 @@ void free_map(map_t *map, int x, int y)
 	if (map != NULL)
 		free(map);
 }
+
+/**
+* @brief getline_close close and free the ressources if getline return -1
+*
+* @param server
+* @param input
+* @param fs
+*/
+
+void getline_close(srv_t *server, char *input, FILE *fs)
+{
+	free(input);
+	fclose(fs);
+	if (server->map->fd == server->cnt->events[server->cnt->a].data.fd)
+		server->map->fs = NULL;
+	close_fd(server);
+}
