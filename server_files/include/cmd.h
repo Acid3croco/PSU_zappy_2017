@@ -11,7 +11,7 @@
 #include "struct.h"
 
 #define NB_CMD_SRV 1
-#define NB_CMD_CLI 4
+#define NB_CMD_CLI 5
 
 typedef struct s_cmd
 {
@@ -27,9 +27,9 @@ const t_cmd cmd_cli[] = {
 	{"Forward", &forward_cmd},
 	{"Right", &right_cmd},
 	{"Left", &left_cmd},
-	{"Look", &look_cmd}
-/*	{"Inventory", &inv_cmd},
-	{"Broadcast", &broad_cmd},
+	{"Look", &look_cmd},
+	{"Inventory", &inventory_cmd}
+/*	{"Broadcast", &broad_cmd},
 	{"Connect_nbr", &conn_cmd},
 	{"Fork", &fork_cmd},
 	{"Eject", &eject_cmd},

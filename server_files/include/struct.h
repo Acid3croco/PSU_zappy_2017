@@ -100,6 +100,6 @@ int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 int look_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
-
+int inventory_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
 
 #endif /* !STRUCT_H_ */

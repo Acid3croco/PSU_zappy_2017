@@ -35,7 +35,8 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/free.c \
 	./server_files/src/my.c \
 	./server_files/src/send_client.c \
-	./server_files/src/look_cmd.c
+	./server_files/src/look_cmd.c \
+	./server_files/src/inventory_cmd.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
