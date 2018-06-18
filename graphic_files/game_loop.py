@@ -10,6 +10,11 @@ def sort_data(data):
 	else
 		create_foods_stones(data)
 
-def get_info(sockett):
+def get_info(sockett, lst):
 	data = sockett.recv(255)
-	sort_data(data)
+	if tab = sort_data(data) == -1:
+		return (-1)
+
+def game_loop(sockett, lst):
+	get_info(sockett, lst)
+

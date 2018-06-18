@@ -3,6 +3,7 @@
 import pygame, socket
 from pygame.locals import *
 from display_map.py import display_map
+fri
 
 def create_window(width, height, sockett, data):
 	screen = pygame.display.set_mode((width, height))
@@ -11,14 +12,12 @@ def create_window(width, height, sockett, data):
 	pygame.display.flip()
 	pygame.display.set_caption('Zappy')
 	running = True
-	display_map(data, width, height)
+	lst = display_map(data, width, height)
 	while running:
 		pygame.time.Clock().tick(30)
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
-		if (get_info(sockett) == 0):
-			# fct display
-		else:
-			break #running = 0
+		if game_loop(sockett, lst) == -1:
+			break #ou running = 0
