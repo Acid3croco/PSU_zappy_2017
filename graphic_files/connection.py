@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import sys, pygame, socket
 from pygame.locals import *
 from map_handler.py
@@ -7,7 +8,6 @@ from map_handler.py
 # CONNECTION SERVER
 def connect_client(port, host):
 	welcome = "WELCOME"
-	str2 = "mbape"
 	sockett = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sockett.connect((host, port))
 	print("Connected : {}".format(port))
@@ -15,6 +15,6 @@ def connect_client(port, host):
 	if str(data).find(welcome) == 2:
 		sockett.send("GMAP\n".encode())
 	data = sockett.recv(255)
-	#if str(data).find(str2) == 2:
-		#handle_map(sockett)
+	# calc size of map fct
+	handle_map(sockett)
 	sockett.close()

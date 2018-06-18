@@ -12,7 +12,9 @@ size_box = 100
 
 #_______________________________________________________________________________
 # DATA MAP
-def handle_map(): #socket a rajouter en parametre
+def handle_map(sockett, data):
+	#SizeX = calc_x
+	#SizeY = calc_y
 	if (SizeX >= 100 and SizeX < 1000 or
 		 SizeY >= 100 and SizeY < 1000):
 		width = SizeX * (size_box / 10)
@@ -27,7 +29,7 @@ def handle_map(): #socket a rajouter en parametre
 	else:
 		width = SizeX * size_box
 		height = SizeY * size_box
-	create_window(int(width), int(height))
+	create_window(int(width), int(height), sockett, data)
 
 def load_tab_info():
 	line = SizeX
