@@ -41,28 +41,37 @@ void	Inventory::parseInventory(std::string buf)
 		buf.erase(0, pos + 2);
 		this->setInventory(token);
 	}
-	for (int i = 0; i < 7; i++)
-		std::cout << this->_res[i] << std::endl;
+	this->_res[0].first = std::string("linemate");
+	this->_res[1].first = std::string("deraumere");
+	this->_res[2].first = std::string("sibur");
+	this->_res[3].first = std::string("mendiane");
+	this->_res[4].first = std::string("phiras");
+	this->_res[5].first = std::string("thystame");
+	this->_res[6].first = std::string("food");
 }
 
 /**
 * @brief priority choose the ressource Ia need to find first.
 *
-* @return std::string
+* @return std::pair<std::string, int>
 */
-std::string	Inventory::priority()
+std::pair<std::string, int>	Inventory::getPriority(std::vector<int> goal)
 {
-	if (this->_res[this->FOOD] < 10)
-		return ("food");
-	return("food");
+	if (this->_res[this->FOOD].second < 10)
+		return (this->_res[this->FOOD]);
+	for (int i = 0; i < 6; i++) {
+		if (goal[i] > this->_res[i].second)
+			return (this->_res[i]);
+	}
+	return(this->_res[this->FOOD]);
 }
 
 /**
 * @brief getInventory return the inventory.
 *
-* @return std::vector<int>
+* @return std::vector<std::pair<std::string, int>>
 */
-std::vector<int>	Inventory::getInventory() const
+std::vector<std::pair<std::string, int>>	Inventory::getInventory() const
 {
 	return (this->_res);
 }
@@ -81,19 +90,34 @@ void	Inventory::setInventory(std::string buf)
 	token = buf.substr(0, pos);
 	buf.erase(0, pos + 1);
 	switch((int)token.front()) {
-		case 'f' : this->_res[0] = atoi(buf.c_str());
+		case 'l' : this->_res[0].second = atoi(buf.c_str());
 			break;
-		case 'l' : this->_res[1] = atoi(buf.c_str());
+		case 'd' : this->_res[1].second = atoi(buf.c_str());
 			break;
-		case 'd' : this->_res[2] = atoi(buf.c_str());
+		case 's' : this->_res[2].second = atoi(buf.c_str());
 			break;
-		case 's' : this->_res[3] = atoi(buf.c_str());
+		case 'm' : this->_res[3].second = atoi(buf.c_str());
 			break;
-		case 'm' : this->_res[4] = atoi(buf.c_str());
+		case 'p' : this->_res[4].second = atoi(buf.c_str());
 			break;
-		case 'p' : this->_res[5] = atoi(buf.c_str());
+		case 't' : this->_res[5].second = atoi(buf.c_str());
 			break;
-		case 't' : this->_res[6] = atoi(buf.c_str());
+		case 'f' : this->_res[6].second = atoi(buf.c_str());
 			break;
 	}
+}
+
+/**
+* @brief findId find the id of the ressource.
+*
+* @param goal
+* @return int
+*/
+int	Inventory::findId(std::string goal)
+{
+	for (int i = 0; i < 7; i++) {
+		if (goal.compare(this->_res[i].first) == 0)
+			return (i);
+	}
+	return (-1);
 }

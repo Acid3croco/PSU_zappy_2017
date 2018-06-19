@@ -18,23 +18,24 @@
 class Inventory {
 public:
 	enum	Type {
-		FOOD,
 		LINEMATE,
 		DERAUMERE,
 		SIBUR,
 		MENDIANE,
 		PHIRAS,
-		THYSTAME
+		THYSTAME,
+		FOOD
 	};
 	Inventory();
 	~Inventory();
 	void	parseInventory(std::string buf);
-	std::string	priority();
-	std::vector<int>	getInventory() const;
+	std::pair<std::string, int>	getPriority(std::vector<int> goal);
+	std::vector<std::pair<std::string, int>>	getInventory() const;
+	int			findId(std::string goal);
 protected:
 private:
 	void	setInventory(std::string buf);
-	std::vector<int>	_res;
+	std::vector<std::pair<std::string, int>>	_res;
 };
 
 #endif /* !INVENTORY_HPP_ */

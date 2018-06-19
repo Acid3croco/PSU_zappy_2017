@@ -11,7 +11,7 @@
 * @brief Construct a new Command:: Command object
 *
 */
-Command::Command() : _so(new Mysocket())
+Command::Command() : _so(new Mysocket()), _lastCmd("noCmd"), _team("-1")
 {
 }
 
@@ -34,25 +34,24 @@ Command::~Command()
 */
 bool	Command::startConnection(int ac, char **av)
 {
-	std::vector<int>	pos{-1, -1, 0};
+	std::vector<int>	pos{-1, 0};
 
 	for (int i = 1; i < ac; i += 2) {
 		if (std::strcmp(av[i], "-p") == 0)
 			pos[0] = i + 1;
 		else if (std::strcmp(av[i], "-n") == 0)
-			pos[1] = i + 1;
+			this->_team = std::string(av[i + 1]);
 		else if (std::strcmp(av[i], "-h") == 0)
-			pos[2] = i + 1;
+			pos[1] = i + 1;
 	}
-	if (pos[0] == -1 || pos[1] == -1)
+	if (pos[0] == -1 || this->_team.compare("noTeam") == 0)
 		return (false);
-	if (this->_so->launchMysocket(std::atoi(av[pos[0]]), av[pos[2]], pos[2])
-	== false) {
-		perror("");
+	if (this->_so->launchMysocket(std::atoi(av[pos[0]]), av[pos[1]], pos[1])
+	== false)
 		return (false);
-	}
-	std::cout << this->_so->wlisten() << std::endl;
-	this->_so->wwrite(av[pos[1]]);
+	if (this->_so->wlisten().compare("Error\n") == 0)
+		return (false);
+	this->_so->wwrite(this->_team.c_str());
 	this->_so->wwrite("\n");
 	return (true);
 }
@@ -116,7 +115,7 @@ void	Command::broadcast(const std::string broad)
 {
 	this->_so->wwrite("Broadcast ");
 	this->_so->wwrite(broad.c_str());
-	this->_so->wwrite(" \n");
+	this->_so->wwrite("\n");
 	this->_lastCmd = std::string("broadcast");
 }
 
@@ -158,7 +157,7 @@ void	Command::takeObj(const std::string object)
 {
 	this->_so->wwrite("Take ");
 	this->_so->wwrite(object.c_str());
-	this->_so->wwrite(" \n");
+	this->_so->wwrite("\n");
 	this->_lastCmd = std::string("takeObj");
 }
 
@@ -170,7 +169,7 @@ void	Command::setObj(const std::string object)
 {
 	this->_so->wwrite("Set ");
 	this->_so->wwrite(object.c_str());
-	this->_so->wwrite(" \n");
+	this->_so->wwrite("\n");
 	this->_lastCmd = std::string("setObj");
 }
 
@@ -206,4 +205,14 @@ bool	Command::compareCmd(std::string cmd)
 	if (this->_lastCmd.compare(cmd) == 0)
 		return (true);
 	return (false);
+}
+
+std::string	Command::getTeam()
+{
+	return (this->_team);
+}
+
+int	Command::verifFd() const
+{
+	return (this->_so->getFd());
 }

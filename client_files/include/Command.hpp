@@ -34,10 +34,13 @@ public:
 	void	incantation();
 	std::string	getListen();
 	bool	compareCmd(std::string cmd);
+	std::string	getTeam();
+	int		verifFd() const;
 protected:
 private:
 	Mysocket	*_so;
 	std::string	_lastCmd;
+	std::string	_team;
 };
 
 #endif /* !COMMAND_HPP_ */

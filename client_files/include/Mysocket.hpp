@@ -41,13 +41,13 @@ private:
 	in_addr_t	winetAddr();
 	int	wconnect();
 	int	wclose();
+	char			*_buf;
+	FILE			*_fs;
 	std::string		_ip;
 	int			_port;
 	int			_fd;
 	struct sockaddr_in	_addr;
 	struct protoent		*_pe;
-	char			*_buf;
-	FILE			*_fs;
 };
 
 #endif /* !Mysocket_HPP_ */

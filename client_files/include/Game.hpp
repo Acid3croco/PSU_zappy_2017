@@ -27,6 +27,7 @@ public:
 	void	handlingMsg(std::string buf);
 	void	handleInventory(std::string buf);
 	void	handleLook(std::string buf);
+	void	takeRessource(int nbrRes, std::pair<std::string, int> invent);
 protected:
 private:
 	Command			*_co;
@@ -34,7 +35,7 @@ private:
 	Objectif		*_obj;
 	int			_msgQ;
 	int			_lvl;
-	std::string		_priority;
+	std::pair<std::string, int>	_priority;
 	std::vector<int>	_goal;
 	int			_x;
 	int			_y;

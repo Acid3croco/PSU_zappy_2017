@@ -12,7 +12,7 @@
 *
 */
 Game::Game() : _co(new Command()), _inv(new Inventory()), _obj(new Objectif()),
-_msgQ(0), _lvl(1), _priority("food"), _goal(7)
+_msgQ(0), _lvl(1), _priority("food", 5), _goal(7)
 {
 }
 
@@ -56,8 +56,6 @@ bool	Game::prepGame(int ac, char **av)
 	this->_x = atoi(token.c_str());
 	this->_y = atoi(buf.c_str());
 	this->_goal = this->_obj->getGoal(this->_lvl);
-	for (int i = 0; i < 6; i++)
-		std::cout << this->_goal[i] << std::endl;
 	std::cout << this->_x << " " << this->_y << std::endl;
 	return (true);
 }
@@ -85,8 +83,8 @@ void	Game::handlingCommand(std::string buf)
 */
 void	Game::handleInventory(std::string buf)
 {
-	this->_inv->parseInventory(buf);
 	this->_co->look();
+	this->_inv->parseInventory(buf);
 }
 
 /**
@@ -96,10 +94,31 @@ void	Game::handleInventory(std::string buf)
 */
 void	Game::handleLook(std::string buf)
 {
-	std::vector<int>	inventory;
+	std::vector<std::pair<std::string, int>>	inventory;
+	std::vector<std::vector<int>>	sight;
 
-	(void)buf;
 	inventory = this->_inv->getInventory();
+	sight = this->_obj->parseLoop(buf, this->_lvl);
+	std::cout << sight[0][this->_priority.second] << std::endl;
+	for (int i = 0; i < 7; i++) {
+		if (sight[0][i] > 0 && this->_priority.second > 0)
+			this->takeRessource(sight[0][i], inventory[i]);
+	}
+}
+
+/**
+* @brief takeRessource take nbr quantity of ressources on the ground.
+*
+* @param nbr
+*/
+void	Game::takeRessource(int nbr, std::pair<std::string, int> invent)
+{
+	(void)invent;
+	if (this->_priority.first.compare("food") == 0)
+		for (int i = 0; 10 > this->_msgQ && i < nbr; i++) {
+			this->_co->takeObj(this->_priority.first);
+			this->_msgQ++;
+		}
 }
 
 /**
@@ -118,7 +137,7 @@ void	Game::handlingMsg(std::string buf)
 		buf.erase(0, pos + 1);
 		pos = buf.find(" ");
 		token = buf.substr(0, pos);
-		if (token.compare("Pierrotie") == 0)
+		if (token.compare(this->_co->getTeam()) == 0)
 			std::cout << "My broadcast" << std::endl;
 	}
 	else
@@ -138,15 +157,17 @@ bool	Game::gameLoop()
 
 	this->_co->inventory();
 	for (;;) {
+		if (this->_co->verifFd() == -1)
+			return false;
 		buf = this->_co->getListen();
+		std::cout << buf << std::endl;
 		if (buf.compare("Error\n") == 0) {
 			perror("");
 			return (false);
 		}
 		else if (buf.compare("dead\n") == 0)
 			break;
-		std::cout << buf << std::endl;
-		this->handlingMsg(buf);
+		//this->handlingMsg(buf);
 	}
 	return (true);
 }
