@@ -11,8 +11,8 @@ int look_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
 {
 	(void)server;
 	(void)cmd;
-	(void)client;
+	(void)fs;
 	printf("Look!\n");
-	fprintf(fs, "Look\n");
+	dprintf(client->fd, "Look\n");
 	return (0);
 }

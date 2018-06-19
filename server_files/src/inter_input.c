@@ -38,9 +38,9 @@ cl_t *find_client(srv_t *server)
 * @param fs
 */
 
-void unknow_cmd(FILE *fs)
+void unknow_cmd(int fd)
 {
-	fprintf(fs, "ko\n");
+	dprintf(fd, "ko\n");
 }
 
 /**
@@ -70,7 +70,7 @@ void inter_input(srv_t *server, char *input, FILE *fs)
 			add_cli_to_team(server, cmd, fs);
 		else
 			if (sel_cli_cmd(server, cmd, fs, client))
-				unknow_cmd(fs);
+				unknow_cmd(client->fd);
 	}
 	free_tab(cmd);
 }
