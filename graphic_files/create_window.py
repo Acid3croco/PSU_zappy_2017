@@ -4,7 +4,7 @@ import pygame, socket
 from pygame.locals import *
 from display_map.py import init_map
 
-def create_window(width, height, sockett, data):
+def create_window(width, height, sockett, data, SizeX, SizeY):
 	screen = pygame.display.set_mode((width, height))
 	my_image = pygame.image.load('textures/grass_template.jpg')
 	screen.blit(pygame.transform.scale(my_image, (width, height)), (0, 0))
@@ -18,5 +18,5 @@ def create_window(width, height, sockett, data):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
-		if game_loop(sockett, lst, width, height) == -1:
+		if game_loop(sockett, lst, SizeX, SizeY) == -1:
 			break #ou running = 0

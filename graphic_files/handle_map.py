@@ -39,4 +39,5 @@ def handle_map(sockett, data):
 	else:
 		width = SizeX * size_box
 		height = SizeY * size_box
-	create_window(int(width), int(height), sockett, data)
+	create_window(int(width), int(height), sockett, data,
+			SizeX, SizeY)
