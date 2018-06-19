@@ -18,5 +18,5 @@ def create_window(width, height, sockett, data):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
-		if game_loop(sockett, lst) == -1:
+		if game_loop(sockett, lst, width, height) == -1:
 			break #ou running = 0
