@@ -8,7 +8,7 @@
 #include "cmd.h"
 
 /**
-* @brief sel_cli_cmd
+* @brief sel_cli_cmd loop on the array structure to find the command
 *
 * @param server
 * @param cmd
@@ -38,5 +38,22 @@ int sel_srv_cmd(srv_t *server, char **cmd)
 	for (int a = 0; a < NB_CMD_SRV; a++)
 		if (strcmp(cmd_srv[a].cmd, cmd[0]) == 0)
 			return (cmd_srv[a].sel_cmd(server, cmd, NULL));
+	return (1);
+}
+
+/**
+* @brief sel_obj_cmd loop on the array structure to find the good object
+*
+* @param box
+* @param client
+* @param cmd
+* @return int
+*/
+
+int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount)
+{
+	for (int a = 0; a < NB_OBJ; a++)
+		if (strcmp(cmd_obj[a].obj, cmd[1]) == 0)
+			return (cmd_obj[a].sel_obj(box, client, amount));
 	return (1);
 }

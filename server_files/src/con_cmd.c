@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+* @brief find_team juste return the team with a team name
+*
+* @param server
+* @param name
+* @return tm_t*
+*/
+
 tm_t *find_team(srv_t *server, char *name)
 {
 	tm_t *tmp = server->team;

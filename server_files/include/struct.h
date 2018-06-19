@@ -102,5 +102,16 @@ int left_cmd(srv_t *server, char **cmd, cl_t *client);
 int look_cmd(srv_t *server, char **cmd, cl_t *client);
 int inventory_cmd(srv_t *server, char **cmd, cl_t *client);
 int con_cmd(srv_t *server, char **cmd, cl_t *client);
+int take_cmd(srv_t *server, char **cmd, cl_t *client);
+int set_cmd(srv_t *server, char **cmd, cl_t *client);
+
+/* object commands functions */
+int der_obj(box_t *box, cl_t *client, int amount);
+int foo_obj(box_t *box, cl_t *client, int amount);
+int lin_obj(box_t *box, cl_t *client, int amount);
+int men_obj(box_t *box, cl_t *client, int amount);
+int phi_obj(box_t *box, cl_t *client, int amount);
+int sib_obj(box_t *box, cl_t *client, int amount);
+int thy_obj(box_t *box, cl_t *client, int amount);
 
 #endif /* !STRUCT_H_ */
