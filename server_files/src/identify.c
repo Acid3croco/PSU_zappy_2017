@@ -33,15 +33,38 @@ void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size)
 }
 
 /**
+* @brief delete_on_map remove the client from his box
+*
+* @param box
+*/
+
+void delete_on_map(box_t *box, cl_t *client)
+{
+	cl_t *tmp = box->client;
+	cl_t *prev = NULL;
+
+	for (;tmp != NULL; tmp = tmp->mnext) {
+		if (tmp->fd == client->fd)
+			break;
+		prev = tmp;
+	}
+	if (prev == NULL)
+		box->client = NULL;
+	else
+		prev->mnext = tmp->mnext;
+}
+
+/**
 * @brief delete_client delete the client and connect the prev to the next
 *
 * @param prev
 * @param cl
 */
 
-void delete_client(tm_t *team, cl_t *cl, cl_t *prev)
+void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 {
 	team->nb_ia -= 1;
+	delete_on_map(map->box[cl->y][cl->x], cl);
 	if (prev != NULL)
 		prev->next = cl->next;
 	else
@@ -78,6 +101,6 @@ void close_fd(srv_t *server)
 			break;
 	}
 	if (cl != NULL)
-		delete_client(tm, cl, prev);
+		delete_client(server->map, tm, cl, prev);
 	printf(YELLOW"Closed connection on descriptor %d\n"RESET, fd);
 }
