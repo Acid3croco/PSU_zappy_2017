@@ -8,8 +8,6 @@ def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
 	connect_client(port, host)
-	load_tab_info()
-	handle_map() #a enlever apres que le pb de mbmap soit regle cote server
 
 #_______________________________________________________________________________
 # GESTION CLIENT

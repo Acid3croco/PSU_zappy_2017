@@ -8,7 +8,7 @@ def sort_info_serv(data, width, height):
 	return (tab)
 
 
-def display_map(data, width, height):
+def init_map(data, width, height):
 	lst = sort_info_serv(data)
 	#create_map(lst)
 	#METTRE TA FONCTION POUR DISPLAY LA MAP EN PREMIER

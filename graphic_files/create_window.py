@@ -2,8 +2,7 @@
 
 import pygame, socket
 from pygame.locals import *
-from display_map.py import display_map
-fri
+from display_map.py import init_map
 
 def create_window(width, height, sockett, data):
 	screen = pygame.display.set_mode((width, height))

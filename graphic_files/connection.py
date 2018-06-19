@@ -2,7 +2,7 @@
 
 import sys, pygame, socket
 from pygame.locals import *
-from map_handler.py
+from handle_map.py import handle_map
 
 #_______________________________________________________________________________
 # CONNECTION SERVER
@@ -15,6 +15,5 @@ def connect_client(port, host):
 	if str(data).find(welcome) == 2:
 		sockett.send("GMAP\n".encode())
 	data = sockett.recv(255)
-	# calc size of map fct
-	handle_map(sockett)
+	handle_map(sockett, data)
 	sockett.close()
