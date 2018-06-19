@@ -16,16 +16,14 @@
 * @return int
 */
 
-int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+int left_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	(void)server;
 	(void)cmd;
-	(void)fs;
-	printf("Left look %i\n", client->look);
+
 	client->look = client->look - 1 % 4;
 	if (client->look < 0)
 		client->look += 4;
-	printf("Left look %i\n", client->look);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }
@@ -39,16 +37,14 @@ int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
 * @return int
 */
 
-int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+int right_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	(void)server;
 	(void)cmd;
-	(void)fs;
-	printf("Right look %i\n", client->look);
+
 	client->look = client->look + 1 % 4;
 	if (client->look > 3)
 		client->look -= 4;
-	printf("Right look %i\n", client->look);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }

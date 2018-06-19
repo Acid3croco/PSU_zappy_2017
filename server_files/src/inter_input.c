@@ -57,8 +57,8 @@ void inter_input(srv_t *server, char *input, FILE *fs)
 	char **cmd;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
 
-	(void)fs;
-	cmd = str_to_wordtab(input, fs);
+
+	cmd = str_to_wordtab(input);
 	free(input);
 	if (fd == 1)
 		server_cmd(server, cmd, fs);
@@ -69,7 +69,7 @@ void inter_input(srv_t *server, char *input, FILE *fs)
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else
-			if (sel_cli_cmd(server, cmd, fs, client))
+			if (sel_cli_cmd(server, cmd, client))
 				unknow_cmd(client->fd);
 	}
 	free_tab(cmd);

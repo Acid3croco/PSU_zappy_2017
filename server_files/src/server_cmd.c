@@ -35,7 +35,7 @@ int get_tab_size(char *buf)
 * @return char **
 */
 
-char **str_to_wordtab(char *input, FILE *fs)
+char **str_to_wordtab(char *input)
 {
 	char **cmd;
 	char *token;
@@ -43,7 +43,6 @@ char **str_to_wordtab(char *input, FILE *fs)
 	int a;
 	int tab_size = get_tab_size(input);
 
-	(void)fs;
 	cmd = malloc(sizeof(char *) * tab_size);
 	token = strtok_r(input, " \n\0", &save);
 	for (a = 0; token != NULL; a++) {
@@ -82,7 +81,7 @@ void server_cmd(srv_t *server, char **cmd, FILE *fs)
 	server->fs = fs;
 	if (cmd[0] != NULL) {
 		upper_case(cmd[0]);
-		if (sel_srv_cmd(server, cmd, fs) == 1)
+		if (sel_srv_cmd(server, cmd) == 1)
 			msg_cmd(cmd[0]);
 	}
 }

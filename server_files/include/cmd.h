@@ -16,7 +16,7 @@
 typedef struct s_cmd
 {
 	char *cmd;
-	int (*sel_cmd)(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+	int (*sel_cmd)(srv_t *server, char **cmd, cl_t *client);
 } t_cmd;
 
 const t_cmd cmd_srv[] = {

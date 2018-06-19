@@ -17,11 +17,10 @@
 * @return int
 */
 
-int inventory_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+int inventory_cmd(srv_t *server, char **cmd, cl_t *client)
 {
     (void)server;
     (void)cmd;
-    (void)fs;
     dprintf(client->fd, "[food %i, linemate %i, deraumere %i, ", client->ress.food,
     client->ress.linemate, client->ress.deraumere);
 
