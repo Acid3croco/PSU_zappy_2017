@@ -57,13 +57,16 @@ void	Inventory::parseInventory(std::string buf)
 */
 std::pair<std::string, int>	Inventory::getPriority(std::vector<int> goal)
 {
+	std::pair<std::string, int>	ret;
+
+	ret = std::make_pair(std::string("invocation"), 1);
 	if (this->_res[this->FOOD].second < 10)
 		return (this->_res[this->FOOD]);
 	for (int i = 0; i < 6; i++) {
 		if (goal[i] > this->_res[i].second)
 			return (this->_res[i]);
 	}
-	return(this->_res[this->FOOD]);
+	return(ret);
 }
 
 /**

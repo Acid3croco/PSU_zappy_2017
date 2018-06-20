@@ -20,9 +20,7 @@ public:
 	Command();
 	~Command();
 	bool	startConnection(int ac, char **av);
-	void	forward();
-	void	right();
-	void	left();
+	void	move(std::string direction);
 	void	look();
 	void	inventory();
 	void	broadcast(const std::string broad);

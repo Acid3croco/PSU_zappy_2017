@@ -57,32 +57,14 @@ bool	Command::startConnection(int ac, char **av)
 }
 
 /**
-* @brief forward Ia move forward.
+* @brief move allow Ia to move.
 *
+* @param direction
 */
-void	Command::forward()
+void	Command::move(std::string direction)
 {
-	this->_so->wwrite("Forward\n");
-	this->_lastCmd = std::string("move");
-}
-
-/**
-* @brief right Ia move to the right.
-*
-*/
-void	Command::right()
-{
-	this->_so->wwrite("Right\n");
-	this->_lastCmd = std::string("move");
-}
-
-/**
-* @brief left Ia move to the left.
-*
-*/
-void	Command::left()
-{
-	this->_so->wwrite("Left\n");
+	this->_so->wwrite(direction.c_str());
+	this->_so->wwrite("\n");
 	this->_lastCmd = std::string("move");
 }
 
@@ -207,11 +189,21 @@ bool	Command::compareCmd(std::string cmd)
 	return (false);
 }
 
+/**
+* @brief getTeam return the name of the team.
+*
+* @return std::string
+*/
 std::string	Command::getTeam()
 {
 	return (this->_team);
 }
 
+/**
+* @brief verifFd verification if the fd exist.
+*
+* @return int
+*/
 int	Command::verifFd() const
 {
 	return (this->_so->getFd());

@@ -11,6 +11,7 @@
 #include "Command.hpp"
 #include "Inventory.hpp"
 #include "Objectif.hpp"
+#include "Movement.hpp"
 
 /**
 * @brief Game : The game is directed here.
@@ -28,11 +29,13 @@ public:
 	void	handleInventory(std::string buf);
 	void	handleLook(std::string buf);
 	void	takeRessource(int nbrRes, std::pair<std::string, int> invent);
+	void	launchCommand();
 protected:
 private:
 	Command			*_co;
 	Inventory		*_inv;
 	Objectif		*_obj;
+	Movement		*_mo;
 	int			_msgQ;
 	int			_lvl;
 	std::pair<std::string, int>	_priority;

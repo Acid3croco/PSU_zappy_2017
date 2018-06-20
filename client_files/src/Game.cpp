@@ -12,7 +12,7 @@
 *
 */
 Game::Game() : _co(new Command()), _inv(new Inventory()), _obj(new Objectif()),
-_msgQ(0), _lvl(1), _priority("food", 5), _goal(7)
+_mo(new Movement()), _msgQ(0), _lvl(1), _priority("food", 5), _goal(7)
 {
 }
 
@@ -25,6 +25,7 @@ Game::~Game()
 	delete this->_co;
 	delete this->_inv;
 	delete this->_obj;
+	delete this->_mo;
 }
 
 /**
@@ -61,30 +62,34 @@ bool	Game::prepGame(int ac, char **av)
 }
 
 /**
-* @brief handlingCommand handle command.
-*
-* @param buf
-*/
-void	Game::handlingCommand(std::string buf)
-{
-	if (buf.compare("ok") == 0)
-		this->_msgQ--;
-	else if (buf.front() == '[') {
-		if (this->_co->compareCmd("inventory") == true)
-			this->handleInventory(buf);
-		else
-			this->handleLook(buf);
-	}
-}
-
-/**
 * @brief handleInventory handle inventory function.
 *
 */
 void	Game::handleInventory(std::string buf)
 {
+	std::vector<std::pair<std::string, int>>	inventory;
+
+	this->_msgQ--;
 	this->_co->look();
+	this->_msgQ++;
 	this->_inv->parseInventory(buf);
+	inventory = this->_inv->getInventory();
+	this->_priority = this->_inv->getPriority(this->_goal);
+}
+
+/**
+* @brief takeRessource take nbr quantity of ressources on the ground.
+*
+* @param nbr
+*/
+void	Game::takeRessource(int nbr, std::pair<std::string, int> invent)
+{
+	(void)invent;
+	for (int i = 0; 10 > this->_msgQ && i < nbr &&
+	this->_priority.second > i ; i++) {
+		this->_co->takeObj(this->_priority.first);
+		this->_msgQ++;
+	}
 }
 
 /**
@@ -96,29 +101,35 @@ void	Game::handleLook(std::string buf)
 {
 	std::vector<std::pair<std::string, int>>	inventory;
 	std::vector<std::vector<int>>	sight;
+	int	index = this->_inv->findId(this->_priority.first);
 
+	this->_msgQ--;
 	inventory = this->_inv->getInventory();
 	sight = this->_obj->parseLoop(buf, this->_lvl);
-	std::cout << sight[0][this->_priority.second] << std::endl;
-	for (int i = 0; i < 7; i++) {
-		if (sight[0][i] > 0 && this->_priority.second > 0)
-			this->takeRessource(sight[0][i], inventory[i]);
+	std::cout << sight[0][index] << std::endl;
+	if (sight[0][index] > 0)
+		this->takeRessource(sight[0][index], inventory[index]);
+	else {
+		this->takeRessource(sight[0][6], inventory[6]);
+		this->_mo->findPath(sight, index);
 	}
 }
 
 /**
-* @brief takeRessource take nbr quantity of ressources on the ground.
+* @brief handlingCommand handle command.
 *
-* @param nbr
+* @param buf
 */
-void	Game::takeRessource(int nbr, std::pair<std::string, int> invent)
+void	Game::handlingCommand(std::string buf)
 {
-	(void)invent;
-	if (this->_priority.first.compare("food") == 0)
-		for (int i = 0; 10 > this->_msgQ && i < nbr; i++) {
-			this->_co->takeObj(this->_priority.first);
-			this->_msgQ++;
-		}
+	if (buf.compare("ok\n") == 0 || buf.compare("ko\n") == 0)
+		this->_msgQ--;
+	else if (buf.front() == '[') {
+		if (this->_co->compareCmd("inventory") == true)
+			this->handleInventory(buf);
+		else
+			this->handleLook(buf);
+	}
 }
 
 /**
@@ -144,6 +155,18 @@ void	Game::handlingMsg(std::string buf)
 		this->handlingCommand(buf);
 }
 
+void	Game::launchCommand()
+{
+	if (this->_msgQ == 0) {
+			this->_co->inventory();
+			this->_msgQ++;
+	}
+	if (this->_mo->verifPath() == true && this->_msgQ < 10) {
+		this->_co->move(this->_mo->getDirection());
+		this->_msgQ++;
+	}
+}
+
 /**
 * @brief gameLoop the loop where the game take place.
 *
@@ -155,8 +178,8 @@ bool	Game::gameLoop()
 {
 	std::string	buf;
 
-	this->_co->inventory();
 	for (;;) {
+		this->launchCommand();
 		if (this->_co->verifFd() == -1)
 			return false;
 		buf = this->_co->getListen();
@@ -167,7 +190,7 @@ bool	Game::gameLoop()
 		}
 		else if (buf.compare("dead\n") == 0)
 			break;
-		//this->handlingMsg(buf);
+		this->handlingMsg(buf);
 	}
 	return (true);
 }
