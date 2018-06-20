@@ -104,6 +104,7 @@ int inventory_cmd(srv_t *server, char **cmd, cl_t *client);
 int con_cmd(srv_t *server, char **cmd, cl_t *client);
 int take_cmd(srv_t *server, char **cmd, cl_t *client);
 int set_cmd(srv_t *server, char **cmd, cl_t *client);
+int broad_cmd(srv_t *server, char **cmd, cl_t *client);
 
 /* object commands functions */
 int der_obj(box_t *box, cl_t *client, int amount);
