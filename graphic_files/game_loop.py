@@ -23,16 +23,16 @@ def size_box(SizeX, SizeY):
 
 #_______________________________________________________________________________
 # SORT DATA GIVEN BY SERVER AND SEND IT TO FUNCTINON DISPLAY
-def sort_data(data, SizeX, SizeY):
+def sort_data(data_c, SizeX, SizeY):
 	SizeB = size_box(SizeX, SizeY)
 	if SizeB == -1:
 		print("size map problem")
 		return (-1)
-	if str(data).find("new_c") == 2:
-		if create_player(data, SizeB) == -1:
+	if data_c.find("new_c") == 2:
+		if create_player(data_c, SizeB) == -1:
 			return (-1)
 	else
-		if create_foods_stones(data, SizeB) == -1:
+		if create_foods_stones(data_c, SizeB) == -1:
 			return (-1)
 	return (0)
 
@@ -40,7 +40,8 @@ def sort_data(data, SizeX, SizeY):
 # GET DATA GIVEN BY SERVER
 def get_info(sockett, lst):
 	data = sockett.recv(255)
-	tab = sort_data(data, SizeX, SizeY)
+	data_c = data.decode("utf-8")
+	tab = sort_data(data_c, SizeX, SizeY)
 	if tab == -1:
 		return (-1)
 	return(0)

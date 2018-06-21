@@ -15,5 +15,6 @@ def connect_client(port, host):
 	if str(data).find(welcome) == 2:
 		sockett.send("GMAP\n".encode())
 	data = sockett.recv(255)
-	handle_map(sockett, data)
+	data_c = data.decode("utf-8")
+	handle_map(sockett, data_c)
 	sockett.close()
