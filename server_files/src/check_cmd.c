@@ -39,6 +39,7 @@ void time_cmd(srv_t *server, cl_t *cl)
 		sel_cli_cmd(server, cmd, cl);
 		free_tab(cmd);
 		delete_input(cl);
+		cl->nb_inpt -= 1;
 	}
 }
 
