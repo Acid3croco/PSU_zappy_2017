@@ -7,17 +7,39 @@
 
 #include "server.h"
 
+void delete_input(cl_t *client)
+{
+	inpt_t *delete = client->input;
+
+	client->input = client->input->next;
+	if (client->input)
+		gettimeofday(&client->input->start, NULL);
+	free(delete->input);
+	free(delete);
+}
+
+/**
+* @brief time_cmd check the duration of the cmd and execute it
+*
+* @param server
+* @param cl
+*/
+
 void time_cmd(srv_t *server, cl_t *cl)
 {
 	struct timeval end;
 	long double dif = 0;
+	char **cmd;
 
 	gettimeofday(&end, NULL);
-	printf("start %ld , %ld\n", cl->input->start.tv_sec, cl->input->start.tv_usec);
-	printf("end %ld , %ld\n", end.tv_sec, end.tv_usec);
 	dif = (end.tv_sec - cl->input->start.tv_sec) * 1000000;
 	dif += (end.tv_usec - cl->input->start.tv_usec);
-	printf("%i clock = %Lf\n", cl->fd, dif);
+	if (dif > cl->input->timer / server->freq * 1000000) {
+		cmd = str_to_wordtab(cl->input->input);
+		sel_cli_cmd(server, cmd, cl);
+		free_tab(cmd);
+		delete_input(cl);
+	}
 }
 
 /**

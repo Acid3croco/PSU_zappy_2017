@@ -21,6 +21,7 @@ int sel_cli_cmd(srv_t *server, char **cmd, cl_t *client)
 	for (int a = 0; a < NB_CMD_CLI; a++)
 		if (strcmp(cmd_cli[a].cmd, cmd[0]) == 0)
 			return (cmd_cli[a].sel_cmd(server, cmd, client));
+	dprintf(client->fd, "ko\n");
 	return (1);
 }
 
@@ -72,11 +73,12 @@ float get_timer(char *input)
 	char *save;
 
 	token = strtok_r(tmp, " \n\0", &save);
-	for (int a = 0; a < NB_CMD_CLI; a++)
-			if (strcmp(cmd_cli[a].cmd, token) == 0) {
-				free(tmp);
-				return (cmd_cli[a].timer);
-			}
+	for (int a = 0; a < NB_CMD_CLI; a++) {
+		if (strcmp(cmd_cli[a].cmd, token) == 0) {
+			free(tmp);
+			return (cmd_cli[a].timer);
+		}
+	}
 	free(tmp);
 	return (0);
 }

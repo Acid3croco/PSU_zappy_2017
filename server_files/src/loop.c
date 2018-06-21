@@ -92,7 +92,7 @@ void loop_server(srv_t *server)
 		server->port);
 	for (;;) {
 		n = epoll_wait(server->cnt->efd,
-				server->cnt->events, MAX_EVENTS, -1);
+				server->cnt->events, MAX_EVENTS, 0);
 		for (server->cnt->a = 0; server->cnt->a < n; server->cnt->a++) {
 			check_errors(server);
 			if (server->cnt->fd ==
