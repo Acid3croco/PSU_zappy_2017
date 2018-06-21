@@ -4,6 +4,8 @@ import pygame, socket
 from pygame.locals import *
 from display_map.py import init_map
 
+#_______________________________________________________________________________
+# CREATE THE WINDOW AND MAP / SEND INFO FOR DISPLAY OBJECTS ON MAP
 def create_window(width, height, sockett, data, SizeX, SizeY):
 	screen = pygame.display.set_mode((width, height))
 	my_image = pygame.image.load('textures/grass_template.jpg')
@@ -19,4 +21,4 @@ def create_window(width, height, sockett, data, SizeX, SizeY):
 			if event.type == pygame.QUIT:
 				running = False
 		if game_loop(sockett, lst, SizeX, SizeY) == -1:
-			break #ou running = 0
+			break

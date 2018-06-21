@@ -2,5 +2,7 @@
 
 import sys
 
-def create_handle(data):
+#_______________________________________________________________________________
+# HANDLE PLAYERS POSITION ON THE MAP
+def hadle_player(data):
 	print(data)
