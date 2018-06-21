@@ -19,8 +19,8 @@ void free_input(inpt_t *input)
 	inpt_t *prev;
 
 	while (tmp != NULL) {
-		printf("FREE %s\n", tmp->input);
-		free(tmp->input);
+		if (tmp->input)
+			free(tmp->input);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);

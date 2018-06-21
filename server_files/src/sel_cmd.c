@@ -57,3 +57,26 @@ int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount)
 			return (cmd_obj[a].sel_obj(box, client, amount));
 	return (1);
 }
+
+/**
+* @brief get_tiner get the timer for the given input
+*
+* @param input
+* @return float
+*/
+
+float get_timer(char *input)
+{
+	char *tmp = strdup(input);
+	char *token;
+	char *save;
+
+	token = strtok_r(tmp, " \n\0", &save);
+	for (int a = 0; a < NB_CMD_CLI; a++)
+			if (strcmp(cmd_cli[a].cmd, token) == 0) {
+				free(tmp);
+				return (cmd_cli[a].timer);
+			}
+	free(tmp);
+	return (0);
+}

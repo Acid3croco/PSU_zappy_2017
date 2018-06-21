@@ -17,7 +17,6 @@
 #include <errno.h>
 #include <ctype.h>
 #include <errno.h>
-#include <sys/timeb.h>
 #include <sys/time.h>
 
 /* socket bind listen headers */
@@ -80,6 +79,6 @@ void getline_close(srv_t *server, char *input, FILE *fs);
 int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount);
 void add_input(srv_t *server, char *input, cl_t *client);
 void free_input(inpt_t *input);
-
+float get_timer(char *input);
 
 #endif /* !SERVER_H_ */

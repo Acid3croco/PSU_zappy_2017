@@ -7,13 +7,27 @@
 
 #include "server.h"
 
+/**
+* @brief disp_input is to display all the input of a client
+*
+* @param input
+*/
+
 void disp_input(inpt_t *input)
 {
 	printf("DISP_INPUTS\n");
 	for (inpt_t *tmp = input; tmp != NULL; tmp = tmp->next) {
-		printf("INPUT > %s\n", tmp->input);
+		printf("INPUT > %s > %f\n", tmp->input, tmp->timer);
 	}
 }
+
+/**
+* @brief new_input create the new inpt_t struct for the input
+*
+* @param server
+* @param input
+* @return inpt_t*
+*/
 
 inpt_t *new_input(srv_t *server, char *input)
 {
@@ -23,8 +37,17 @@ inpt_t *new_input(srv_t *server, char *input)
 		quit(server);
 	new->input = input;
 	new->next = NULL;
+	new->timer = get_timer(input);
 	return (new);
 }
+
+/**
+* @brief add_input add the input to the linkedlist of all the inputs
+*
+* @param server
+* @param save
+* @param client
+*/
 
 void add_input(srv_t *server, char *save, cl_t *client)
 {
@@ -38,5 +61,4 @@ void add_input(srv_t *server, char *save, cl_t *client)
 		tmp->next = new_input(server, input);
 	}
 	client->nb_inpt++;
-	disp_input(client->input);
 }

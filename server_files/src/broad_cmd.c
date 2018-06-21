@@ -27,7 +27,7 @@ int calc_size(char **cmd)
 * @brief concat_msg concat all the word of the message
 *
 * @param cmd
-* @return char*
+* @return char *
 */
 
 char *concat_msg(char **cmd)

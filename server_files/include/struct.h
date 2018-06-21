@@ -10,6 +10,7 @@
 
 #include <sys/epoll.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* color define for printf */
