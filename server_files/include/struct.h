@@ -32,6 +32,7 @@ typedef struct inpt_s
 {
 	char *input;
 	float timer;
+	clock_t clock;
 	struct inpt_s *next;
 } inpt_t;
 
