@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/timeb.h>
 
 /* color define for printf */
 #include "color.h"
@@ -32,7 +33,7 @@ typedef struct inpt_s
 {
 	char *input;
 	float timer;
-	clock_t clock;
+	struct timeval start;
 	struct inpt_s *next;
 } inpt_t;
 

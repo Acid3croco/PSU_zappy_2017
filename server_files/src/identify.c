@@ -77,7 +77,7 @@ void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 }
 
 /**
-* @brief close_fd close the given fd and free the client
+* @brief close_fd close the opened fd and free the client
 *
 * @param fd
 */

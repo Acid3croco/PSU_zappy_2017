@@ -71,7 +71,7 @@ void read_event(srv_t *server)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1)
-		getline_close(server, input, fs);
+		getline_close(server, input);
 	else if (characters > 1)
 		inter_input(server, input, fs);
 	else
@@ -86,8 +86,6 @@ void read_event(srv_t *server)
 
 void loop_server(srv_t *server)
 {
-	clock_t start;
-	clock_t end;
 	int n = 0;
 
 	printf(GREEN"Ready to accept new client on port %i\n"RESET,
@@ -103,5 +101,6 @@ void loop_server(srv_t *server)
 			else
 				read_event(server);
 		}
+		check_cmd(server);
 	}
 }
