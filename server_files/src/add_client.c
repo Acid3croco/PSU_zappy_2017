@@ -64,6 +64,7 @@ void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 	new->fs = fs;
 	new->fd = fd;
 	new->input = NULL;
+	new->nb_inpt = 0;
 	new->next = team->client;
 	team->client = new;
 	team->nb_ia += 1;

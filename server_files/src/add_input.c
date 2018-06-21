@@ -54,11 +54,17 @@ void add_input(srv_t *server, char *save, cl_t *client)
 	inpt_t *tmp = client->input;
 	char *input = strdup(save);
 
+	if (client->nb_inpt >= 10) {
+		free(input);
+		close_fd(server);
+		return;
+	}
 	if (client->input == NULL)
 		client->input = new_input(server, input);
 	else {
 		for (; tmp->next != NULL; tmp = tmp->next);
 		tmp->next = new_input(server, input);
 	}
-	client->nb_inpt++;
+	client->nb_inpt += 1;
+	printf("nb input = %i\n", client->nb_inpt);
 }
