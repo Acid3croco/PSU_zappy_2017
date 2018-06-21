@@ -76,8 +76,9 @@ void upper_case(char *cmd)
 * @param fs
 */
 
-void server_cmd(srv_t *server, char **cmd, FILE *fs)
+void server_cmd(srv_t *server, char **cmd, FILE *fs, char *save)
 {
+	free(save);
 	server->fs = fs;
 	if (cmd[0] != NULL) {
 		upper_case(cmd[0]);

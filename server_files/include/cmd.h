@@ -11,13 +11,14 @@
 #include "struct.h"
 
 #define NB_CMD_SRV 1
-#define NB_CMD_CLI 9
+#define NB_CMD_CLI 10
 #define NB_OBJ 7
 
 typedef struct cmd_s
 {
 	char *cmd;
 	int (*sel_cmd)(srv_t *server, char **cmd, cl_t *client);
+	float timer;
 } cmd_t;
 
 typedef struct obj_s
@@ -27,22 +28,22 @@ typedef struct obj_s
 } obj_t;
 
 const cmd_t cmd_srv[] = {
-	{"QUIT", &quit_cmd}
+	{"QUIT", &quit_cmd, 0}
 };
 
 const cmd_t cmd_cli[] = {
-	{"Forward", &forward_cmd},
-	{"Right", &right_cmd},
-	{"Left", &left_cmd},
-	{"Look", &look_cmd},
-	{"Inventory", &inventory_cmd},
-	{"Connect_nbr", &con_cmd},
-	{"Take", &take_cmd},
-	{"Set", &set_cmd},
-	{"Broadcast", &broad_cmd}
-/*	{"Fork", &fork_cmd},
-	{"Eject", &eject_cmd},
-	{"Incentation", &inc_cmd} */
+	{"Forward", &forward_cmd, 7},
+	{"Right", &right_cmd, 7},
+	{"Left", &left_cmd, 7},
+	{"Look", &look_cmd, 7},
+	{"Inventory", &inventory_cmd, 1},
+	{"Connect_nbr", &con_cmd, 0},
+	{"Take", &take_cmd, 7},
+	{"Set", &set_cmd, 7},
+	{"Broadcast", &broad_cmd, 7},
+	{"Eject", &eject_cmd, 7}
+/*	{"Fork", &fork_cmd, 42},
+	{"Incentation", &inc_cmd, 300} */
 };
 
 const obj_t cmd_obj[] = {

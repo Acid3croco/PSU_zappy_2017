@@ -63,6 +63,7 @@ void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 	strcpy(new->team, cmd[0]);
 	new->fs = fs;
 	new->fd = fd;
+	new->input = NULL;
 	new->next = team->client;
 	team->client = new;
 	team->nb_ia += 1;
@@ -80,7 +81,7 @@ void add_cli(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 
 void add_map(srv_t *server, FILE *fs)
 {
-	char *map = calloc(sizeof(char), server->height * server->width * 20);
+	char *map = calloc(sizeof(char), server->height * server->width * 21);
 
 	server->map->fs = fs;
 	server->map->fd = server->cnt->events[server->cnt->a].data.fd;

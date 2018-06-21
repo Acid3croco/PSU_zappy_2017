@@ -71,6 +71,7 @@ void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 		team->client = cl->next;
 	if (cl->team != NULL)
 		free(cl->team);
+	free_input(cl->input);
 	close(cl->fd);
 	free(cl);
 }

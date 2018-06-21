@@ -60,12 +60,12 @@ void loop_server(srv_t *server);
 void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size);
 void close_fd(srv_t *server);
 void inter_input(srv_t *server, char *input, FILE *fs);
-void server_cmd(srv_t *server, char **cmd, FILE *fs);
+void server_cmd(srv_t *server, char **cmd, FILE *fs, char *save);
 void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
 char **str_to_wordtab(char *input);
 void free_tab(char **tab);
 void init_map(srv_t *server);
-void map_cmd(srv_t *server, char **cmd, FILE *fs);
+void map_cmd(srv_t *server, char **cmd, FILE *fs, char *save);
 int sel_cli_cmd(srv_t *server, char **cmd, cl_t *client);
 int sel_srv_cmd(srv_t *server, char **cmd);
 void free_tab(char **tab);
@@ -78,6 +78,8 @@ void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
 void init_ress_client(cl_t *client);
 void getline_close(srv_t *server, char *input, FILE *fs);
 int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount);
+void add_input(srv_t *server, char *input, cl_t *client);
+void free_input(inpt_t *input);
 
 
 #endif /* !SERVER_H_ */

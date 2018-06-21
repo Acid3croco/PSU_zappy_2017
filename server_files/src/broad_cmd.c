@@ -7,6 +7,13 @@
 
 #include "server.h"
 
+/**
+* @brief calc_size calcul the size of the message to allocate memory
+*
+* @param cmd
+* @return int
+*/
+
 int calc_size(char **cmd)
 {
 	int len = 0;
@@ -15,6 +22,13 @@ int calc_size(char **cmd)
 		len += strlen(cmd[a]) + 1;
 	return (len);
 }
+
+/**
+* @brief concat_msg concat all the word of the message
+*
+* @param cmd
+* @return char*
+*/
 
 char *concat_msg(char **cmd)
 {
@@ -35,6 +49,15 @@ char *concat_msg(char **cmd)
 	return (msg);
 }
 
+int calc_dir(cl_t *client, cl_t *cl)
+{
+	int dir = 0;
+	(void)client;
+	(void)cl;
+
+	return dir;
+}
+
 /**
 * @brief broad_cmd send the message to every client
 *
@@ -46,7 +69,7 @@ char *concat_msg(char **cmd)
 
 int broad_cmd(srv_t *server, char **cmd, cl_t *client)
 {
-	int done = 0;
+	int dir = 0;
 	char *msg = concat_msg(cmd);
 
 	if (msg == NULL)
@@ -55,11 +78,11 @@ int broad_cmd(srv_t *server, char **cmd, cl_t *client)
 		for (cl_t *cl = tm->client; cl != NULL; cl = cl->next) {
 			if (cl->fd == client->fd)
 				dprintf(cl->fd, "ok\n");
-			else
-				dprintf(cl->fd, "%s\n", msg);
+			else {
+				dir = calc_dir(client, cl);
+				dprintf(cl->fd, "message %i, %s\n", dir, msg);
+			}
 		}
-		if (done == 1)
-			break;
 	}
 	free(msg);
 	return (0);

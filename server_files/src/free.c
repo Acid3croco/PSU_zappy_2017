@@ -8,6 +8,26 @@
 #include "server.h"
 
 /**
+* @brief free_input frre the linked list of the input of a client
+*
+* @param input
+*/
+
+void free_input(inpt_t *input)
+{
+	inpt_t *tmp = input;
+	inpt_t *prev;
+
+	while (tmp != NULL) {
+		printf("FREE %s\n", tmp->input);
+		free(tmp->input);
+		prev = tmp;
+		tmp = tmp->next;
+		free(prev);
+	}
+}
+
+/**
 * @brief free_tab free the given array
 *
 * @param cmd

@@ -23,6 +23,8 @@ void free_client(cl_t *client)
 			free(tmp->team);
 		if (tmp->fs != NULL)
 			fclose(tmp->fs);
+		if (tmp->input != NULL)
+			free_input(tmp->input);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);

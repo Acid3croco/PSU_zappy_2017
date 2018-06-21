@@ -27,6 +27,13 @@ typedef struct ress_s
 	int food;
 } rs_t;
 
+typedef struct inpt_s
+{
+	char *input;
+	float timer;
+	struct inpt_s *next;
+} inpt_t;
+
 typedef struct client_s
 {
 	int x;
@@ -34,10 +41,11 @@ typedef struct client_s
 	int lv;
 	int fd;
 	int look;
-	int cycle;
+	int nb_inpt;
 	FILE *fs;
 	char *team;
 	struct ress_s ress;
+	struct inpt_s *input;
 	struct client_s *next;
 	struct client_s *mnext;
 } cl_t;
@@ -105,6 +113,7 @@ int con_cmd(srv_t *server, char **cmd, cl_t *client);
 int take_cmd(srv_t *server, char **cmd, cl_t *client);
 int set_cmd(srv_t *server, char **cmd, cl_t *client);
 int broad_cmd(srv_t *server, char **cmd, cl_t *client);
+int eject_cmd(srv_t *server, char **cmd, cl_t *client);
 
 /* object commands functions */
 int der_obj(box_t *box, cl_t *client, int amount);
