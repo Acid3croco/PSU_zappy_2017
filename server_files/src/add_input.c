@@ -56,7 +56,7 @@ void add_input(srv_t *server, char *save, cl_t *client)
 
 	if (client->nb_inpt >= 10) {
 		free(input);
-		close_fd(server, -1);
+		close_fd(server, -1, NULL);
 		return;
 	}
 	if (client->input == NULL) {

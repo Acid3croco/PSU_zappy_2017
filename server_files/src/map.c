@@ -54,7 +54,7 @@ void fill_map(srv_t *server)
 
 void create_map(srv_t *server)
 {
-	server->map->box = malloc(server->width * sizeof(box_t *));
+	server->map->box = malloc(server->height * sizeof(box_t *));
 	if (server->map->box == NULL)
 		quit(server);
 	for (int y = 0; y < server->height; y++) {

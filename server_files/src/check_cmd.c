@@ -40,12 +40,10 @@ int check_food(srv_t *server, cl_t *client,
 	dif = (end->tv_sec - strt_fd->tv_sec) * 1000000;
 	dif += (end->tv_usec - strt_fd->tv_usec);
 	if (dif > 126 / server->freq * 1000000) {
-		printf("dif food %Lf\n", dif);
 		client->ress.food -= 1;
 		gettimeofday(strt_fd, NULL);
 		if (client->ress.food < 0) {
-			dprintf(client->fd, "dead\n");
-			close_fd(server, client->fd);
+			close_fd(server, client->fd, NULL);
 			return (1);
 		}
 	}

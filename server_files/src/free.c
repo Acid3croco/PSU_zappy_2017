@@ -70,10 +70,8 @@ void free_map(map_t *map, int x, int y)
 * @param fs
 */
 
-void getline_close(srv_t *server, char *input)
+void getline_close(srv_t *server, char *input, FILE *fs)
 {
 	free(input);
-	if (server->map->fd == server->cnt->events[server->cnt->a].data.fd)
-		server->map->fs = NULL;
-	close_fd(server, -1);
+	close_fd(server, -1, fs);
 }

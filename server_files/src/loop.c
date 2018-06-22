@@ -71,7 +71,7 @@ void read_event(srv_t *server)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
 	if (characters < 1)
-		getline_close(server, input);
+		getline_close(server, input, fs);
 	else if (characters > 1)
 		inter_input(server, input, fs);
 	else

@@ -70,11 +70,11 @@ int forward_cmd(srv_t *server, char **cmd, cl_t *client)
 	switch (client->look) {
 		case 0:go_on(server, client, client->x, client->y - 1);
 			break;
-		case 1:go_on(server, client, client->x + 1, client->y);
+		case 1:go_on(server, client, client->x - 1, client->y);
 			break;
 		case 2:go_on(server, client, client->x, client->y + 1);
 			break;
-		case 3:go_on(server, client, client->x -1, client->y);
+		case 3:go_on(server, client, client->x + 1, client->y);
 			break;
 	}
 	dprintf(client->fd, "ok\n");

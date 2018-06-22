@@ -21,9 +21,10 @@ int left_cmd(srv_t *server, char **cmd, cl_t *client)
 	(void)server;
 	(void)cmd;
 
-	client->look = client->look - 1 % 4;
-	if (client->look < 0)
-		client->look += 4;
+	client->look = client->look + 1 % 4;
+	if (client->look > 3)
+		client->look -= 4;
+	printf("looking at %i\n", client->look);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }
@@ -42,9 +43,10 @@ int right_cmd(srv_t *server, char **cmd, cl_t *client)
 	(void)server;
 	(void)cmd;
 
-	client->look = client->look + 1 % 4;
-	if (client->look > 3)
-		client->look -= 4;
+	client->look = client->look - 1 % 4;
+	if (client->look < 0)
+		client->look += 4;
+	printf("looking at %i\n", client->look);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }

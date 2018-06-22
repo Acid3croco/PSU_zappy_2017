@@ -63,6 +63,7 @@ void delete_on_map(box_t *box, cl_t *client)
 
 void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 {
+	dprintf(cl->fd, "dead\n");
 	team->nb_ia -= 1;
 	delete_on_map(map->box[cl->y][cl->x], cl);
 	if (prev != NULL)
@@ -82,15 +83,13 @@ void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 * @param fd
 */
 
-void close_fd(srv_t *server, int fd)
+void close_fd(srv_t *server, int fd, FILE *fs)
 {
 	tm_t *tm = server->team;
-	cl_t *cl = NULL;
-	cl_t *prev = NULL;
-	int done = 0;
+	cl_t *cl, *prev = NULL;
 
 	fd = (fd < 0) ? server->cnt->events[server->cnt->a].data.fd : fd;
-	for (;done == 0 && tm != NULL; tm = tm->next) {
+	for (int done = 0; done == 0 && tm != NULL; tm = tm->next) {
 		for (cl = tm->client; done == 0 && cl != NULL; cl = cl->next) {
 			if (cl->fd == fd) {
 				done = 1;
@@ -103,5 +102,7 @@ void close_fd(srv_t *server, int fd)
 	}
 	if (cl != NULL)
 		delete_client(server->map, tm, cl, prev);
+	else if (fs)
+		fclose(fs);
 	printf(YELLOW"Closed connection on descriptor %d\n"RESET, fd);
 }

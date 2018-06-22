@@ -59,7 +59,7 @@ void socket_bind(srv_t *server);
 void create_epoll(srv_t *server);
 void loop_server(srv_t *server);
 void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size);
-void close_fd(srv_t *server, int fd);
+void close_fd(srv_t *server, int fd, FILE *fs);
 void inter_input(srv_t *server, char *input, FILE *fs);
 void server_cmd(srv_t *server, char **cmd, FILE *fs, char *save);
 void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
@@ -77,11 +77,12 @@ void free_map(map_t *map, int x, int y);
 int my_rand(unsigned int *seed);
 void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
 void init_ress_client(cl_t *client);
-void getline_close(srv_t *server, char *input);
+void getline_close(srv_t *server, char *input, FILE *fs);
 int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount);
 void add_input(srv_t *server, char *input, cl_t *client);
 void free_input(inpt_t *input);
 float get_timer(char *input);
 void check_cmd(srv_t *server, struct timeval *strt_fd);
+void go_on(srv_t *s, cl_t *client, int x, int y);
 
 #endif /* !SERVER_H_ */
