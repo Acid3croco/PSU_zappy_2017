@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief delete_input delete the input and restart the timer
+*
+* @param client
+*/
+
 void delete_input(cl_t *client)
 {
 	inpt_t *delete = client->input;
@@ -19,28 +25,60 @@ void delete_input(cl_t *client)
 }
 
 /**
+* @brief check_food check the time and decrement the food
+*
+* @param server
+* @param client
+* @param strt_fd
+* @param end
+*/
+
+int check_food(srv_t *server, cl_t *client,
+		struct timeval *strt_fd, struct timeval *end)
+{
+	long double dif = 0;
+	dif = (end->tv_sec - strt_fd->tv_sec) * 1000000;
+	dif += (end->tv_usec - strt_fd->tv_usec);
+	if (dif > 126 / server->freq * 1000000) {
+		printf("dif food %Lf\n", dif);
+		client->ress.food -= 1;
+		gettimeofday(strt_fd, NULL);
+		if (client->ress.food < 0) {
+			dprintf(client->fd, "dead\n");
+			close_fd(server, client->fd);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+/**
 * @brief time_cmd check the duration of the cmd and execute it
 *
 * @param server
 * @param cl
 */
 
-void time_cmd(srv_t *server, cl_t *cl)
+cl_t *time_cmd(srv_t *server, cl_t *cl, struct timeval *strt_fd)
 {
 	struct timeval end;
 	long double dif = 0;
 	char **cmd;
+	cl_t *next = cl->next;
 
 	gettimeofday(&end, NULL);
-	dif = (end.tv_sec - cl->input->start.tv_sec) * 1000000;
-	dif += (end.tv_usec - cl->input->start.tv_usec);
-	if (dif > cl->input->timer / server->freq * 1000000) {
-		cmd = str_to_wordtab(cl->input->input);
-		sel_cli_cmd(server, cmd, cl);
-		free_tab(cmd);
-		delete_input(cl);
-		cl->nb_inpt -= 1;
+	if (cl && check_food(server, cl, strt_fd, &end) == 0 && cl->input) {
+		dif = (end.tv_sec - cl->input->start.tv_sec) * 1000000;
+		dif += (end.tv_usec - cl->input->start.tv_usec);
+		if (dif > cl->input->timer / server->freq * 1000000) {
+			cmd = str_to_wordtab(cl->input->input);
+			sel_cli_cmd(server, cmd, cl);
+			free_tab(cmd);
+			delete_input(cl);
+			cl->nb_inpt -= 1;
+		}
 	}
+	return (next);
 }
 
 /**
@@ -49,12 +87,11 @@ void time_cmd(srv_t *server, cl_t *cl)
 * @param server
 */
 
-void check_cmd(srv_t *server)
+void check_cmd(srv_t *server, struct timeval *strt_fd)
 {
 	for (tm_t *tm = server->team; tm ; tm = tm->next) {
-		for (cl_t *cl = tm->client; cl ; cl = cl->next) {
-			if (cl->input)
-				time_cmd(server, cl);
+		for (cl_t *cl = tm->client; cl;) {
+			cl = time_cmd(server, cl, strt_fd);
 		}
 	}
 }

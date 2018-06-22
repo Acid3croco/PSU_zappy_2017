@@ -77,7 +77,6 @@ int forward_cmd(srv_t *server, char **cmd, cl_t *client)
 		case 3:go_on(server, client, client->x -1, client->y);
 			break;
 	}
-	printf("Forward!\n");
 	dprintf(client->fd, "ok\n");
 	return (0);
 }

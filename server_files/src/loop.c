@@ -87,9 +87,11 @@ void read_event(srv_t *server)
 void loop_server(srv_t *server)
 {
 	int n = 0;
+	struct timeval strt_fd;
 
 	printf(GREEN"Ready to accept new client on port %i\n"RESET,
 		server->port);
+	gettimeofday(&strt_fd, NULL);
 	for (;;) {
 		n = epoll_wait(server->cnt->efd,
 				server->cnt->events, MAX_EVENTS, 0);
@@ -101,6 +103,6 @@ void loop_server(srv_t *server)
 			else
 				read_event(server);
 		}
-		check_cmd(server);
+		check_cmd(server, &strt_fd);
 	}
 }

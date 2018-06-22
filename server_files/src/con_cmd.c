@@ -12,7 +12,7 @@
 *
 * @param server
 * @param name
-* @return tm_t*
+* @return tm_t *
 */
 
 tm_t *find_team(srv_t *server, char *name)

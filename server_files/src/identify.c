@@ -82,14 +82,14 @@ void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 * @param fd
 */
 
-void close_fd(srv_t *server)
+void close_fd(srv_t *server, int fd)
 {
 	tm_t *tm = server->team;
 	cl_t *cl = NULL;
 	cl_t *prev = NULL;
-	int fd = server->cnt->events[server->cnt->a].data.fd;
 	int done = 0;
 
+	fd = (fd < 0) ? server->cnt->events[server->cnt->a].data.fd : fd;
 	for (;done == 0 && tm != NULL; tm = tm->next) {
 		for (cl = tm->client; done == 0 && cl != NULL; cl = cl->next) {
 			if (cl->fd == fd) {

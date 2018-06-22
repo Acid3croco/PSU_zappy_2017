@@ -75,5 +75,5 @@ void getline_close(srv_t *server, char *input)
 	free(input);
 	if (server->map->fd == server->cnt->events[server->cnt->a].data.fd)
 		server->map->fs = NULL;
-	close_fd(server);
+	close_fd(server, -1);
 }

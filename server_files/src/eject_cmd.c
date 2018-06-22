@@ -11,7 +11,6 @@ int eject_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	(void)server;
 	(void)cmd;
-	(void)client;
-	printf("eject!");
+	dprintf(client->fd, "ok\n");
 	return (0);
 }

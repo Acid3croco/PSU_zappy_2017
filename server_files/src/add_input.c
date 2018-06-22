@@ -26,7 +26,7 @@ void disp_input(inpt_t *input)
 *
 * @param server
 * @param input
-* @return inpt_t*
+* @return inpt_t *
 */
 
 inpt_t *new_input(srv_t *server, char *input)
@@ -56,7 +56,7 @@ void add_input(srv_t *server, char *save, cl_t *client)
 
 	if (client->nb_inpt >= 10) {
 		free(input);
-		close_fd(server);
+		close_fd(server, -1);
 		return;
 	}
 	if (client->input == NULL) {
