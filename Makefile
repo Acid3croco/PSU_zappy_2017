@@ -44,7 +44,8 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/broad_cmd.c \
 	./server_files/src/eject_cmd.c \
 	./server_files/src/add_input.c \
-	./server_files/src/check_cmd.c
+	./server_files/src/check_cmd.c \
+	./server_files/src/help.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\

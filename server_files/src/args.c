@@ -82,7 +82,7 @@ void fill_args(int ac, char **av, srv_t *server)
 				break;
 			case 'f': server->freq = strtol(optarg, NULL, 10);
 				break;
-			default : quit(server);
+			default : help(server);
 				break;
 		}
 	}
