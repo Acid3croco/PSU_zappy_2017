@@ -34,6 +34,6 @@ int quit_cmd(srv_t *server, char **cmd, cl_t *client)
 
 int msg_cmd(char *cmd)
 {
-	printf("%s: unknow command...\n", cmd);
+	printf("%s: unknown command...\n", cmd);
 	return (0);
 }

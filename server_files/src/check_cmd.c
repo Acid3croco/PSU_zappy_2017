@@ -43,6 +43,7 @@ int check_food(srv_t *server, cl_t *client,
 		client->ress.food -= 1;
 		gettimeofday(strt_fd, NULL);
 		if (client->ress.food < 0) {
+			dprintf(server->map->fd, "Dead %i\n", client->fd);
 			epoll_ctl(server->cnt->efd, EPOLL_CTL_DEL, client->fd,
 				server->cnt->events);
 			close_fd(server, client->fd, NULL);
