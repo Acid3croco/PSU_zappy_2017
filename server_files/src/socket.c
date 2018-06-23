@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief Fill sockaddr_in *s_in with the port
+* @brief get_in fill sockaddr_in *s_in with the port
 *
 * @param s_in
 * @param port
@@ -25,7 +25,7 @@ struct sockaddr_in get_in(struct sockaddr_in *s_in, int port)
 }
 
 /**
-* @brief Function that call socket(), bind() and listen()
+* @brief socket_bind call socket(), bind() and listen()
 *
 * @param server
 */

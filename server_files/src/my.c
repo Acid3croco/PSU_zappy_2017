@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief my_fopen do a fopen after a check of the clients
+* @brief my_fdopen do a fopen after a check of the clients
 *
 * @param server
 * @return FILE*

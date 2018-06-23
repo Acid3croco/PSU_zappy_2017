@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief Get the tab size counting the number of space js
+* @brief get_tab_size get the tab size counting the number of space
 *
 * @param buf
 * @return int

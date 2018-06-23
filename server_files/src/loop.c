@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief check_error checks erros of the event and can close it
+* @brief check_errors checks erros of the event and can close it
 *
 * @param server
 */

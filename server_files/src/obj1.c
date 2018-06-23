@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+/**
+* @brief mem_obj take and set mendiane
+*
+* @param box
+* @param client
+* @param amount
+* @return int
+*/
+
 int men_obj(box_t *box, cl_t *client, int amount)
 {
 	if (amount > 0 && box->ress.mendiane > 0) {
@@ -19,6 +28,15 @@ int men_obj(box_t *box, cl_t *client, int amount)
 		dprintf(client->fd, "ko\n");
 	return (0);
 }
+
+/**
+* @brief phi_obj take and set phiras
+*
+* @param box
+* @param client
+* @param amount
+* @return int
+*/
 
 int phi_obj(box_t *box, cl_t *client, int amount)
 {
@@ -35,6 +53,15 @@ int phi_obj(box_t *box, cl_t *client, int amount)
 	return (0);
 }
 
+/**
+* @brief sib_obj take and set sibur
+*
+* @param box
+* @param client
+* @param amount
+* @return int
+*/
+
 int sib_obj(box_t *box, cl_t *client, int amount)
 {
 	if (amount > 0 && box->ress.sibur > 0) {
@@ -49,6 +76,15 @@ int sib_obj(box_t *box, cl_t *client, int amount)
 		dprintf(client->fd, "ko\n");
 	return (0);
 }
+
+/**
+* @brief thy_obj take and set thystame
+*
+* @param box
+* @param client
+* @param amount
+* @return int
+*/
 
 int thy_obj(box_t *box, cl_t *client, int amount)
 {
