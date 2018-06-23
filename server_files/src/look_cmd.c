@@ -19,7 +19,6 @@ void look_up(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	printf("up %i %i\n", client->x, client->y);
 	for (int a = 0, y = client->y, c = 0; a <= client->lv; a++, y--) {
 		for (int x = client->x - a; x <= client->x + a; x++, c++) {
 			if (c > 0)
@@ -28,7 +27,6 @@ void look_up(srv_t *server, cl_t *client)
 			yp = y % server->height;
 			xp = (xp < 0) ? xp + server->width : xp;
 			yp = (yp < 0) ? yp + server->height : yp;
-			printf("%i %i\n", xp, yp);
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
@@ -46,7 +44,6 @@ void look_left(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	printf("left %i %i\n", client->x, client->y);
 	for (int a = 0, y = client->x, c = 0; a <= client->lv; a++, y--) {
 		for (int x = client->y - a; x <= client->y + a; x++, c++) {
 			if (c > 0)
@@ -55,7 +52,6 @@ void look_left(srv_t *server, cl_t *client)
 			yp = y % server->height;
 			xp = (xp < 0) ? xp + server->width : xp;
 			yp = (yp < 0) ? yp + server->height : yp;
-			printf("%i %i\n", xp, yp);
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
@@ -73,7 +69,6 @@ void look_down(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	printf("down %i %i\n", client->x, client->y);
 	for (int a = 0, y = client->y, c = 0; a <= client->lv; a++, y++) {
 		for (int x = client->x - a; x <= client->x + a; x++, c++) {
 			if (c > 0)
@@ -82,7 +77,6 @@ void look_down(srv_t *server, cl_t *client)
 			yp = y % server->height;
 			xp = (xp < 0) ? xp + server->width : xp;
 			yp = (yp < 0) ? yp + server->height : yp;
-			printf("%i %i\n", xp, yp);
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
@@ -100,7 +94,6 @@ void look_right(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	printf("right %i %i\n", client->x, client->y);
 	for (int a = 0, y = client->x, c = 0; a <= client->lv; a++, y++) {
 		for (int x = client->y - a; x <= client->y + a; x++, c++) {
 			if (c > 0)
@@ -109,7 +102,6 @@ void look_right(srv_t *server, cl_t *client)
 			yp = y % server->height;
 			xp = (xp < 0) ? xp + server->width : xp;
 			yp = (yp < 0) ? yp + server->height : yp;
-			printf("%i %i\n", xp, yp);
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
