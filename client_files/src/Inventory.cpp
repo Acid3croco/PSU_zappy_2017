@@ -59,12 +59,14 @@ std::pair<std::string, int>	Inventory::getPriority(std::vector<int> goal)
 {
 	std::pair<std::string, int>	ret;
 
-	ret = std::make_pair(std::string("invocation"), 1);
+	ret = std::make_pair(std::string("incantation"), 1);
 	if (this->_res[this->FOOD].second < 10)
 		return (this->_res[this->FOOD]);
 	for (int i = 0; i < 6; i++) {
-		if (goal[i] > this->_res[i].second)
-			return (this->_res[i]);
+		if (goal[i] > this->_res[i].second) {
+			ret.first = this->_res[i].first;
+			ret.second = goal[i] - this->_res[i].second;
+		}
 	}
 	return(ret);
 }
@@ -74,9 +76,12 @@ std::pair<std::string, int>	Inventory::getPriority(std::vector<int> goal)
 *
 * @return std::vector<std::pair<std::string, int>>
 */
-std::vector<std::pair<std::string, int>>	Inventory::getInventory() const
+int	Inventory::getInventory(std::string name) const
 {
-	return (this->_res);
+	int	i = 0;
+
+	for (; i < 7 && this->_res[i].first.compare(name) != 0; i++);
+	return (this->_res[i].second);
 }
 
 /**
@@ -87,9 +92,8 @@ std::vector<std::pair<std::string, int>>	Inventory::getInventory() const
 void	Inventory::setInventory(std::string buf)
 {
 	std::string	token;
-	size_t		pos;
+	size_t		pos = buf.find(" ");
 
-	pos = buf.find(" ");
 	token = buf.substr(0, pos);
 	buf.erase(0, pos + 1);
 	switch((int)token.front()) {
@@ -123,4 +127,18 @@ int	Inventory::findId(std::string goal)
 			return (i);
 	}
 	return (-1);
+}
+
+/**
+* @brief return a vetor with the ressource name.
+*
+* @return std::vector<std::string>
+*/
+std::vector<std::string>	Inventory::getRessourceName()
+{
+	std::vector<std::string>	ressource(6);
+
+	for (int i = 0; i < 6; i++)
+		ressource[i] = this->_res[i].first;
+	return (ressource);
 }

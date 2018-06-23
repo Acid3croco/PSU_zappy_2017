@@ -119,6 +119,7 @@ std::string	Mysocket::wlisten()
 void	Mysocket::wwrite(const char *s)
 {
 	write(this->_fd, s, strlen(s));
+	std::cout << s;
 }
 
 /**

@@ -25,7 +25,6 @@ protected:
 private:
 	std::vector<int>	getObjectTile(std::string buf);
 	std::vector<int>	addObject(std::string token, std::vector<int> tile);
-	std::vector<std::vector<int>>	_matrix;
 };
 
 #endif /* !OBJECTIF_HPP_ */

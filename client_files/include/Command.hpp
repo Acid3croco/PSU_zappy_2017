@@ -34,10 +34,12 @@ public:
 	bool	compareCmd(std::string cmd);
 	std::string	getTeam();
 	int		verifFd() const;
+	void	popBack();
+	bool	verifExist(std::string cmd) const;
 protected:
 private:
 	Mysocket	*_so;
-	std::string	_lastCmd;
+	std::vector<std::string>	_lastCmd;
 	std::string	_team;
 };
 

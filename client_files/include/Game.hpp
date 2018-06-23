@@ -28,8 +28,12 @@ public:
 	void	handlingMsg(std::string buf);
 	void	handleInventory(std::string buf);
 	void	handleLook(std::string buf);
-	void	takeRessource(int nbrRes, std::pair<std::string, int> invent);
+	void	takeRessource(int nbrRes, int index);
 	void	launchCommand();
+	void	incantationPrep();
+	void	handleIncantation(std::string buf);
+	void	launchIncantation(std::vector<std::vector<int>>	sight);
+	void	getAll(std::vector<int> sight);
 protected:
 private:
 	Command			*_co;

@@ -30,8 +30,9 @@ public:
 	~Inventory();
 	void	parseInventory(std::string buf);
 	std::pair<std::string, int>	getPriority(std::vector<int> goal);
-	std::vector<std::pair<std::string, int>>	getInventory() const;
-	int			findId(std::string goal);
+	int	getInventory(std::string ressource) const;
+	int	findId(std::string goal);
+	std::vector<std::string>	getRessourceName();
 protected:
 private:
 	void	setInventory(std::string buf);
