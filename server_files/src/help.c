@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief help print the help and quit if an error occurs
+*
+* @param server
+*/
+
 void help(srv_t *server)
 {
 	printf("USAGE: ./zappy_server -p port -x width -y height -n name1 ");
@@ -20,6 +26,12 @@ void help(srv_t *server)
 	printf("of actions\n");
 	quit(server);
 }
+
+/**
+* @brief check_args check if the arguments are correct
+*
+* @param server
+*/
 
 void check_args(srv_t *server)
 {
