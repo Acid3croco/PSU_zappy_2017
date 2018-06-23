@@ -20,3 +20,17 @@ void help(srv_t *server)
 	printf("of actions\n");
 	quit(server);
 }
+
+void check_args(srv_t *server)
+{
+	if (server->port > 65535 || server->port < 0)
+		quit(server);
+	if (server->width < 10 || server->width > 30)
+		quit(server);
+	if (server->height < 10 || server->height > 30)
+		quit(server);
+	if (server->freq < 2 || server->freq > 10000)
+		quit(server);
+	if (server->clientsNB < 1)
+		quit(server);
+}
