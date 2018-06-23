@@ -7,6 +7,8 @@ import sys
 #    1   3
 #      2
 
-def fd_m(data):
+#_______________________________________________________________________________
+# GET INFO FD AT CONNECTION
+def fd_management(data):
 	fd_info = data.split(' ')
 	return (fd_info)
