@@ -7,6 +7,13 @@
 
 #include "server.h"
 
+/**
+* @brief look_up print the ressources of the boxs
+*
+* @param server
+* @param client
+*/
+
 void look_up(srv_t *server, cl_t *client)
 {
 	int xp;
@@ -26,6 +33,13 @@ void look_up(srv_t *server, cl_t *client)
 		}
 	}
 }
+
+/**
+* @brief look_left print the ressources of the boxs
+*
+* @param server
+* @param client
+*/
 
 void look_left(srv_t *server, cl_t *client)
 {
@@ -47,6 +61,13 @@ void look_left(srv_t *server, cl_t *client)
 	}
 }
 
+/**
+* @brief look_down print the ressources of the boxs
+*
+* @param server
+* @param client
+*/
+
 void look_down(srv_t *server, cl_t *client)
 {
 	int xp;
@@ -66,6 +87,13 @@ void look_down(srv_t *server, cl_t *client)
 		}
 	}
 }
+
+/**
+* @brief look_right print the ressources of the boxs
+*
+* @param server
+* @param client
+*/
 
 void look_right(srv_t *server, cl_t *client)
 {
