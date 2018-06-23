@@ -86,6 +86,7 @@ void check_cmd(srv_t *server, struct timeval *strt_fd);
 void go_on(srv_t *s, cl_t *client, int x, int y);
 void help(srv_t *server);
 void check_args(srv_t *server);
+void check_args(srv_t *server);
 void ress_cell(box_t *box, cl_t *client);
 
 #endif /* !SERVER_H_ */
