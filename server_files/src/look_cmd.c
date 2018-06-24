@@ -44,14 +44,14 @@ void look_left(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	for (int a = 0, y = client->x, c = 0; a <= client->lv; a++, y--) {
-		for (int x = client->y - a; x <= client->y + a; x++, c++) {
+	for (int a = 0, x = client->x, c = 0; a <= client->lv; a++, x--) {
+		for (int y = client->y - a; y <= client->y + a; y++, c++) {
 			if (c > 0)
 				dprintf(client->fd, ",");
-			xp = x % server->width;
 			yp = y % server->height;
-			xp = (xp < 0) ? xp + server->width : xp;
-			yp = (yp < 0) ? yp + server->height : yp;
+			xp = x % server->width;
+			yp = (yp < 0) ? yp + server->width : yp;
+			xp = (xp < 0) ? xp + server->height : xp;
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
@@ -94,14 +94,14 @@ void look_right(srv_t *server, cl_t *client)
 	int xp;
 	int yp;
 
-	for (int a = 0, y = client->x, c = 0; a <= client->lv; a++, y++) {
-		for (int x = client->y - a; x <= client->y + a; x++, c++) {
+	for (int a = 0, x = client->x, c = 0; a <= client->lv; a++, x++) {
+		for (int y = client->y - a; y <= client->y + a; y++, c++) {
 			if (c > 0)
 				dprintf(client->fd, ",");
-			xp = x % server->width;
 			yp = y % server->height;
-			xp = (xp < 0) ? xp + server->width : xp;
-			yp = (yp < 0) ? yp + server->height : yp;
+			xp = x % server->width;
+			yp = (yp < 0) ? yp + server->width : yp;
+			xp = (xp < 0) ? xp + server->height : xp;
 			ress_cell(server->map->box[yp][xp], client);
 		}
 	}
