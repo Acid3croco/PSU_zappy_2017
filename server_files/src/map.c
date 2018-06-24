@@ -18,11 +18,11 @@ void fill_box(box_t *box)
 	unsigned int seed = 0;
 
 	box->ress.food = my_rand(&seed) % 10;
-	box->ress.linemate = my_rand(&seed) % 7;
-	box->ress.deraumere = my_rand(&seed) % 6;
-	box->ress.sibur = my_rand(&seed) % 5;
-	box->ress.mendiane = my_rand(&seed) % 4;
-	box->ress.phiras = my_rand(&seed) % 3;
+	box->ress.linemate = my_rand(&seed) % 4;
+	box->ress.deraumere = my_rand(&seed) % 4;
+	box->ress.sibur = my_rand(&seed) % 3;
+	box->ress.mendiane = my_rand(&seed) % 3;
+	box->ress.phiras = my_rand(&seed) % 2;
 	box->ress.thystame = my_rand(&seed) % 2;
 	box->client = NULL;
 }
@@ -54,16 +54,15 @@ void fill_map(srv_t *server)
 
 void create_map(srv_t *server)
 {
-	int a;
-	int b;
-
-	server->map->box = malloc(server->width * sizeof(box_t *));
+	server->map->box = malloc(server->height * sizeof(box_t *));
 	if (server->map->box == NULL)
 		quit(server);
-	for (a = 0; a < server->width; a++) {
-		server->map->box[a] = malloc(server->height * sizeof(box_t));
-		for (b = 0; b < server->height; b++)
-			server->map->box[a][b] = malloc(sizeof(box_t));
+	for (int y = 0; y < server->height; y++) {
+		server->map->box[y] = malloc(server->height * sizeof(box_t));
+		for (int x = 0; x < server->width; x++) {
+			server->map->box[y][x] = malloc(sizeof(box_t));
+			fill_box(server->map->box[y][x]);
+		}
 	}
 	fill_map(server);
 }
@@ -80,7 +79,7 @@ void init_map(srv_t *server)
 
 	if (server->map == NULL)
 		quit(server);
-	server->map->fd = 0;
+	server->map->fd = -2;
 	server->map->fs = NULL;
 	server->map->box = NULL;
 }

@@ -17,7 +17,10 @@
 #include <errno.h>
 #include <ctype.h>
 #include <errno.h>
+#include <time.h>
+#include <sys/time.h>
 #include <sys/timeb.h>
+#include <math.h>
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -51,22 +54,22 @@ void fill_args(int ac, char **av, srv_t *server);
 void add_team(char *name, srv_t *server);
 void init_struct(srv_t *server);
 void quit(srv_t *server);
-int iteam_s_new(char *name, srv_t *server);
+int is_team_new(char *name, srv_t *server);
 void free_server(srv_t *server);
 void socket_bind(srv_t *server);
 void create_epoll(srv_t *server);
 void loop_server(srv_t *server);
 void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size);
-void close_fd(srv_t *server);
+void close_fd(srv_t *server, int fd, FILE *fs);
 void inter_input(srv_t *server, char *input, FILE *fs);
-void server_cmd(srv_t *server, char **cmd, FILE *fs);
+void server_cmd(srv_t *server, char **cmd, FILE *fs, char *save);
 void add_cli_to_team(srv_t *server, char **cmd, FILE *fs);
-char **str_to_wordtab(char *input, FILE *fs);
+char **str_to_wordtab(char *input);
 void free_tab(char **tab);
 void init_map(srv_t *server);
-void map_cmd(srv_t *server, char **cmd, FILE *fs);
-int sel_cli_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
-int sel_srv_cmd(srv_t *server, char **cmd, FILE *fs);
+void map_cmd(srv_t *server, char **cmd, FILE *fs, char *save);
+int sel_cli_cmd(srv_t *server, char **cmd, cl_t *client);
+int sel_srv_cmd(srv_t *server, char **cmd);
 void free_tab(char **tab);
 FILE *my_fdopen(srv_t *server);
 cl_t *find_client(srv_t *server);
@@ -75,5 +78,33 @@ void free_map(map_t *map, int x, int y);
 int my_rand(unsigned int *seed);
 void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd);
 void init_ress_client(cl_t *client);
+void getline_close(srv_t *server, char *input, FILE *fs);
+int sel_obj_cmd(box_t *box, cl_t *client, char **cmd, int amount);
+void add_input(srv_t *server, char *input, cl_t *client);
+void free_input(inpt_t *input);
+float get_timer(char *input);
+void check_cmd(srv_t *server, struct timeval *strt_fd);
+void go_on(srv_t *s, cl_t *client, int x, int y);
+void help(srv_t *server);
+void ress_cell(box_t *box, cl_t *client);
+tm_t *find_team(srv_t *server, char *name);
+void add_cli_egg(srv_t *server, char **cmd, FILE *fs, tm_t *team);
+void delete_egg(srv_t *server, tm_t *team, egg_t *egg);
+void check_egg(srv_t *server);
+void free_egg(egg_t *egg);
+int calc_dir(cl_t *sender, cl_t *recev);
+void check_p(srv_t *server);
+void check_width(srv_t *server);
+void check_height(srv_t *server);
+void check_freq(srv_t *server);
+void check_clientsNB(srv_t *server);
+void check_args(srv_t *server);
+void create_inc(srv_t *server, cl_t *client);
+void check_inc(srv_t *server);
+int check_ress(box_t *box, int lv);
+void free_inc(inc_t *inc);
+void check_all(srv_t *server, struct timeval *strt_fd);
+void free_server(srv_t *server);
+void fill_box(box_t *box);
 
 #endif /* !SERVER_H_ */

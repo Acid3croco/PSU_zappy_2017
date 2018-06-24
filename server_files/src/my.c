@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief my_fopen do a fopen after a check of the clients
+* @brief my_fdopen do a fopen after a check of the clients
 *
 * @param server
 * @return FILE*
@@ -21,10 +21,12 @@ FILE *my_fdopen(srv_t *server)
 
 	if (fd == 1) {
 		if (server->fs == NULL)
-			return (fdopen(fd, "r"));
+			return (fdopen(fd, "w+"));
 		else
 			return (server->fs);
 	}
+	if (fd == server->map->fd)
+		return (server->map->fs);
 	client = find_client(server);
 	if (client == NULL)
 		return (fdopen(fd, "w+"));
@@ -40,10 +42,10 @@ FILE *my_fdopen(srv_t *server)
 
 int my_rand(unsigned int *seed)
 {
-	struct timeb time;
+	struct timeval time;
 
-	ftime(&time);
-	*seed += time.millitm;
+	gettimeofday(&time, NULL);
+	*seed += time.tv_usec;
 	srand(*seed);
 	return (rand());
 }

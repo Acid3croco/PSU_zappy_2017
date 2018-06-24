@@ -15,9 +15,10 @@
 * @param fs
 */
 
-void map_cmd(srv_t *server, char **cmd, FILE *fs)
+void map_cmd(srv_t *server, char **cmd, FILE *fs, char *save)
 {
 	(void)server;
 	(void)fs;
-	printf("map_cmd = %s\n", cmd[0]);
+	free(save);
+	printf("map = %s\n", cmd[0]);
 }

@@ -38,9 +38,9 @@ cl_t *find_client(srv_t *server)
 * @param fs
 */
 
-void unknow_cmd(FILE *fs)
+void unknow_cmd(int fd)
 {
-	fprintf(fs, "ko\n");
+	dprintf(fd, "ko\n");
 }
 
 /**
@@ -56,21 +56,21 @@ void inter_input(srv_t *server, char *input, FILE *fs)
 	cl_t *client = NULL;
 	char **cmd;
 	int fd = server->cnt->events[server->cnt->a].data.fd;
+	char *save = strdup(input);
 
-	(void)fs;
-	cmd = str_to_wordtab(input, fs);
+	cmd = str_to_wordtab(input);
 	free(input);
 	if (fd == 1)
-		server_cmd(server, cmd, fs);
+		server_cmd(server, cmd, fs, save);
 	else if (fd == server->map->fd)
-		map_cmd(server, cmd, fs);
+		map_cmd(server, cmd, fs, save);
 	else {
 		client = find_client(server);
 		if (client == NULL)
 			add_cli_to_team(server, cmd, fs);
 		else
-			if (sel_cli_cmd(server, cmd, fs, client))
-				unknow_cmd(fs);
+			add_input(server, save, client);
+		free(save);
 	}
 	free_tab(cmd);
 }

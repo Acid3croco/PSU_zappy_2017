@@ -63,21 +63,22 @@ void go_on(srv_t *s, cl_t *client, int x, int y)
 * @return int
 */
 
-int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client)
+int forward_cmd(srv_t *server, char **cmd, cl_t *client)
 {
-	(void)server;
 	(void)cmd;
+
 	switch (client->look) {
 		case 0:go_on(server, client, client->x, client->y - 1);
 			break;
-		case 1:go_on(server, client, client->x + 1, client->y);
+		case 1:go_on(server, client, client->x - 1, client->y);
 			break;
 		case 2:go_on(server, client, client->x, client->y + 1);
 			break;
-		case 3:go_on(server, client, client->x -1, client->y);
+		case 3:go_on(server, client, client->x + 1, client->y);
 			break;
 	}
-	printf("Forward!\n");
-	fprintf(fs, "ok\n");
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Forward %i\n", client->fd);
+	dprintf(client->fd, "ok\n");
 	return (0);
 }

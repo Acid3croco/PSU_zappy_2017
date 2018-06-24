@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief check_error checks erros of the event and can close it
+* @brief check_errors checks erros of the event and can close it
 *
 * @param server
 */
@@ -70,34 +70,12 @@ void read_event(srv_t *server)
 	if (input == NULL)
 		quit(server);
 	characters = getline(&input, &bufsize, fs);
-	if (characters < 1) {
-		free(input);
-		fclose(fs);
-		close_fd(server);
-	}
+	if (characters < 1)
+		getline_close(server, input, fs);
 	else if (characters > 1)
 		inter_input(server, input, fs);
 	else
 		free(input);
-}
-
-/**
-* @brief time_loop handle time cycle for everything
-*
-* @param server
-*/
-
-void time_loop(srv_t *server, struct timeb *start)
-{
-	struct timeb end;
-	long int timer;
-
-	(void)server;
-	ftime(&end);
-	timer = (1 / server->freq * 1000) - ((end.time * 1000 + end.millitm) -
-		(start->time * 1000 + start->millitm));
-	if (timer > 0)
-		usleep(timer * 1000);
 }
 
 /**
@@ -109,15 +87,14 @@ void time_loop(srv_t *server, struct timeb *start)
 void loop_server(srv_t *server)
 {
 	int n = 0;
-	struct timeb start;
+	struct timeval strt_fd;
 
 	printf(GREEN"Ready to accept new client on port %i\n"RESET,
 		server->port);
+	gettimeofday(&strt_fd, NULL);
 	for (;;) {
 		n = epoll_wait(server->cnt->efd,
-				server->cnt->events, MAX_EVENTS, -1);
-		printf(BLUE"n %i\n"RESET, n);
-		ftime(&start);
+				server->cnt->events, MAX_EVENTS, 0);
 		for (server->cnt->a = 0; server->cnt->a < n; server->cnt->a++) {
 			check_errors(server);
 			if (server->cnt->fd ==
@@ -126,6 +103,6 @@ void loop_server(srv_t *server)
 			else
 				read_event(server);
 		}
-		time_loop(server, &start);
+		check_all(server, &strt_fd);
 	}
 }

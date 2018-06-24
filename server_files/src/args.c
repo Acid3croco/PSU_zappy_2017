@@ -24,12 +24,14 @@ void init_struct(srv_t *server)
 	server->team->name = NULL;
 	server->team->client = NULL;
 	server->team->next = NULL;
+	server->team->egg = NULL;
 	server->port = 1234;
 	server->width = 10;
 	server->height = 10;
 	server->clientsNB = 10;
 	server->freq = 100;
 	server->fs = NULL;
+	server->inc = NULL;
 }
 
 /**
@@ -46,7 +48,7 @@ void fill_teams(int ac, char **av, srv_t *server)
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		if (iteam_s_new(av[optind], server) != 0) {
+		if (is_team_new(av[optind], server) != 0) {
 			printf(RED"-n option only accepts unique team names\n"
 				RESET);
 			quit(server);
@@ -82,7 +84,7 @@ void fill_args(int ac, char **av, srv_t *server)
 				break;
 			case 'f': server->freq = strtol(optarg, NULL, 10);
 				break;
-			default : quit(server);
+			default : help(server);
 				break;
 		}
 	}

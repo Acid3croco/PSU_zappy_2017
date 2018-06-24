@@ -23,6 +23,8 @@ void free_client(cl_t *client)
 			free(tmp->team);
 		if (tmp->fs != NULL)
 			fclose(tmp->fs);
+		if (tmp->input != NULL)
+			free_input(tmp->input);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);
@@ -45,6 +47,8 @@ void free_team(tm_t *team)
 			free(tmp->name);
 		if (tmp->client != NULL)
 			free_client(tmp->client);
+		if (tmp->egg != NULL)
+			free_egg(tmp->egg);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);
@@ -77,6 +81,7 @@ void free_server(srv_t *server)
 	free_connect(server->cnt);
 	free_team(server->team);
 	free_map(server->map, server->width, server->height);
+	free_inc(server->inc);
 	if (server->fs != NULL)
 		fclose(server->fs);
 	free(server);

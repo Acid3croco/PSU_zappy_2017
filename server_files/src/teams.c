@@ -9,14 +9,14 @@
 #include "server.h"
 
 /**
-* @brief iteam_s_new (?) check if the team name already exist
+* @brief is_team_new (?) check if the team name already exist
 *
 * @param name
 * @param server
 * @return int
 */
 
-int iteam_s_new(char *name, srv_t *server)
+int is_team_new(char *name, srv_t *server)
 {
 	tm_t *tmp = server->team;
 
@@ -43,5 +43,7 @@ void add_team(char *name, srv_t *server)
 	new->next = server->team;
 	new->client = NULL;
 	new->nb_ia = 0;
+	new->egg = NULL;
+	new->nb_egg = 0;
 	server->team = new;
 }

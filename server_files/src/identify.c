@@ -33,40 +33,63 @@ void identify_cli(int infd, struct sockaddr_in *client_s, socklen_t size)
 }
 
 /**
+* @brief delete_on_map remove the client from his box
+*
+* @param box
+*/
+
+void delete_on_map(box_t *box, cl_t *client)
+{
+	cl_t *tmp = box->client;
+	cl_t *prev = NULL;
+
+	for (;tmp != NULL; tmp = tmp->mnext) {
+		if (tmp->fd == client->fd)
+			break;
+		prev = tmp;
+	}
+	if (prev == NULL)
+		box->client = NULL;
+	else
+		prev->mnext = tmp->mnext;
+}
+
+/**
 * @brief delete_client delete the client and connect the prev to the next
 *
 * @param prev
 * @param cl
 */
 
-void delete_client(tm_t *team, cl_t *cl, cl_t *prev)
+void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 {
+	dprintf(cl->fd, "dead\n");
 	team->nb_ia -= 1;
+	delete_on_map(map->box[cl->y][cl->x], cl);
 	if (prev != NULL)
 		prev->next = cl->next;
 	else
 		team->client = cl->next;
 	if (cl->team != NULL)
 		free(cl->team);
-	close(cl->fd);
+	free_input(cl->input);
+	fclose(cl->fs);
 	free(cl);
 }
 
 /**
-* @brief close_fd close the given fd and free the client
+* @brief close_fd close the opened fd and free the client
 *
 * @param fd
 */
 
-void close_fd(srv_t *server)
+void close_fd(srv_t *server, int fd, FILE *fs)
 {
 	tm_t *tm = server->team;
-	cl_t *cl = NULL;
-	cl_t *prev = NULL;
-	int fd = server->cnt->events[server->cnt->a].data.fd;
-	int done = 0;
+	cl_t *cl, *prev = NULL;
 
-	for (;done == 0 && tm != NULL; tm = tm->next) {
+	fd = (fd < 0) ? server->cnt->events[server->cnt->a].data.fd : fd;
+	for (int done = 0; done == 0 && tm != NULL; tm = tm->next) {
 		for (cl = tm->client; done == 0 && cl != NULL; cl = cl->next) {
 			if (cl->fd == fd) {
 				done = 1;
@@ -78,6 +101,8 @@ void close_fd(srv_t *server)
 			break;
 	}
 	if (cl != NULL)
-		delete_client(tm, cl, prev);
+		delete_client(server->map, tm, cl, prev);
+	else if (fs)
+		fclose(fs);
 	printf(YELLOW"Closed connection on descriptor %d\n"RESET, fd);
 }

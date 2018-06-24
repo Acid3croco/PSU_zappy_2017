@@ -8,7 +8,7 @@
 #include "server.h"
 
 /**
-* @brief Get the tab size counting the number of space js
+* @brief get_tab_size get the tab size counting the number of space
 *
 * @param buf
 * @return int
@@ -35,7 +35,7 @@ int get_tab_size(char *buf)
 * @return char **
 */
 
-char **str_to_wordtab(char *input, FILE *fs)
+char **str_to_wordtab(char *input)
 {
 	char **cmd;
 	char *token;
@@ -43,7 +43,6 @@ char **str_to_wordtab(char *input, FILE *fs)
 	int a;
 	int tab_size = get_tab_size(input);
 
-	(void)fs;
 	cmd = malloc(sizeof(char *) * tab_size);
 	token = strtok_r(input, " \n\0", &save);
 	for (a = 0; token != NULL; a++) {
@@ -77,12 +76,13 @@ void upper_case(char *cmd)
 * @param fs
 */
 
-void server_cmd(srv_t *server, char **cmd, FILE *fs)
+void server_cmd(srv_t *server, char **cmd, FILE *fs, char *save)
 {
+	free(save);
 	server->fs = fs;
 	if (cmd[0] != NULL) {
 		upper_case(cmd[0]);
-		if (sel_srv_cmd(server, cmd, fs) == 1)
+		if (sel_srv_cmd(server, cmd) == 1)
 			msg_cmd(cmd[0]);
 	}
 }

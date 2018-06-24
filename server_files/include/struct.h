@@ -10,7 +10,9 @@
 
 #include <sys/epoll.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/timeb.h>
 
 /* color define for printf */
 #include "color.h"
@@ -27,6 +29,24 @@ typedef struct ress_s
 	int food;
 } rs_t;
 
+typedef struct inpt_s
+{
+	char *input;
+	float timer;
+	struct timeval start;
+	struct inpt_s *next;
+} inpt_t;
+
+typedef struct inc_s
+{
+	int x;
+	int y;
+	int lv;
+	struct timeval start;
+	struct client_s *client;
+	struct inc_s *next;
+} inc_t;
+
 typedef struct client_s
 {
 	int x;
@@ -34,18 +54,31 @@ typedef struct client_s
 	int lv;
 	int fd;
 	int look;
-	int cycle;
+	int is_inc;
+	int nb_inpt;
 	FILE *fs;
 	char *team;
 	struct ress_s ress;
+	struct inpt_s *input;
 	struct client_s *next;
 	struct client_s *mnext;
+	struct client_s *inext;
 } cl_t;
+
+typedef struct egg_s
+{
+	int x;
+	int y;
+	struct timeval start;
+	struct egg_s *next;
+} egg_t;
 
 typedef struct team_s
 {
 	int nb_ia;
 	char *name;
+	int nb_egg;
+	struct egg_s *egg;
 	struct client_s *client;
 	struct team_s *next;
 } tm_t;
@@ -65,8 +98,8 @@ typedef struct connect_s
 /* Map Strucutres */
 typedef struct box_s
 {
-	struct client_s *client;
 	struct ress_s ress;
+	struct client_s *client;
 
 } box_t;
 
@@ -87,19 +120,36 @@ typedef struct server_s
 	int freq;
 	FILE *fs;
 	struct map_s *map;
+	struct inc_s *inc;
 	struct connect_s *cnt;
 	struct team_s *team;
 } srv_t;
 
 /* server commands functions */
-int quit_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int quit_cmd(srv_t *server, char **cmd, cl_t *client);
 int msg_cmd(char *cmd);
 
 /* client commands functions */
-int forward_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
-int right_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
-int left_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
-int look_cmd(srv_t *server, char **cmd, FILE *fs, cl_t *client);
+int forward_cmd(srv_t *server, char **cmd, cl_t *client);
+int right_cmd(srv_t *server, char **cmd, cl_t *client);
+int left_cmd(srv_t *server, char **cmd, cl_t *client);
+int look_cmd(srv_t *server, char **cmd, cl_t *client);
+int inventory_cmd(srv_t *server, char **cmd, cl_t *client);
+int con_cmd(srv_t *server, char **cmd, cl_t *client);
+int take_cmd(srv_t *server, char **cmd, cl_t *client);
+int set_cmd(srv_t *server, char **cmd, cl_t *client);
+int broad_cmd(srv_t *server, char **cmd, cl_t *client);
+int eject_cmd(srv_t *server, char **cmd, cl_t *client);
+int fork_cmd(srv_t *server, char **cmd, cl_t *client);
+int inc_cmd(srv_t *server, char **cmd, cl_t *client);
 
+/* object commands functions */
+int der_obj(box_t *box, cl_t *client, int amount);
+int foo_obj(box_t *box, cl_t *client, int amount);
+int lin_obj(box_t *box, cl_t *client, int amount);
+int men_obj(box_t *box, cl_t *client, int amount);
+int phi_obj(box_t *box, cl_t *client, int amount);
+int sib_obj(box_t *box, cl_t *client, int amount);
+int thy_obj(box_t *box, cl_t *client, int amount);
 
 #endif /* !STRUCT_H_ */
