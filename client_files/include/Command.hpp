@@ -20,9 +20,7 @@ public:
 	Command();
 	~Command();
 	bool	startConnection(int ac, char **av);
-	void	forward();
-	void	right();
-	void	left();
+	void	move(std::string direction);
 	void	look();
 	void	inventory();
 	void	broadcast(const std::string broad);
@@ -34,10 +32,15 @@ public:
 	void	incantation();
 	std::string	getListen();
 	bool	compareCmd(std::string cmd);
+	std::string	getTeam();
+	int		verifFd() const;
+	void	popBack();
+	bool	verifExist(std::string cmd) const;
 protected:
 private:
 	Mysocket	*_so;
-	std::string	_lastCmd;
+	std::vector<std::string>	_lastCmd;
+	std::string	_team;
 };
 
 #endif /* !COMMAND_HPP_ */

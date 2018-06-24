@@ -11,7 +11,7 @@
  * @brief Construct a new Mysocket:: Mysocket object
  *
  */
-Mysocket::Mysocket()
+Mysocket::Mysocket() : _buf(), _fs()
 {
 }
 
@@ -101,13 +101,12 @@ std::string	Mysocket::wlisten()
 {
 	std::string	str;
 	size_t		len = 4096;
+	ssize_t		ret;
 
 	this->_buf = (char *)memset(this->_buf, 0, 4096);
-	if (getline(&this->_buf, &len, (FILE *)this->_fs) == -1) {
-		perror("");
-		fclose(this->_fs);
+	ret = getline(&this->_buf, &len, (FILE *)this->_fs);
+	if (ret < 1)
 		return ("Error\n");
-	}
 	str = std::string(this->_buf);
 	return(str);
 }
@@ -120,6 +119,7 @@ std::string	Mysocket::wlisten()
 void	Mysocket::wwrite(const char *s)
 {
 	write(this->_fd, s, strlen(s));
+	std::cout << s;
 }
 
 /**
@@ -179,7 +179,9 @@ int	Mysocket::getPort() const
 */
 int	Mysocket::getFd()const
 {
-	return(this->_fd);
+	if (this->_fd)
+		return(this->_fd);
+	return (-1);
 }
 
 /**

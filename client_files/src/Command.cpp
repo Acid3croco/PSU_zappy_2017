@@ -11,7 +11,7 @@
 * @brief Construct a new Command:: Command object
 *
 */
-Command::Command() : _so(new Mysocket())
+Command::Command() : _so(new Mysocket()), _lastCmd(0), _team("-1")
 {
 }
 
@@ -34,57 +34,40 @@ Command::~Command()
 */
 bool	Command::startConnection(int ac, char **av)
 {
-	std::vector<int>	pos{-1, -1, 0};
+	std::vector<int>	pos{-1, 0};
 
 	for (int i = 1; i < ac; i += 2) {
 		if (std::strcmp(av[i], "-p") == 0)
 			pos[0] = i + 1;
 		else if (std::strcmp(av[i], "-n") == 0)
-			pos[1] = i + 1;
+			this->_team = std::string(av[i + 1]);
 		else if (std::strcmp(av[i], "-h") == 0)
-			pos[2] = i + 1;
+			pos[1] = i + 1;
 	}
-	if (pos[0] == -1 || pos[1] == -1)
+	if (pos[0] == -1 || this->_team.compare("noTeam") == 0)
 		return (false);
-	if (this->_so->launchMysocket(std::atoi(av[pos[0]]), av[pos[2]], pos[2])
-	== false) {
-		perror("");
+	if (this->_so->launchMysocket(std::atoi(av[pos[0]]), av[pos[1]], pos[1])
+	== false)
 		return (false);
-	}
-	std::cout << this->_so->wlisten() << std::endl;
-	this->_so->wwrite(av[pos[1]]);
+	if (this->_so->wlisten().compare("WELCOME\n") != 0)
+		return (false);
+	this->_so->wwrite(this->_team.c_str());
 	this->_so->wwrite("\n");
 	return (true);
 }
 
 /**
-* @brief forward Ia move forward.
+* @brief move allow Ia to move.
 *
+* @param direction
 */
-void	Command::forward()
+void	Command::move(std::string direction)
 {
-	this->_so->wwrite("Forward\n");
-	this->_lastCmd = std::string("move");
-}
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
 
-/**
-* @brief right Ia move to the right.
-*
-*/
-void	Command::right()
-{
-	this->_so->wwrite("Right\n");
-	this->_lastCmd = std::string("move");
-}
-
-/**
-* @brief left Ia move to the left.
-*
-*/
-void	Command::left()
-{
-	this->_so->wwrite("Left\n");
-	this->_lastCmd = std::string("move");
+	this->_so->wwrite(direction.c_str());
+	this->_so->wwrite("\n");
+	this->_lastCmd.insert(it, "move");
 }
 
 /**
@@ -93,8 +76,10 @@ void	Command::left()
 */
 void	Command::look()
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Look\n");
-	this->_lastCmd = std::string("look");
+	this->_lastCmd.insert(it, "look");
 }
 
 /**
@@ -103,8 +88,10 @@ void	Command::look()
 */
 void	Command::inventory()
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Inventory\n");
-	this->_lastCmd = std::string("inventory");
+	this->_lastCmd.insert(it, "inventory");
 }
 
 /**
@@ -114,10 +101,14 @@ void	Command::inventory()
 */
 void	Command::broadcast(const std::string broad)
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Broadcast ");
+	this->_so->wwrite(this->_team.c_str());
+	this->_so->wwrite(" ");
 	this->_so->wwrite(broad.c_str());
-	this->_so->wwrite(" \n");
-	this->_lastCmd = std::string("broadcast");
+	this->_so->wwrite("\n");
+	this->_lastCmd.insert(it, "broadcast");
 }
 
 /**
@@ -126,8 +117,10 @@ void	Command::broadcast(const std::string broad)
 */
 void	Command::connectNbr()
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Connect_nbr\n");
-	this->_lastCmd = std::string("connectNbr");
+	this->_lastCmd.insert(it, "connect_nbr");
 }
 
 /**
@@ -136,8 +129,10 @@ void	Command::connectNbr()
 */
 void	Command::pfork()
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Fork\n");
-	this->_lastCmd = std::string("fork");
+	this->_lastCmd.insert(it, "fork");
 }
 
 /**
@@ -146,8 +141,10 @@ void	Command::pfork()
 */
 void	Command::eject()
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Eject\n");
-	this->_lastCmd = std::string("eject");
+	this->_lastCmd.insert(it, "eject");
 }
 
 /**
@@ -156,10 +153,12 @@ void	Command::eject()
 */
 void	Command::takeObj(const std::string object)
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Take ");
 	this->_so->wwrite(object.c_str());
-	this->_so->wwrite(" \n");
-	this->_lastCmd = std::string("takeObj");
+	this->_so->wwrite("\n");
+	this->_lastCmd.insert(it, "takeObj");
 }
 
 /**
@@ -168,10 +167,12 @@ void	Command::takeObj(const std::string object)
 */
 void	Command::setObj(const std::string object)
 {
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
 	this->_so->wwrite("Set ");
 	this->_so->wwrite(object.c_str());
-	this->_so->wwrite(" \n");
-	this->_lastCmd = std::string("setObj");
+	this->_so->wwrite("\n");
+	this->_lastCmd.insert(it, "setObj");
 }
 
 /**
@@ -180,8 +181,10 @@ void	Command::setObj(const std::string object)
 */
 void	Command::incantation()
 {
-	this->_so->wwrite("Incantation");
-	this->_lastCmd = std::string("incantation");
+	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
+
+	this->_so->wwrite("Incantation\n");
+	this->_lastCmd.insert(it, "incantation");
 }
 
 /**
@@ -203,7 +206,52 @@ std::string	Command::getListen()
 */
 bool	Command::compareCmd(std::string cmd)
 {
-	if (this->_lastCmd.compare(cmd) == 0)
+	if (this->_lastCmd.back().compare(cmd) == 0)
 		return (true);
 	return (false);
+}
+
+/**
+* @brief popBack delete the last element of the message queue.
+*
+*/
+void	Command::popBack()
+{
+	this->_lastCmd.pop_back();
+}
+
+/**
+* @brief getTeam return the name of the team.
+*
+* @return std::string
+*/
+std::string	Command::getTeam()
+{
+	return (this->_team);
+}
+
+/**
+* @brief verifFd verification if the fd exist.
+*
+* @return int
+*/
+int	Command::verifFd() const
+{
+	return (this->_so->getFd());
+}
+
+/**
+* @brief verifExist verify if a cmd is in message queue.
+*
+* @param cmd
+* @return true
+* @return false
+*/
+bool	Command::verifExist(std::string cmd) const
+{
+	for (int i = 0; i < (int)this->_lastCmd.size(); i++) {
+		if (this->_lastCmd[i].compare(cmd) == 0)
+			return (true);
+	}
+	return(false);
 }

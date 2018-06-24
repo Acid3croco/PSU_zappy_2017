@@ -42,7 +42,8 @@ SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Command.cpp	\
 		./client_files/src/Game.cpp	\
 		./client_files/src/Inventory.cpp	\
-		./client_files/src/Objectif.cpp
+		./client_files/src/Objectif.cpp	\
+		./client_files/src/Movement.cpp
 
 OBJS_S	= $(SRCS_S:.c=.o)
 
