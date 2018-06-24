@@ -31,6 +31,7 @@ void init_struct(srv_t *server)
 	server->clientsNB = 10;
 	server->freq = 100;
 	server->fs = NULL;
+	server->inc = NULL;
 }
 
 /**

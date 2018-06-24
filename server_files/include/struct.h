@@ -37,6 +37,16 @@ typedef struct inpt_s
 	struct inpt_s *next;
 } inpt_t;
 
+typedef struct inc_s
+{
+	int x;
+	int y;
+	int lv;
+	struct timeval start;
+	struct client_s *client;
+	struct inc_s *next;
+} inc_t;
+
 typedef struct client_s
 {
 	int x;
@@ -44,6 +54,7 @@ typedef struct client_s
 	int lv;
 	int fd;
 	int look;
+	int is_inc;
 	int nb_inpt;
 	FILE *fs;
 	char *team;
@@ -51,6 +62,7 @@ typedef struct client_s
 	struct inpt_s *input;
 	struct client_s *next;
 	struct client_s *mnext;
+	struct client_s *inext;
 } cl_t;
 
 typedef struct egg_s
@@ -108,6 +120,7 @@ typedef struct server_s
 	int freq;
 	FILE *fs;
 	struct map_s *map;
+	struct inc_s *inc;
 	struct connect_s *cnt;
 	struct team_s *team;
 } srv_t;
@@ -128,6 +141,7 @@ int set_cmd(srv_t *server, char **cmd, cl_t *client);
 int broad_cmd(srv_t *server, char **cmd, cl_t *client);
 int eject_cmd(srv_t *server, char **cmd, cl_t *client);
 int fork_cmd(srv_t *server, char **cmd, cl_t *client);
+int inc_cmd(srv_t *server, char **cmd, cl_t *client);
 
 /* object commands functions */
 int der_obj(box_t *box, cl_t *client, int amount);

@@ -99,5 +99,8 @@ void check_height(srv_t *server);
 void check_freq(srv_t *server);
 void check_clientsNB(srv_t *server);
 void check_args(srv_t *server);
+void create_inc(srv_t *server, cl_t *client);
+void check_inc(srv_t *server);
+int check_ress(box_t *box, int lv);
 
 #endif /* !SERVER_H_ */

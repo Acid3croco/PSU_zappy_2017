@@ -15,7 +15,9 @@
 
 void init_ress_client(cl_t *client)
 {
+	client->is_inc = 0;
 	client->lv = 1;
+	client->inext = NULL;
 	client->ress.deraumere = 0;
 	client->ress.food = 9;
 	client->ress.linemate = 0;

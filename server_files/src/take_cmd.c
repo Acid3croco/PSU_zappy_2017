@@ -7,6 +7,18 @@
 
 #include "server.h"
 
+void send_box(box_t *box, int x, int y, int fd)
+{
+	dprintf(fd, "/%i;%i:%iD%iF%iL%iM%iP%iS%iT", x, y,
+		box->ress.deraumere,
+		box->ress.food,
+		box->ress.linemate,
+		box->ress.mendiane,
+		box->ress.phiras,
+		box->ress.sibur,
+		box->ress.thystame);
+}
+
 /**
 * @brief take_cmd execute the take command adding one ressource to the client
 *
@@ -22,7 +34,8 @@ int take_cmd(srv_t *server, char **cmd, cl_t *client)
 		sel_obj_cmd(server->map->box[client->y][client->x],
 				client, cmd, 1);
 	if (server->map->fd != -2)
-		dprintf(server->map->fd, "Take %s %i\n", cmd[1], client->fd);
+		send_box(server->map->box[client->y][client->x],
+			client->x, client->y, server->map->fd);
 	return (0);
 }
 
@@ -41,6 +54,7 @@ int set_cmd(srv_t *server, char **cmd, cl_t *client)
 		sel_obj_cmd(server->map->box[client->y][client->x],
 				client, cmd, -1);
 	if (server->map->fd != -2)
-		dprintf(server->map->fd, "Set %s %i\n", cmd[1], client->fd);
+		send_box(server->map->box[client->y][client->x],
+			client->x, client->y, server->map->fd);
 	return (0);
 }

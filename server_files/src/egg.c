@@ -13,7 +13,7 @@
 * @param server
 * @param team
 * @param egg
-* @return egg_t*
+* @return egg_t *
 */
 
 egg_t *time_egg(srv_t *server, tm_t *team, egg_t *egg)

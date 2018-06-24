@@ -40,11 +40,13 @@ tm_t *find_team(srv_t *server, char *name)
 int con_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	tm_t *tmp = find_team(server, client->team);
+	int nb_ia = 0;
 
+	(void)cmd;
 	if (tmp == NULL)
 		return (1);
-	(void)cmd;
-
-	dprintf(client->fd, "%i\n", server->clientsNB - tmp->nb_ia);
+	nb_ia = server->clientsNB - tmp->nb_ia;
+	nb_ia = (nb_ia < 0) ? 0 : nb_ia;
+	dprintf(client->fd, "%i\n", nb_ia);
 	return (0);
 }

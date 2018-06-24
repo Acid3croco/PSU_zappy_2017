@@ -18,7 +18,7 @@ void delete_input(cl_t *client)
 	inpt_t *delete = client->input;
 
 	client->input = client->input->next;
-	if (client->input)
+	if (client->input && client->is_inc == 0)
 		gettimeofday(&client->input->start, NULL);
 	free(delete->input);
 	free(delete);
@@ -73,7 +73,8 @@ cl_t *time_cmd(srv_t *server, cl_t *cl, struct timeval *strt_fd)
 	if (cl && check_food(server, cl, strt_fd, &end) == 0 && cl->input) {
 		dif = (end.tv_sec - cl->input->start.tv_sec) * 1000000;
 		dif += (end.tv_usec - cl->input->start.tv_usec);
-		if (dif > cl->input->timer / server->freq * 1000000) {
+		if (cl->is_inc == 0 && \
+			dif > cl->input->timer / server->freq * 1000000) {
 			cmd = str_to_wordtab(cl->input->input);
 			sel_cli_cmd(server, cmd, cl);
 			free_tab(cmd);

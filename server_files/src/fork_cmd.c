@@ -11,7 +11,7 @@
 * @brief find_egg find the first egg
 *
 * @param team
-* @return egg_t*
+* @return egg_t *
 */
 
 egg_t *find_egg(tm_t *team)
@@ -83,7 +83,7 @@ void add_cli_egg(srv_t *server, char **cmd, FILE *fs, tm_t *team)
 *
 * @param server
 * @param client
-* @return egg_t*
+* @return egg_t *
 */
 
 egg_t *new_egg(srv_t *server, cl_t *client)

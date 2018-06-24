@@ -50,7 +50,10 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/fork_cmd.c \
 	./server_files/src/egg.c \
 	./server_files/src/broad_dir.c \
-	./server_files/src/args_check.c
+	./server_files/src/args_check.c \
+	./server_files/src/inc_cmd.c \
+	./server_files/src/add_inc.c \
+	./server_files/src/check_inc.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
