@@ -99,7 +99,8 @@ void add_map(srv_t *server, FILE *fs)
 				server->map->box[y][x]->ress.thystame);
 		}
 	}
-	dprintf(server->map->fd, "%s", map);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "%s", map);
 	free(map);
 }
 
@@ -128,6 +129,8 @@ void add_cli_to_team(srv_t *server, char **cmd, FILE *fs)
 	}
 	if (done == 1 && server->clientsNB - tmp->nb_ia > 0)
 		add_cli(server, cmd, fs, tmp);
+	else if (done == 1 && server->clientsNB + tmp->nb_egg - tmp->nb_ia > 0)
+		add_cli_egg(server, cmd, fs, tmp);
 	else
 		wrong_teamname(server, cmd, fs);
 }

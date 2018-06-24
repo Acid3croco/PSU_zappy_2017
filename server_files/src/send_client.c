@@ -40,8 +40,9 @@ void send_new_client(srv_t *server, tm_t *team, cl_t *client, char **cmd)
 
 	dprintf(client->fd, "%i\n", server->clientsNB - team->nb_ia);
 	dprintf(client->fd, "%i %i\n", server->width, server->height);
-	dprintf(server->map->fd, "new_c %i %s %i %i %i\n", client->fd, \
-		client->team, client->x, client->y, client->look);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "new_c %i %s %i %i %i\n", client->fd, \
+			client->team, client->x, client->y, client->look);
 	printf(MAGENTA"Adding %i to the team %s\n"RESET, fd, cmd[0]);
 	printf(MAGENTA"There is %i ia in the team %s\n"RESET,
 		team->nb_ia, cmd[0]);

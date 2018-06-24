@@ -53,10 +53,20 @@ typedef struct client_s
 	struct client_s *mnext;
 } cl_t;
 
+typedef struct egg_s
+{
+	int x;
+	int y;
+	struct timeval start;
+	struct egg_s *next;
+} egg_t;
+
 typedef struct team_s
 {
 	int nb_ia;
 	char *name;
+	int nb_egg;
+	struct egg_s *egg;
 	struct client_s *client;
 	struct team_s *next;
 } tm_t;
@@ -76,8 +86,8 @@ typedef struct connect_s
 /* Map Strucutres */
 typedef struct box_s
 {
-	struct client_s *client;
 	struct ress_s ress;
+	struct client_s *client;
 
 } box_t;
 
@@ -117,6 +127,7 @@ int take_cmd(srv_t *server, char **cmd, cl_t *client);
 int set_cmd(srv_t *server, char **cmd, cl_t *client);
 int broad_cmd(srv_t *server, char **cmd, cl_t *client);
 int eject_cmd(srv_t *server, char **cmd, cl_t *client);
+int fork_cmd(srv_t *server, char **cmd, cl_t *client);
 
 /* object commands functions */
 int der_obj(box_t *box, cl_t *client, int amount);

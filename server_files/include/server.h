@@ -87,5 +87,10 @@ void go_on(srv_t *s, cl_t *client, int x, int y);
 void help(srv_t *server);
 void check_args(srv_t *server);
 void ress_cell(box_t *box, cl_t *client);
+tm_t *find_team(srv_t *server, char *name);
+void add_cli_egg(srv_t *server, char **cmd, FILE *fs, tm_t *team);
+void delete_egg(srv_t *server, tm_t *team, egg_t *egg);
+void check_egg(srv_t *server);
+void free_egg(egg_t *egg);
 
 #endif /* !SERVER_H_ */

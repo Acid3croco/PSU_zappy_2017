@@ -24,7 +24,8 @@ int left_cmd(srv_t *server, char **cmd, cl_t *client)
 	client->look = client->look + 1 % 4;
 	if (client->look > 3)
 		client->look -= 4;
-	dprintf(server->map->fd, "Left %i\n", client->fd);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Left %i\n", client->fd);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }
@@ -46,7 +47,8 @@ int right_cmd(srv_t *server, char **cmd, cl_t *client)
 	client->look = client->look - 1 % 4;
 	if (client->look < 0)
 		client->look += 4;
-	dprintf(server->map->fd, "Right %i\n", client->fd);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Right %i\n", client->fd);
 	dprintf(client->fd, "ok\n");
 	return (0);
 }

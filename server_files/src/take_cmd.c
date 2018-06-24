@@ -21,7 +21,8 @@ int take_cmd(srv_t *server, char **cmd, cl_t *client)
 	if (cmd[1] != NULL)
 		sel_obj_cmd(server->map->box[client->y][client->x],
 				client, cmd, 1);
-	dprintf(server->map->fd, "Take %s %i\n", cmd[1], client->fd);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Take %s %i\n", cmd[1], client->fd);
 	return (0);
 }
 
@@ -39,6 +40,7 @@ int set_cmd(srv_t *server, char **cmd, cl_t *client)
 	if (cmd[1] != NULL)
 		sel_obj_cmd(server->map->box[client->y][client->x],
 				client, cmd, -1);
-	dprintf(server->map->fd, "Set %s %i\n", cmd[1], client->fd);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Set %s %i\n", cmd[1], client->fd);
 	return (0);
 }

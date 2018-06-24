@@ -75,3 +75,21 @@ void getline_close(srv_t *server, char *input, FILE *fs)
 	free(input);
 	close_fd(server, -1, fs);
 }
+
+/**
+* @brief free_egg free the eggs of a team
+*
+* @param egg
+*/
+
+void free_egg(egg_t *egg)
+{
+	egg_t *tmp = egg;
+	egg_t *prev;
+
+	while (tmp != NULL) {
+		prev = tmp;
+		tmp = tmp->next;
+		free(prev);
+	}
+}

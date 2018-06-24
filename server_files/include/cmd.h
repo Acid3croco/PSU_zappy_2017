@@ -11,7 +11,7 @@
 #include "struct.h"
 
 #define NB_CMD_SRV 1
-#define NB_CMD_CLI 10
+#define NB_CMD_CLI 11
 #define NB_OBJ 7
 
 typedef struct cmd_s
@@ -41,9 +41,9 @@ const cmd_t cmd_cli[] = {
 	{"Take", &take_cmd, 7},
 	{"Set", &set_cmd, 7},
 	{"Broadcast", &broad_cmd, 7},
-	{"Eject", &eject_cmd, 7}
-/*	{"Fork", &fork_cmd, 42},
-	{"Incentation", &inc_cmd, 300} */
+	{"Eject", &eject_cmd, 7},
+	{"Fork", &fork_cmd, 42}
+	/* {"Incentation", &inc_cmd, 300} */
 };
 
 const obj_t cmd_obj[] = {

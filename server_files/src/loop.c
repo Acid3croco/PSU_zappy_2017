@@ -104,5 +104,6 @@ void loop_server(srv_t *server)
 				read_event(server);
 		}
 		check_cmd(server, &strt_fd);
+		check_egg(server);
 	}
 }

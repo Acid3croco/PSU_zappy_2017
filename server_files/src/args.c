@@ -24,6 +24,7 @@ void init_struct(srv_t *server)
 	server->team->name = NULL;
 	server->team->client = NULL;
 	server->team->next = NULL;
+	server->team->egg = NULL;
 	server->port = 1234;
 	server->width = 10;
 	server->height = 10;

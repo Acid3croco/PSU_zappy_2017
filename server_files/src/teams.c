@@ -43,5 +43,7 @@ void add_team(char *name, srv_t *server)
 	new->next = server->team;
 	new->client = NULL;
 	new->nb_ia = 0;
+	new->egg = NULL;
+	new->nb_egg = 0;
 	server->team = new;
 }

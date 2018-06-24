@@ -47,6 +47,8 @@ void free_team(tm_t *team)
 			free(tmp->name);
 		if (tmp->client != NULL)
 			free_client(tmp->client);
+		if (tmp->egg != NULL)
+			free_egg(tmp->egg);
 		prev = tmp;
 		tmp = tmp->next;
 		free(prev);

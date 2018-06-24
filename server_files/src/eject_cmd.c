@@ -33,8 +33,9 @@ void eject_cl(srv_t *server, cl_t *client, cl_t *cl)
 			k = 3 + 2 * cl->look;
 			break;
 	}
-	dprintf(server->map->fd, "Eject %i %i %i\n", client->fd, \
-		client->x, client->y);
+	if (server->map->fd != -2)
+		dprintf(server->map->fd, "Eject %i %i %i\n", client->fd, \
+			client->x, client->y);
 	dprintf(cl->fd, "eject: %i\n", k);
 }
 
