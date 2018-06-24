@@ -7,9 +7,18 @@
 
 #include "server.h"
 
+/**
+* @brief send_box send the current ressources on the given box
+*
+* @param box
+* @param x
+* @param y
+* @param fd
+*/
+
 void send_box(box_t *box, int x, int y, int fd)
 {
-	dprintf(fd, "/%i;%i:%iD%iF%iL%iM%iP%iS%iT", x, y,
+	dprintf(fd, "/%i;%i:%iD%iF%iL%iM%iP%iS%iT\n", x, y,
 		box->ress.deraumere,
 		box->ress.food,
 		box->ress.linemate,
@@ -31,8 +40,9 @@ void send_box(box_t *box, int x, int y, int fd)
 int take_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	if (cmd[1] != NULL)
-		sel_obj_cmd(server->map->box[client->y][client->x],
-				client, cmd, 1);
+		if (sel_obj_cmd(server->map->box[client->y][client->x],
+				client, cmd, 1) != 0)
+			dprintf(client->fd, "ko\n");
 	if (server->map->fd != -2)
 		send_box(server->map->box[client->y][client->x],
 			client->x, client->y, server->map->fd);
@@ -51,8 +61,9 @@ int take_cmd(srv_t *server, char **cmd, cl_t *client)
 int set_cmd(srv_t *server, char **cmd, cl_t *client)
 {
 	if (cmd[1] != NULL)
-		sel_obj_cmd(server->map->box[client->y][client->x],
-				client, cmd, -1);
+		if (sel_obj_cmd(server->map->box[client->y][client->x],
+				client, cmd, -1) != 0)
+			dprintf(client->fd, "ko\n");
 	if (server->map->fd != -2)
 		send_box(server->map->box[client->y][client->x],
 			client->x, client->y, server->map->fd);

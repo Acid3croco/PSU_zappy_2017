@@ -81,6 +81,7 @@ void free_server(srv_t *server)
 	free_connect(server->cnt);
 	free_team(server->team);
 	free_map(server->map, server->width, server->height);
+	free_inc(server->inc);
 	if (server->fs != NULL)
 		fclose(server->fs);
 	free(server);

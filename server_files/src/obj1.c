@@ -21,9 +21,11 @@ int men_obj(box_t *box, cl_t *client, int amount)
 	if (amount > 0 && box->ress.mendiane > 0) {
 		client->ress.mendiane += amount;
 		box->ress.mendiane -= amount;
+		dprintf(client->fd, "ok\n");
 	} else if (amount < 0 && client->ress.mendiane > 0) {
 		client->ress.mendiane += amount;
 		box->ress.mendiane -= amount;
+		dprintf(client->fd, "ok\n");
 	} else
 		dprintf(client->fd, "ko\n");
 	return (0);

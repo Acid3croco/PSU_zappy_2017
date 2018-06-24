@@ -2,13 +2,25 @@
 ** EPITECH PROJECT, 2018
 ** zappy
 ** File description:
-** add incentation to server
+** add Incantation to server
 */
 
 #include "server.h"
 
+void free_inc(inc_t *inc)
+{
+	inc_t *tmp = inc;
+	inc_t *prev;
+
+	while (tmp != NULL) {
+		prev = tmp;
+		tmp = tmp->next;
+		free(prev);
+	}
+}
+
 /**
-* @brief add_cli_to_inc add the clients to the incentation
+* @brief add_cli_to_inc add the clients to the Incantation
 *
 * @param new
 * @param box
@@ -27,11 +39,11 @@ void add_cli_to_inc(inc_t *new, box_t *box)
 }
 
 /**
-* @brief new_inc create a new incentation struct
+* @brief new_inc create a new Incantation struct
 *
 * @param server
 * @param client
-* @return inc_t*
+* @return inc_t *
 */
 
 inc_t *new_inc(srv_t *server, cl_t *client)
@@ -50,7 +62,7 @@ inc_t *new_inc(srv_t *server, cl_t *client)
 }
 
 /**
-* @brief create_inc create the incentation struct to add it to the server
+* @brief create_inc create the Incantation struct to add it to the server
 *
 * @param server
 * @param client

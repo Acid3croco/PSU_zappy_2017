@@ -43,7 +43,7 @@ const cmd_t cmd_cli[] = {
 	{"Broadcast", &broad_cmd, 7},
 	{"Eject", &eject_cmd, 7},
 	{"Fork", &fork_cmd, 42},
-	{"Incentation", &inc_cmd, 0}
+	{"Incantation", &inc_cmd, 0}
 };
 
 const obj_t cmd_obj[] = {

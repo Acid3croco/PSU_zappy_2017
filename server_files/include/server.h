@@ -102,5 +102,6 @@ void check_args(srv_t *server);
 void create_inc(srv_t *server, cl_t *client);
 void check_inc(srv_t *server);
 int check_ress(box_t *box, int lv);
+void free_inc(inc_t *inc);
 
 #endif /* !SERVER_H_ */

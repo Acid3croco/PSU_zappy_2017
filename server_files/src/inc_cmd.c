@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** zappy
 ** File description:
-** incentation commands
+** Incantation commands
 */
 
 #include "server.h"
@@ -51,7 +51,6 @@ int check_ress(box_t *box, int lv)
 	if (curr_ress[0] < ritual[lv][0])
 		return (-1);
 	for (int a = 1; a < 8; a++) {
-		printf("box %i, ritual %i\n", curr_ress[a], ritual[lv][a]);
 		if (curr_ress[a] != ritual[lv][a])
 			return (-1);
 	}
@@ -59,7 +58,7 @@ int check_ress(box_t *box, int lv)
 }
 
 /**
-* @brief inc_cmd is the functions for the Incentation command
+* @brief inc_cmd is the functions for the Incantation command
 *
 * @param server
 * @param cmd
