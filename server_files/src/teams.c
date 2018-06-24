@@ -9,14 +9,14 @@
 #include "server.h"
 
 /**
-* @brief iteam_s_new (?) check if the team name already exist
+* @brief is_team_new (?) check if the team name already exist
 *
 * @param name
 * @param server
 * @return int
 */
 
-int iteam_s_new(char *name, srv_t *server)
+int is_team_new(char *name, srv_t *server)
 {
 	tm_t *tmp = server->team;
 

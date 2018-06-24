@@ -47,7 +47,7 @@ void fill_teams(int ac, char **av, srv_t *server)
 
 	(void)server;
 	while (optind < ac && av[optind][0] != '-') {
-		if (iteam_s_new(av[optind], server) != 0) {
+		if (is_team_new(av[optind], server) != 0) {
 			printf(RED"-n option only accepts unique team names\n"
 				RESET);
 			quit(server);

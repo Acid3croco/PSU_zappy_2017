@@ -48,7 +48,8 @@ SRCS_S	= ./server_files/src/server.c \
 	./server_files/src/help.c \
 	./server_files/src/look_cell.c \
 	./server_files/src/fork_cmd.c \
-	./server_files/src/egg.c
+	./server_files/src/egg.c \
+	./server_files/src/broad_dir.c
 
 SRCS_C	=	./client_files/src/Client.cpp	\
 		./client_files/src/Mysocket.cpp	\
@@ -61,7 +62,7 @@ OBJS_S	= $(SRCS_S:.c=.o)
 
 OBJS_C	= $(SRCS_C:.cpp=.o)
 
-WFLAGS	+= -W -Wall -Wextra -g3
+WFLAGS	+= -W -Wall -Wextra -lm -g3
 CFLAGS	+= -I ./server_files/include/ $(WFLAGS)
 CPPFLAGS	= -I ./client_files/include/ $(WFLAGS)
 

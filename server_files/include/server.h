@@ -20,6 +20,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/timeb.h>
+#include <math.h>
 
 /* socket bind listen headers */
 #include <netdb.h>
@@ -53,7 +54,7 @@ void fill_args(int ac, char **av, srv_t *server);
 void add_team(char *name, srv_t *server);
 void init_struct(srv_t *server);
 void quit(srv_t *server);
-int iteam_s_new(char *name, srv_t *server);
+int is_team_new(char *name, srv_t *server);
 void free_server(srv_t *server);
 void socket_bind(srv_t *server);
 void create_epoll(srv_t *server);
@@ -92,5 +93,6 @@ void add_cli_egg(srv_t *server, char **cmd, FILE *fs, tm_t *team);
 void delete_egg(srv_t *server, tm_t *team, egg_t *egg);
 void check_egg(srv_t *server);
 void free_egg(egg_t *egg);
+int calc_dir(cl_t *sender, cl_t *recev);
 
 #endif /* !SERVER_H_ */

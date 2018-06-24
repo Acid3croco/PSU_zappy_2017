@@ -37,7 +37,6 @@ char *concat_msg(char **cmd)
 
 	if (size == 0)
 		return (NULL);
-	printf("len %i\n", size);
 	msg = malloc(size + 1);
 	if (msg == NULL)
 		return (NULL);
@@ -47,15 +46,6 @@ char *concat_msg(char **cmd)
 		strcat(msg, " ");
 	}
 	return (msg);
-}
-
-int calc_dir(cl_t *client, cl_t *cl)
-{
-	int dir = 0;
-	(void)client;
-	(void)cl;
-
-	return dir;
 }
 
 /**
@@ -78,7 +68,7 @@ int broad_cmd(srv_t *server, char **cmd, cl_t *client)
 		for (cl_t *cl = tm->client; cl != NULL; cl = cl->next) {
 			if (cl->fd == client->fd)
 				dprintf(cl->fd, "ok\n");
-			else {
+			else if (cl) {
 				dir = calc_dir(client, cl);
 				dprintf(cl->fd, "message %i, %s\n", dir, msg);
 			}
