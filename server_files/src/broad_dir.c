@@ -29,9 +29,12 @@ int get_dir(float angle, cl_t *recev)
 
 int calc_dir(cl_t *sender, cl_t *recev)
 {
-	double coef = (recev->x - sender->x) / (recev->y - sender->y);
-	double angle = atan(coef);
+	double coef = 0;
+	double angle = 0;
 
+	if (recev->y - sender->y != 0)
+		coef = (recev->x - sender->x) / (recev->y - sender->y);
+	angle = atan(coef);
 	angle = angle * 180 / M_PI;
 	if (sender->x > recev->x)
 		angle += 90;

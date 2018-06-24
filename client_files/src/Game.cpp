@@ -365,7 +365,6 @@ bool	Game::gameLoop()
 		if (this->_co->verifFd() == -1)
 			return false;
 		buf = this->_co->getListen();
-		std::cout << buf << std::endl;
 		if (buf.compare("Error\n") == 0) {
 			perror("");
 			return (false);
