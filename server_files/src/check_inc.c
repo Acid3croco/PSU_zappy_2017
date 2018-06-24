@@ -119,7 +119,7 @@ void check_inc(srv_t *server)
 			gettimeofday(&end, NULL);
 			dif = (end.tv_sec - inc->start.tv_sec) * 1000000;
 			dif += (end.tv_usec - inc->start.tv_usec);
-			if (dif > 10 / server->freq * 1000000) {
+			if (dif > 300 / server->freq * 1000000) {
 				success_inc(inc);
 				clean_box(server, inc);
 				inc = delete_inc(server, inc);
