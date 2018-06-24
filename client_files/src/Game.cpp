@@ -12,7 +12,7 @@
 *
 */
 Game::Game() : _co(new Command()), _inv(new Inventory()), _obj(new Objectif()),
-_mo(new Movement()), _msgQ(0), _lvl(1), _priority("food", 5), _goal(7)
+_mo(new Movement()), _msgQ(0), _lvl(1), _priority("food", 5), _goal(7), _nbIa(0)
 {
 }
 
@@ -47,7 +47,6 @@ bool	Game::prepGame(int ac, char **av)
 	buf = this->_co->getListen();
 	if (buf.compare("ko\n") == 0)
 		return (false);
-	std::cout << buf << std::endl;
 	buf = this->_co->getListen();
 	if (buf.compare("ko\n") == 0)
 		return (false);
@@ -57,7 +56,6 @@ bool	Game::prepGame(int ac, char **av)
 	this->_x = atoi(token.c_str());
 	this->_y = atoi(buf.c_str());
 	this->_goal = this->_obj->getGoal(this->_lvl);
-	std::cout << this->_x << " " << this->_y << std::endl;
 	return (true);
 }
 
@@ -82,6 +80,7 @@ void	Game::handleInventory(std::string buf)
 * @brief takeRessource take nbr quantity of ressources on the ground.
 *
 * @param nbr
+* @param index
 */
 void	Game::takeRessource(int nbr, int index)
 {
@@ -120,6 +119,29 @@ void	Game::getAll(std::vector<int> sight)
 }
 
 /**
+* @brief incantationPrep preparation for incantation.
+*
+*/
+void	Game::incantationPrep()
+{
+	std::vector<std::string>	ressourceName;
+
+	ressourceName = this->_inv->getRessourceName();
+	for (int i = 0; i < 6; i++) {
+		for (; 0 < this->_goal[i] && this->_msgQ < 10;) {
+			this->_co->setObj(ressourceName[i]);
+			this->_goal[i]--;
+			this->_msgQ++;
+		}
+	}
+	if (this->_msgQ < 10) {
+		this->_co->incantation();
+		this->_msgQ++;
+		this->_priority.first = "food";
+	}
+}
+
+/**
 * @brief launchIncantation verify if the tile is empty.
 *
 * @param sight
@@ -135,6 +157,54 @@ void	Game::launchIncantation(std::vector<std::vector<int>>	sight)
 }
 
 /**
+* @brief searchForTeam ask team mate for help.
+*
+*/
+void	Game::searchForTeam()
+{
+	std::string	msg;
+
+	if (this->_msgQ < 10 && this->_lvl > 1) {
+		msg = "incantation " + std::to_string(this->_lvl);
+		this->_co->broadcast(msg);
+		this->_msgQ++;
+	}
+}
+
+/**
+* @brief findRessource search and take ressources.
+*
+* @param sight
+*/
+void	Game::findRessource(std::vector<std::vector<int>> sight)
+{
+	int	index;
+
+	index = this->_inv->findId(this->_priority.first);
+	if (index < 7 && sight[0][index] > 0)
+		this->takeRessource(sight[0][index], index);
+	else {
+		this->takeRessource(sight[0][6], 6);
+		if (this->_mo->verifPath() == false)
+			this->_mo->findPath(sight, index, this->_x);
+	}
+}
+
+/**
+* @brief lookingForPlayer search the players.
+*
+* @param sight
+*/
+void	Game::lookingForPlayer(std::vector<std::vector<int>> sight)
+{
+	if (this->_mo->checkPlayer(sight[0], this->_nbIa) == true) {
+		this->_co->broadcast("startIncantation " + std::to_string(this->_lvl));
+		this->_msgQ++;
+		this->launchIncantation(sight);
+	}
+}
+
+/**
 * @brief handleLook handle look function.
 *
 * @param buf
@@ -142,22 +212,20 @@ void	Game::launchIncantation(std::vector<std::vector<int>>	sight)
 void	Game::handleLook(std::string buf)
 {
 	std::vector<std::vector<int>>	sight;
-	int	index;
 
 	this->_msgQ--;
 	sight = this->_obj->parseLoop(buf, this->_lvl);
 	if (this->_priority.first.compare("incantation") != 0) {
-		index = this->_inv->findId(this->_priority.first);
-		if (sight[0][index] > 0)
-			this->takeRessource(sight[0][index], index);
-		else {
-			this->takeRessource(sight[0][6], 6);
-			if (this->_mo->verifPath() == false)
-				this->_mo->findPath(sight, index, this->_x);
-		}
+		findRessource(sight);
 	}
-	else
+	else if (this->_lvl == 1)
 		this->launchIncantation(sight);
+	else if (this->_priority.first.compare("searchTeam") == 0)
+		this->lookingForPlayer(sight);
+	else if (this->_priority.first.compare("teamMate") == 0)
+		this->_mo->findPlayer(sight);
+	else
+		this->searchForTeam();
 	this->_co->popBack();
 }
 
@@ -197,8 +265,40 @@ void	Game::handlingCommand(std::string buf)
 		else if (this->_co->compareCmd("look") == true)
 			this->handleLook(buf);
 	}
-	else if (this->_co->compareCmd("incantation") == true)
+	else if (this->_co->compareCmd("incantation") == true ||
+	this->_co->compareCmd("broadcast") == true)
 		this->handleIncantation(buf);
+}
+
+/**
+* @brief handleBroadcast handle the Ia message.
+*
+* @param buf
+*/
+void	Game::handleBroadcast(std::string buf, int direction)
+{
+	size_t		pos;
+	std::string	token;
+	int		lvl;
+
+	pos = buf.find(" ");
+	buf.erase(0, pos + 1);
+	pos = buf.find(" ");
+	token = buf.substr(0, pos);
+	buf.erase(0, pos + 1);
+	lvl = stoi(buf);
+	if (direction == 0 && token.compare("startIncantation") == 0)
+		this->_priority.first = "wait";
+	else if (direction == 0)
+		this->_co->look();
+	else if (token.compare("incantation") == 0 && this->_lvl == lvl &&
+	this->_priority.first.compare("food") != 0 && this->_msgQ < 9) {
+		this->_co->broadcast("comming " + std::to_string(this->_lvl));
+		this->_priority.first = "teamMate";
+		this->_mo->findTeamMate(direction);
+		this->_co->look();
+		this->_msgQ += 2;
+	}
 }
 
 /**
@@ -210,41 +310,22 @@ void	Game::handlingMsg(std::string buf)
 {
 	size_t		pos;
 	std::string	token;
+	int		direction;
 
 	pos = buf.find(" ");
 	token = buf.substr(0, pos);
-	if (token.compare("text") == 0) {
+	if (token.compare("message") == 0) {
 		buf.erase(0, pos + 1);
 		pos = buf.find(" ");
 		token = buf.substr(0, pos);
-		if (token.compare(this->_co->getTeam()) == 0)
-			std::cout << "My broadcast" << std::endl;
+		direction = stoi(token);
+		buf.erase(0, pos + 1);
+		if (buf.compare(0, this->_co->getTeam().length(),
+		this->_co->getTeam()) == 0)
+			this->handleBroadcast(buf, direction);
 	}
 	else
 		this->handlingCommand(buf);
-}
-
-/**
-* @brief incantationPrep preparation for incantation.
-*
-*/
-void	Game::incantationPrep()
-{
-	std::vector<std::string>	ressourceName;
-
-	ressourceName = this->_inv->getRessourceName();
-	for (int i = 0; i < 6; i++) {
-		for (; 0 < this->_goal[i] && this->_msgQ < 10;) {
-			this->_co->setObj(ressourceName[i]);
-			this->_goal[i]--;
-			this->_msgQ++;
-		}
-	}
-	if (this->_msgQ < 10) {
-		this->_co->incantation();
-		this->_msgQ++;
-		this->_priority.first = "food";
-	}
 }
 
 /**
@@ -258,7 +339,7 @@ void	Game::launchCommand()
 		this->_msgQ++;
 	}
 	else if (this->_msgQ == 0) {
-			if (this->_co->verifExist("inventory") == false) {
+		if (this->_co->verifExist("inventory") == false) {
 			this->_co->inventory();
 			this->_msgQ++;
 		}
@@ -268,8 +349,6 @@ void	Game::launchCommand()
 /**
 * @brief gameLoop the loop where the game take place.
 *
-* @param ac
-* @param av
 * @return bool
 */
 bool	Game::gameLoop()
@@ -277,11 +356,11 @@ bool	Game::gameLoop()
 	std::string	buf;
 
 	for (;;) {
-		this->launchCommand();
+		if (this->_priority.first.compare("wait") != 0)
+			this->launchCommand();
 		if (this->_co->verifFd() == -1)
 			return false;
 		buf = this->_co->getListen();
-		std::cout << buf << std::endl;
 		if (buf.compare("Error\n") == 0) {
 			perror("");
 			return (false);

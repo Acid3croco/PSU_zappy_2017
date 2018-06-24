@@ -104,6 +104,8 @@ void	Command::broadcast(const std::string broad)
 	std::vector<std::string>::iterator	it = this->_lastCmd.begin();
 
 	this->_so->wwrite("Broadcast ");
+	this->_so->wwrite(this->_team.c_str());
+	this->_so->wwrite(" ");
 	this->_so->wwrite(broad.c_str());
 	this->_so->wwrite("\n");
 	this->_lastCmd.insert(it, "broadcast");
@@ -238,6 +240,13 @@ int	Command::verifFd() const
 	return (this->_so->getFd());
 }
 
+/**
+* @brief verifExist verify if a cmd is in message queue.
+*
+* @param cmd
+* @return true
+* @return false
+*/
 bool	Command::verifExist(std::string cmd) const
 {
 	for (int i = 0; i < (int)this->_lastCmd.size(); i++) {

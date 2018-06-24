@@ -27,6 +27,10 @@ public:
 	int size);
 	bool	checkEmpty(std::vector<int> tile);
 	void	calculPath(int pos);
+	void	findTeamMate(int direction);
+	void	deletePath();
+	void	findPlayer(std::vector<std::vector<int>> sight);
+	bool	checkPlayer(std::vector<int> sight, int nbr);
 protected:
 private:
 	void	assignPath(int y, int x);

@@ -91,7 +91,7 @@ std::vector<int>	Objectif::getObjectTile(std::string buf)
 	size_t			pos;
 	std::string		token;
 
-	tile = {0, 0, 0, 0, 0, 0, 0};
+	tile = {0, 0, 0, 0, 0, 0, 0, 0};
 	for (int i = 0; (pos = buf.find(" ")) != std::string::npos; i++) {
 		token = buf.substr(0, pos);
 		tile = this->addObject(token, tile);
@@ -125,6 +125,8 @@ std::vector<int> tile)
 		case 'p' :
 			if (token.compare("phiras") == 0)
 				tile[4]++;
+			else
+				tile[7]++;
 			break;
 		case 't' : tile[5]++;
 			break;

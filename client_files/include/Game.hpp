@@ -24,9 +24,11 @@ public:
 	bool	prepGame(int ac, char **av);
 	bool	gameLoop();
 	void	setCo(const Command &copy);
+	void	handleBroadcast(std::string buf, int direction);
 	void	handlingCommand(std::string buf);
 	void	handlingMsg(std::string buf);
 	void	handleInventory(std::string buf);
+	void	searchForTeam();
 	void	handleLook(std::string buf);
 	void	takeRessource(int nbrRes, int index);
 	void	launchCommand();
@@ -34,6 +36,8 @@ public:
 	void	handleIncantation(std::string buf);
 	void	launchIncantation(std::vector<std::vector<int>>	sight);
 	void	getAll(std::vector<int> sight);
+	void	findRessource(std::vector<std::vector<int>> sight);
+	void	lookingForPlayer(std::vector<std::vector<int>> sight);
 protected:
 private:
 	Command			*_co;
@@ -44,6 +48,7 @@ private:
 	int			_lvl;
 	std::pair<std::string, int>	_priority;
 	std::vector<int>	_goal;
+	int			_nbIa;
 	int			_x;
 	int			_y;
 };

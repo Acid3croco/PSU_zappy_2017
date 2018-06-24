@@ -46,7 +46,7 @@ void	Movement::assignPath(int y, int x)
 }
 
 /**
-* @brief calculPath calcul the path due to the pos.
+* @brief calculPath calcul the path due to the position.
 *
 * @param pos
 */
@@ -59,7 +59,6 @@ void	Movement::calculPath(int pos)
 	if (pos > 3)
 		tmp = 3;
 	for (;x < pos; x = x + 2, tmp = tmp + tmp + 2, y++);
-	//std::cout << "x : " << x << ", y : " << y << ", tmp :" << tmp << ", pos :" << pos << std::endl;
 	x = (x / 2) + 1;
 	x = (pos - tmp) - x;
 	this->_size = 0;
@@ -87,6 +86,7 @@ bool	Movement::checkEmpty(std::vector<int> tile)
 *
 * @param sight
 * @param index
+* @param size
 */
 void	Movement::findPath(std::vector<std::vector<int>> sight, int index,
 int size)
@@ -141,4 +141,68 @@ std::string	Movement::getDirection()
 	if (ret != 0)
 		this->_path.erase(this->_path.begin());
 	return (this->_direction[ret]);
+}
+
+/**
+* @brief deletePath clear the actual path.
+*
+*/
+void	Movement::deletePath()
+{
+	this->_path.erase(this->_path.begin(), this->_path.end() - 1);
+}
+
+/**
+* @brief findTeamMate find the team mate asking for incatantion.
+*
+* @param direction
+*/
+void	Movement::findTeamMate(int direction)
+{
+	this->deletePath();
+	switch (direction) {
+		case 0 : break;
+		case 1 : this->assignPath(1, 0);
+			break;
+		case 3 : this->assignPath(0, -1);
+			break;
+		case 5 : this->assignPath(0, 1);
+			break;
+		case 7 : this->assignPath(0, 1);
+			break;
+	}
+}
+
+/**
+* @brief findPlayer search and assign the path for the player.
+*
+* @param sight
+*/
+void	Movement::findPlayer(std::vector<std::vector<int>> sight)
+{
+	int	pos = 1;
+	int	index = 8;
+
+	if (index == -1)
+		for (; pos < (int)sight.size() &&
+		this->checkEmpty(sight[pos]) == true; pos++);
+	else
+		for (; pos < (int)sight.size() &&
+		sight[pos][index] == 0; pos++);
+	if (pos < (int)sight.size())
+		this->calculPath(pos);
+}
+
+/**
+* @brief checkPlayer check if the nbr of player required are present.
+*
+* @param sight
+* @return true
+* @return false
+*/
+bool	Movement::checkPlayer(std::vector<int> sight, int nbr)
+{
+	if (sight[7] == nbr)
+		return (true);
+	return (false);
 }
