@@ -78,6 +78,20 @@ void delete_client(map_t *map, tm_t *team, cl_t *cl, cl_t *prev)
 }
 
 /**
+* @brief close_fs check the fs and close it
+*
+* @param server
+* @param fs
+* @param fd
+*/
+
+void close_fs(srv_t *server, FILE *fs, int fd)
+{
+	fclose(fs);
+	if (fd == server->map->fd)
+		server->map->fs = NULL;
+}
+/**
 * @brief close_fd close the opened fd and free the client
 *
 * @param fd
@@ -103,6 +117,6 @@ void close_fd(srv_t *server, int fd, FILE *fs)
 	if (cl != NULL)
 		delete_client(server->map, tm, cl, prev);
 	else if (fs)
-		fclose(fs);
+		close_fs(server, fs, fd);
 	printf(YELLOW"Closed connection on descriptor %d\n"RESET, fd);
 }
