@@ -47,7 +47,7 @@ void check_height(srv_t *server)
 {
 	if (server->height < 10 || server->height > 30)
 	{
-		printf("\n-y option only accepts integer values between 10 and 30\n\n")
+		printf("\n-y option only accepts integer values between 10 and 30\n\n");
 		help(server);
 	}
 }
