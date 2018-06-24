@@ -86,7 +86,6 @@ float get_timer(char *input);
 void check_cmd(srv_t *server, struct timeval *strt_fd);
 void go_on(srv_t *s, cl_t *client, int x, int y);
 void help(srv_t *server);
-void check_args(srv_t *server);
 void ress_cell(box_t *box, cl_t *client);
 tm_t *find_team(srv_t *server, char *name);
 void add_cli_egg(srv_t *server, char **cmd, FILE *fs, tm_t *team);
@@ -94,5 +93,11 @@ void delete_egg(srv_t *server, tm_t *team, egg_t *egg);
 void check_egg(srv_t *server);
 void free_egg(egg_t *egg);
 int calc_dir(cl_t *sender, cl_t *recev);
+void check_p(srv_t *server);
+void check_width(srv_t *server);
+void check_height(srv_t *server);
+void check_freq(srv_t *server);
+void check_clientsNB(srv_t *server);
+void check_args(srv_t *server);
 
 #endif /* !SERVER_H_ */

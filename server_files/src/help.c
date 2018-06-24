@@ -28,21 +28,16 @@ void help(srv_t *server)
 }
 
 /**
-* @brief check_args check if the arguments are correct
+* @brief check_args call all functions that checks all the arguments
 *
 * @param server
 */
 
 void check_args(srv_t *server)
 {
-	if (server->port > 65535 || server->port < 0)
-		help(server);
-	if (server->width < 10 || server->width > 30)
-		help(server);
-	if (server->height < 10 || server->height > 30)
-		help(server);
-	if (server->freq < 2 || server->freq > 10000)
-		help(server);
-	if (server->clientsNB < 1)
-		help(server);
+	check_p(server);
+	check_width(server);
+	check_height(server);
+	check_freq(server);
+	check_clientsNB(server);
 }
