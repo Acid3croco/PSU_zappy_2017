@@ -88,12 +88,14 @@ void	Game::takeRessource(int nbr, int index)
 		for (int i = 0; 10 > this->_msgQ && i < nbr &&
 		this->_goal[index] > i; i++) {
 			this->_co->takeObj(this->_priority.first);
+			usleep(100);
 			this->_msgQ++;
 		}
 	}
 	else {
 		for (int i = 0; 10 > this->_msgQ && i < nbr; i++) {
 			this->_co->takeObj("food");
+			usleep(100);
 			this->_msgQ++;
 		}
 	}
@@ -112,6 +114,7 @@ void	Game::getAll(std::vector<int> sight)
 	for (int i = 0; i < 6; i++) {
 		for (; 0 < sight[i] && this->_msgQ < 10;) {
 			this->_co->takeObj(ressourceName[i]);
+			usleep(100);
 			sight[i]--;
 			this->_msgQ++;
 		}
@@ -130,6 +133,7 @@ void	Game::incantationPrep()
 	for (int i = 0; i < 6; i++) {
 		for (; 0 < this->_goal[i] && this->_msgQ < 10;) {
 			this->_co->setObj(ressourceName[i]);
+			usleep(100);
 			this->_goal[i]--;
 			this->_msgQ++;
 		}
@@ -361,6 +365,7 @@ bool	Game::gameLoop()
 		if (this->_co->verifFd() == -1)
 			return false;
 		buf = this->_co->getListen();
+		std::cout << buf << std::endl;
 		if (buf.compare("Error\n") == 0) {
 			perror("");
 			return (false);

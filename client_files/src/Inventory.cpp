@@ -32,9 +32,12 @@ void	Inventory::parseInventory(std::string buf)
 {
 	std::string	token;
 	size_t		pos;
+	int		space = 1;
 
-	buf.erase(0, 2);
-	buf.erase(buf.length() - 2, buf.length());
+	if (buf[1] == ' ')
+		space = 2;
+	buf.erase(0, space);
+	buf.erase(buf.length() - space, buf.length());
 	for (int i = 0; i < 7; i++) {
 		pos = buf.find(", ");
 		token = buf.substr(0, pos);
