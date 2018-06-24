@@ -17,7 +17,10 @@
 void player_cell(box_t *box, cl_t *client)
 {
 	for (cl_t *cl = box->client; cl != NULL; cl = cl->mnext) {
-		dprintf(client->fd, " player");
+		if (!cl)
+			break;
+		if (client)
+			dprintf(client->fd, " player");
 	}
 }
 
@@ -31,9 +34,9 @@ void player_cell(box_t *box, cl_t *client)
 
 void look_cell(int fd, char *name, int nb)
 {
-	for (; nb > 0; nb--) {
-		dprintf(fd, " %s", name);
-	}
+	if (nb > 0)
+		for (; nb > 0; nb--)
+			dprintf(fd, " %s", name);
 }
 
 /**
