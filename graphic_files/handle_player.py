@@ -7,8 +7,7 @@ from pygame.locals import *
 def hadle_player(data):
 	print(data)
 
-#
-_______________________________________________________________________________
+#_______________________________________________________________________________
 # CHANGE DIRECTION OF CHARACTER
 def right_left(Img, check, r_l):
 	tmp = "./textures/character"
@@ -23,9 +22,8 @@ def right_left(Img, check, r_l):
 	tmp += ".png"
 	Img = pygame.image.load(tmp)
 
-#
-_______________________________________________________________________________
-# MAKE THE ANIMATION OF FORWARD 
+#_______________________________________________________________________________
+# MAKE THE ANIMATION OF FORWARD
 def forward (Img, fenetre, check, x_size, y_size, pos_x, pos_y):
 	if check == 1:
 		Img = pygame.image.load('./textures/character4.1.png')

@@ -1,54 +1,41 @@
 #!/usr/bin/python3
 
 import sys, socket
-from handle_player import create_player
-from handle_foods_stones.py import handle_foods_stones
-
-# SIZE OF A BOX BY DEFAULT
-size_box = 100
-
-#_______________________________________________________________________________
-# DEFINE SIZE OF BOX
-def size_box(SizeX, SizeY):
-	if (SizeX >= 100 and SizeX < 1000 or
-		 SizeY >= 100 and SizeY < 1000):
-		 return int(box = size_box / 10)
-	elif (SizeX >= 1000 and SizeX < 10000 or
-		 SizeY >= 1000 and SizeY < 10000):
-		 return int(size_box / 100)
-	elif (SizeX >= 10000 and SizeX >= 10000
-		 return int(size_box / 1000)
-	else:
-		return (-1)
+from handle_foods_stones import first_rocks, resize_rocks, choose_rock
 
 #_______________________________________________________________________________
 # SORT DATA GIVEN BY SERVER AND SEND IT TO FUNCTINON DISPLAY
 def sort_data(data_c, SizeX, SizeY):
-	SizeB = size_box(SizeX, SizeY)
-	if SizeB == -1:
+	if int(SizeX) < 0 or int(SizeY) < 0 == -1:
 		print("size map problem")
 		return (-1)
-	if data_c.find("new_c") == 2:
-		if create_player(data_c, SizeB) == -1:
+	if data_c.find("new_c") == 0:
+		if handle_player(data_c, SizeB) == -1:
 			return (-1)
-	else
-		if create_foods_stones(data_c, SizeB) == -1:
-			return (-1)
-	return (0)
+	elif data_c.find("Eject") == 0:
+		cmd = data.split(' ')
+		return cmd
+	elif data_c.find("Dead") == 0:
+		cmd = data.split(' ')
+		return cmd
+	else:
+		return (data_c)
 
 #_______________________________________________________________________________
 # GET DATA GIVEN BY SERVER
-def get_info(sockett, lst):
+def get_info(sockett, SizeX, SizeY):
 	data = sockett.recv(255)
 	data_c = data.decode("utf-8")
 	tab = sort_data(data_c, SizeX, SizeY)
 	if tab == -1:
 		return (-1)
-	return(0)
+	return(tab)
 
 #_______________________________________________________________________________
 # GAME LOOP
-def game_loop(sockett, lst, SizeX, SizeY):
-	if get_info(sockett, lst, SizeX, SizeY) == -1:
+def game_loop(sockett, SizeX, SizeY, screen):
+	tab = get_info(sockett, SizeX, SizeY)
+	if tab == -1:
 		return (-1)
+	first_rocks(tab, 90, screen)
 	return (0)

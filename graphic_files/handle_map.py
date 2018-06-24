@@ -29,19 +29,7 @@ def recover_y(data):
 def handle_map(sockett, data):
 	SizeX = recover_x(data)
 	SizeY = recover_y(data)
-	if (SizeX >= 100 and SizeX < 1000 or
-		 SizeY >= 100 and SizeY < 1000):
-		width = SizeX * (size_box / 10)
-		height = SizeY * (size_box / 10)
-	elif (SizeX >= 1000 and SizeX < 10000 or
-		 SizeY >= 1000 and SizeY < 10000):
-		width = SizeX * (size_box / 100)
-		height = SizeY * (size_box / 100)
-	elif (SizeX >= 10000 or SizeY >= 10000):
-		width = SizeX * (size_box / 1000)
-		height = SizeY * (size_box / 1000)
-	else:
-		width = SizeX * size_box
-		height = SizeY * size_box
+	width = SizeX * size_box
+	height = SizeY * size_box
 	create_window(int(width), int(height), sockett, data,
 			SizeX, SizeY)

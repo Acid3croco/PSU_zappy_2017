@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-from map_handle import handle_map, load_tab_info
+from handle_map import handle_map
 from connection import connect_client
 
 #_______________________________________________________________________________
