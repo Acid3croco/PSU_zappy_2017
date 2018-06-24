@@ -2,11 +2,31 @@
 
 import sys, pygame
 from pygame.locals import *
+
+#new_c FD “team-name” X Y O
+#      0
+#    1   3
+#      2
+
 #_______________________________________________________________________________
 # HANDLE PLAYERS POSITION ON THE MAP
-def hadle_player(data):
-	print(data)
+def fd_management(data):
+	fd_info = data.split(' ')
+	return (fd_info)
 
+def first_pos(tab, screen, ):
+	Img = 0
+	if tab[5] == "0\n":
+		Img = right_left(Img, 2, 1)
+	elif tab[5] == "1\n":
+		Img = right_left(Img, 1, 1)
+	elif tab[5] == "2\n":
+		Img = right_left(Img, 2, 0)
+	elif tab[5] == "3\n":
+		Img = right_left(Img, 3, 1)
+	screen.blit(Img, (100 * int(tab[3]) + 30,  100 * int(tab[4]) + 30))
+	pygame.display.flip()
+	
 #_______________________________________________________________________________
 # CHANGE DIRECTION OF CHARACTER
 def right_left(Img, check, r_l):
@@ -21,6 +41,7 @@ def right_left(Img, check, r_l):
 		tmp += str(check + 1)
 	tmp += ".png"
 	Img = pygame.image.load(tmp)
+	return (Img)
 
 #_______________________________________________________________________________
 # MAKE THE ANIMATION OF FORWARD

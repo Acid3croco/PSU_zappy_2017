@@ -2,6 +2,7 @@
 
 import sys, socket
 from handle_foods_stones import first_rocks, resize_rocks, choose_rock
+from handle_player import fd_management
 
 #_______________________________________________________________________________
 # SORT DATA GIVEN BY SERVER AND SEND IT TO FUNCTINON DISPLAY
@@ -10,8 +11,11 @@ def sort_data(data_c, SizeX, SizeY):
 		print("size map problem")
 		return (-1)
 	if data_c.find("new_c") == 0:
-		if handle_player(data_c, SizeB) == -1:
+		cmd = fd_management(data_c)
+		if cmd == -1:
 			return (-1)
+		else:
+			return (cmd, 1)
 	elif data_c.find("Eject") == 0:
 		cmd = data.split(' ')
 		return cmd
@@ -19,7 +23,7 @@ def sort_data(data_c, SizeX, SizeY):
 		cmd = data.split(' ')
 		return cmd
 	else:
-		return (data_c)
+		return (data_c, 2)
 
 #_______________________________________________________________________________
 # GET DATA GIVEN BY SERVER
@@ -30,12 +34,3 @@ def get_info(sockett, SizeX, SizeY):
 	if tab == -1:
 		return (-1)
 	return(tab)
-
-#_______________________________________________________________________________
-# GAME LOOP
-def game_loop(sockett, SizeX, SizeY, screen):
-	tab = get_info(sockett, SizeX, SizeY)
-	if tab == -1:
-		return (-1)
-	first_rocks(tab, 90, screen)
-	return (0)

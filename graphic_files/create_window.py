@@ -2,7 +2,8 @@
 
 import pygame, socket
 from pygame.locals import *
-from game_loop import game_loop, get_info
+from game_loop import get_info
+from handle_player import first_pos
 from handle_foods_stones import first_rocks
 
 #_______________________________________________________________________________
@@ -13,6 +14,7 @@ def create_window(width, height, sockett, data, SizeX, SizeY):
 	pygame.display.set_caption('Zappy')
 	first_rocks(data, 100, screen)
 	running = True
+	player = []
 	while running:
 		pygame.time.Clock().tick(30)
 
@@ -20,9 +22,13 @@ def create_window(width, height, sockett, data, SizeX, SizeY):
 			if event.type == pygame.QUIT:
 				running = False
 		tab = get_info(sockett, SizeX, SizeY)
-		print(tab)
+		if tab[1] == 1:
+			player.append(tab[0])
+			print(tab[0])
+			first_pos(tab[0], screen)
+												
+		print(player)
 		if tab == -1:
 			break
-		print("i go in rocks second time\n")
-		first_rocks(tab, 100, screen)
-	
+		if tab[1] == 2:
+			first_rocks(tab, 100, screen)
