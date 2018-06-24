@@ -118,7 +118,7 @@ std::string	Mysocket::wlisten()
 */
 void	Mysocket::wwrite(const char *s)
 {
-	write(this->_fd, s, strlen(s));
+	send(this->_fd, s, strlen(s), MSG_NOSIGNAL);
 	std::cout << s;
 }
 
