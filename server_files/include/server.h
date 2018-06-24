@@ -103,5 +103,8 @@ void create_inc(srv_t *server, cl_t *client);
 void check_inc(srv_t *server);
 int check_ress(box_t *box, int lv);
 void free_inc(inc_t *inc);
+void check_all(srv_t *server, struct timeval *strt_fd);
+void free_server(srv_t *server);
+void fill_box(box_t *box);
 
 #endif /* !SERVER_H_ */

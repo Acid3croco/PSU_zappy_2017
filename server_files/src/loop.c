@@ -103,8 +103,6 @@ void loop_server(srv_t *server)
 			else
 				read_event(server);
 		}
-		check_cmd(server, &strt_fd);
-		check_egg(server);
-		check_inc(server);
+		check_all(server, &strt_fd);
 	}
 }

@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+* @brief delete_inc delete the incantation struct
+*
+* @param server
+* @param inc
+* @return inc_t *
+*/
+
 inc_t *delete_inc(srv_t *server, inc_t *inc)
 {
 	inc_t *prev = NULL;
@@ -27,6 +35,12 @@ inc_t *delete_inc(srv_t *server, inc_t *inc)
 	return (NULL);
 }
 
+/**
+* @brief success_inc incrise the level and free the incentation
+*
+* @param inc
+*/
+
 void success_inc(inc_t *inc)
 {
 	for (cl_t * cl = inc->client; cl != NULL; cl = cl->inext) {
@@ -40,6 +54,12 @@ void success_inc(inc_t *inc)
 
 }
 
+/**
+* @brief cancel_inc cancel the incantation and free the struct
+*
+* @param inc
+*/
+
 void cancel_inc(inc_t *inc)
 {
 	for (cl_t * cl = inc->client; cl != NULL; cl = cl->inext) {
@@ -49,6 +69,40 @@ void cancel_inc(inc_t *inc)
 		dprintf(cl->fd, "ko\n");
 	}
 }
+
+/**
+* @brief clean_box clean the box and replace ressources
+*
+* @param server
+* @param inc
+*/
+
+void clean_box(srv_t *server, inc_t *inc)
+{
+	unsigned int seed = 0;
+
+	server->map->box[inc->y][inc->x]->ress.food = 0;
+	server->map->box[inc->y][inc->x]->ress.linemate = 0;
+	server->map->box[inc->y][inc->x]->ress.deraumere = 0;
+	server->map->box[inc->y][inc->x]->ress.sibur = 0;
+	server->map->box[inc->y][inc->x]->ress.mendiane = 0;
+	server->map->box[inc->y][inc->x]->ress.phiras = 0;
+	server->map->box[inc->y][inc->x]->ress.thystame = 0;
+	for (int x, y;;) {
+		x = my_rand(&seed) % server->width;
+		y = my_rand(&seed) % server->height;
+		if (server->map->box[y][x]->client == NULL) {
+			fill_box(server->map->box[y][x]);
+			break;
+		}
+	}
+}
+
+/**
+* @brief check_inc check all the inc struct
+*
+* @param server
+*/
 
 void check_inc(srv_t *server)
 {
@@ -67,6 +121,7 @@ void check_inc(srv_t *server)
 			dif += (end.tv_usec - inc->start.tv_usec);
 			if (dif > 10 / server->freq * 1000000) {
 				success_inc(inc);
+				clean_box(server, inc);
 				inc = delete_inc(server, inc);
 			}
 		}

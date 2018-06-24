@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+* @brief free_inc free the incantation struct
+*
+* @param inc
+*/
+
 void free_inc(inc_t *inc)
 {
 	inc_t *tmp = inc;
