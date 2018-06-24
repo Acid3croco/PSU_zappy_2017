@@ -32,7 +32,8 @@ void check_width(srv_t *server)
 {
 	if (server->width < 10 || server->width > 30)
 	{
-		printf("\n-x option only accepts integer values between 10 and 30\n\n");
+		printf("\n-x option only accepts integer values between 10 ");
+		printf("and 30\n\n");
 		help(server);
 	}
 }
@@ -47,7 +48,8 @@ void check_height(srv_t *server)
 {
 	if (server->height < 10 || server->height > 30)
 	{
-		printf("\n-y option only accepts integer values between 10 and 30\n\n");
+		printf("\n-y option only accepts integer values between 10 ");
+		printf("and 30\n\n");
 		help(server);
 	}
 }
@@ -63,7 +65,8 @@ void check_freq(srv_t *server)
 	if (server->freq < 2 || server->freq > 10000)
 	{
 		printf("\n");
-		printf("-f option only accepts integer values between 2 and 10000\n\n");
+		printf("-f option only accepts integer values between 2 ");
+		printf("and 10000\n\n");
 		help(server);
 	}
 }
@@ -79,7 +82,8 @@ void check_clientsNB(srv_t *server)
 	if (server->clientsNB < 1)
 	{
 		printf("\n");
-		printf("-c option only accepts integer values greater or equal to 1\n");
+		printf("-c option only accepts integer values greater or ");
+		printf("equal to 1\n");
 		printf("\n\n");
 		help(server);
 	}
