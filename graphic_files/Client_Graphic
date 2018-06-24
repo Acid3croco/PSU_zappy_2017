@@ -1,15 +1,15 @@
-
+#!/usr/bin/python3
 
 import sys
-from map_handle import handle_map, load_tab_info
+from handle_map import handle_map
 from connection import connect_client
 
+#_______________________________________________________________________________
+# FUNCTION THAT LAUNCH THE GAME BY CONNECT TO THE SERVER
 def launch_graphic_client(arg1, arg2):
 	port = get_port(arg1)
 	host = arg2
 	connect_client(port, host)
-	load_tab_info()
-	handle_map() #a enlever apres que le pb de mbmap soit regle cote server
 
 #_______________________________________________________________________________
 # GESTION CLIENT
@@ -19,11 +19,14 @@ def get_port(arg1):
 		return (-1)
 	return (port)
 
+#_______________________________________________________________________________
+# USAGE
 def print_usage():
 	print("USAGE")
 	print("\t./zappy_graphique port host")
 
-
+#_______________________________________________________________________________
+# MAIN FUNCTION
 def main():
 	if len(sys.argv) == 2 and sys.argv[1] == "--help":
 		print_usage()
