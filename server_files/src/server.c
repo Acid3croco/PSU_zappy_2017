@@ -7,8 +7,40 @@
 
 #include "server.h"
 
-int main(void)
+/**
+* @brief init_server initialize the server
+*
+* @param server
+*/
+
+void init_server(srv_t *server)
 {
-	printf("Server !\n");
+	socket_bind(server);
+	create_epoll(server);
+	(void)server;
+}
+
+/**
+* @brief THE Main
+*
+* @param ac
+* @param av
+* @return int
+*/
+
+int main(int ac, char **av)
+{
+	srv_t *server = malloc(sizeof(srv_t));
+
+	if (server == NULL)
+		return (84);
+	init_struct(server);
+	init_map(server);
+	fill_args(ac, av, server);
+	check_args(server);
+	init_server(server);
+	create_map(server);
+	loop_server(server);
+	free_server(server);
 	return (0);
 }

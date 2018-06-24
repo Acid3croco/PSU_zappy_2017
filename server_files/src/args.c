@@ -1,0 +1,91 @@
+/*
+** EPITECH PROJECT, 2018
+** zappy
+** File description:
+** args
+*/
+
+#include "server.h"
+
+/**
+* @brief init_struct initialize the server struct with default values
+*
+* @param server
+*/
+
+void init_struct(srv_t *server)
+{
+	server->team = malloc(sizeof(tm_t));
+	server->cnt = malloc(sizeof(cnt_t));
+
+	if (server->team == NULL || server->cnt == NULL)
+		quit(server);
+	server->cnt->events = NULL;
+	server->team->name = NULL;
+	server->team->client = NULL;
+	server->team->next = NULL;
+	server->team->egg = NULL;
+	server->port = 1234;
+	server->width = 10;
+	server->height = 10;
+	server->clientsNB = 10;
+	server->freq = 100;
+	server->fs = NULL;
+	server->inc = NULL;
+}
+
+/**
+* @brief fill_teams create and initialize all the teams
+*
+* @param ac
+* @param av
+* @param server
+*/
+
+void fill_teams(int ac, char **av, srv_t *server)
+{
+	optind -= 1;
+
+	(void)server;
+	while (optind < ac && av[optind][0] != '-') {
+		if (is_team_new(av[optind], server) != 0) {
+			printf(RED"-n option only accepts unique team names\n"
+				RESET);
+			quit(server);
+		}
+		add_team(av[optind], server);
+		optind++;
+	}
+}
+
+/**
+* @brief fill_args put all arguments with optget in the server structure
+*
+* @param ac
+* @param av
+* @param server
+*/
+
+void fill_args(int ac, char **av, srv_t *server)
+{
+	int opt = 0;
+
+	while ((opt = getopt(ac, av, "p:x:y:n:c:f:")) != -1) {
+		switch (opt) {
+			case 'p': server->port = strtol(optarg, NULL, 10);
+				break;
+			case 'x': server->width = strtol(optarg, NULL, 10);
+				break;
+			case 'y': server->height = strtol(optarg, NULL, 10);
+				break;
+			case 'n': fill_teams(ac, av, server);
+				break;
+			case 'c': server->clientsNB = strtol(optarg, NULL, 10);
+				break;
+			case 'f': server->freq = strtol(optarg, NULL, 10);
+				break;
+			default : help(server);
+				break;
+		}
+	}
+}

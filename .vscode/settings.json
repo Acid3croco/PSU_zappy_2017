@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"server.h": "c",
+		"typeinfo": "c",
+		"unistd.h": "c",
+		"struct.h": "c",
+		"errno.h": "c",
+		"cmd.h": "c",
+		"istream": "c",
+		"timeb.h": "c",
+		"cmath": "c"
+	}
+}

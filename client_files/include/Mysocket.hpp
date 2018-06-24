@@ -16,22 +16,34 @@
 #include <iostream>
 #include <cstring>
 
+/**
+* @brief Mysocket : connect to server and communicate with him.
+*
+*/
 class Mysocket {
 public:
-	Mysocket(const std::string ip, const int port);
+	Mysocket();
 	~Mysocket();
-	int	LaunchMysocket();
-	char	*Wlisten(char *);
-	void	Wwrite(const char *s);
+	bool	launchMysocket(const int port, const std::string ip,
+	const int pos);
+	std::string	wlisten();
+	void	wwrite(const char *s);
+	const std::string	getIp() const;
+	int			getPort() const;
+	int			getFd() const;
+	struct sockaddr_in	getAddr() const;
+	struct protoent		*getPe() const;
 protected:
 private:
-	int	Wgetprotobyname();
-	int	Wsocket();
-	uint16_t	Whtons();
-	in_addr_t	WinetAddr();
-	int	Wconnect();
-	int	Wclose();
-	const std::string	_ip;
+	int	wgetprotobyname();
+	int	wsocket();
+	uint16_t	whtons();
+	in_addr_t	winetAddr();
+	int	wconnect();
+	int	wclose();
+	char			*_buf;
+	FILE			*_fs;
+	std::string		_ip;
 	int			_port;
 	int			_fd;
 	struct sockaddr_in	_addr;
