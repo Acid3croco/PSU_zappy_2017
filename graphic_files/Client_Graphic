@@ -1,39 +1,42 @@
-#!/usr/bin/python3
-
 import sys
 from handle_map import handle_map
 from connection import connect_client
 
+
 #_______________________________________________________________________________
 # FUNCTION THAT LAUNCH THE GAME BY CONNECT TO THE SERVER
 def launch_graphic_client(arg1, arg2):
-	port = get_port(arg1)
-	host = arg2
-	connect_client(port, host)
+    port = get_port(arg1)
+    host = arg2
+    connect_client(port, host)
+
 
 #_______________________________________________________________________________
 # GESTION CLIENT
 def get_port(arg1):
-	port = int(arg1)
-	if port < 0 or port > 65535:
-		return (-1)
-	return (port)
+    port = int(arg1)
+    if port < 0 or port > 65535:
+        return (-1)
+    return (port)
+
 
 #_______________________________________________________________________________
 # USAGE
 def print_usage():
-	print("USAGE")
-	print("\t./zappy_graphique port host")
+    print("USAGE")
+    print("\t./zappy_graphique port host")
+
 
 #_______________________________________________________________________________
 # MAIN FUNCTION
 def main():
-	if len(sys.argv) == 2 and sys.argv[1] == "--help":
-		print_usage()
-	elif len(sys.argv) == 3:
-		launch_graphic_client(sys.argv[1], sys.argv[2])
-	else:
-		exit(84)
-	exit(0)
+    if len(sys.argv) == 2 and sys.argv[1] == "--help":
+        print_usage()
+    elif len(sys.argv) == 3:
+        launch_graphic_client(sys.argv[1], sys.argv[2])
+    else:
+        exit(84)
+    exit(0)
+
 
 main()
